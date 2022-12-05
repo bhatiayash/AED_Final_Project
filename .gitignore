@@ -1,3 +1,5 @@
+//following files will be ignored
+
 /GymManagementSystem/build/
 /GymManagementSystem/dist/
 .DS_Store
