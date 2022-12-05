@@ -21,20 +21,13 @@ import java.util.ArrayList;
  */
 public class GymEnterprise extends Enterprise {
 
-    //private ProgramQueue courseQueue;
     private ProgramQueue programQueue;
-    //private ProgramDirectory courseDirectory;
     private ProgramDirectory programDirectory;
     private BookingQueue bookingQueue;
     private RoomDirectory roomDirec;
     private BookingTime appointmentTime;
     private NewHireApplicationsDirectory newHireDirec;
 
-    
-    
-//    public GymEnterprise(String name, EnterpriseType type) {
-//        super(name, type);
-//    }
     
     public GymEnterprise(String name){
         super(name,EnterpriseType.Gym);
@@ -50,14 +43,6 @@ public class GymEnterprise extends Enterprise {
         return null;
     }
 
-//    public ProgramQueue getCourseQueue() {
-//        return courseQueue;
-//    }
-//
-//    public void setCourseQueue(ProgramQueue courseQueue) {
-//        this.courseQueue = courseQueue;
-//    }
-
     public ProgramQueue getProgramQueue() {
         return programQueue;
     }
@@ -65,17 +50,7 @@ public class GymEnterprise extends Enterprise {
     public void setProgramQueue(ProgramQueue programQueue) {
         this.programQueue = programQueue;
     }
-    
-    
-    
-
-//    public ProgramDirectory getCourseDirectory() {
-//        return courseDirectory;
-//    }
-//
-//    public void setCourseDirectory(ProgramDirectory courseDirectory) {
-//        this.courseDirectory = courseDirectory;
-//    }
+   
 
     public ProgramDirectory getProgramDirectory() {
         return programDirectory;
@@ -85,10 +60,6 @@ public class GymEnterprise extends Enterprise {
         this.programDirectory = programDirectory;
     }
     
-
-//    public BookingQueue getAppointmentQueue() {
-//        return appointmentQueue;
-//    }
 
     public BookingQueue getBookingQueue() {
         return bookingQueue;
@@ -106,17 +77,6 @@ public class GymEnterprise extends Enterprise {
         this.roomDirec = roomDirec;
     }
 
-//    public void setAppointmentQueue(BookingQueue appointmentQueue) {
-//        this.appointmentQueue = appointmentQueue;
-//    }
-//
-//    public RoomDirectory getClassRoomDirectory() {
-//        return classRoomDirectory;
-//    }
-//
-//    public void setClassRoomDirectory(RoomDirectory classRoomDirectory) {
-//        this.classRoomDirectory = classRoomDirectory;
-//    }
 
     public BookingTime getAppointmentTime() {
         return appointmentTime;
