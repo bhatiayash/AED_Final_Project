@@ -25,7 +25,6 @@ public class UserAccount {
     private WorkQueue workQueue;
     private SalesQueue salesQueue;
     private BookingQueue appointmentQueue;
-    private ProgramQueue courseQueue;
     private ProgramQueue programQueue;
     
     public UserAccount() {
@@ -35,13 +34,7 @@ public class UserAccount {
         salesQueue = new SalesQueue();
     }
 
-//    public SalesQueue getOnlineSalesQueue() {
-//        return onlineSalesQueue;
-//    }
-//
-//    public void setOnlineSalesQueue(SalesQueue onlineSalesQueue) {
-//        this.onlineSalesQueue = onlineSalesQueue;
-//    }
+
 
     public SalesQueue getSalesQueue() {
         return salesQueue;
@@ -95,14 +88,6 @@ public class UserAccount {
 
     public WorkQueue getWorkQueue() {
         return workQueue;
-    }
-
-    public ProgramQueue getCourseQueue() {
-        return courseQueue;
-    }
-
-    public void setCourseQueue(ProgramQueue courseQueue) {
-        this.courseQueue = courseQueue;
     }
 
     public ProgramQueue getProgramQueue() {

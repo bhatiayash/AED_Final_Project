@@ -47,11 +47,6 @@ public class UserAccountDirectory {
         return userAccount;
     }
     
-    public CustomerAccount createCustomerAccount(String username, String password, Person person, Role role) {
-        CustomerAccount ua = new CustomerAccount(username, password, person.toString(), role.toString());
-        userAccountList.add(ua);
-        return ua;
-    }
     
     public boolean checkIfUsernameIsUnique(String username){
         for (UserAccount ua : userAccountList){
@@ -62,10 +57,6 @@ public class UserAccountDirectory {
                 return false;
         }
         return true;
-    }
-
-    public UserAccount createUserAccount(String username, String password, Customer customer, CustomerRole customerRole) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     public UserAccount createUserAccount(String username, String password, Customer customer, CustomerRole customerRole) {
