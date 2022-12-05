@@ -20,19 +20,5 @@ public class CustomerAccountDirectory extends UserAccountDirectory{
         this.cusList = new ArrayList();
     }
 
-//    public ArrayList<CustomerAccountDirectory> getCusDirectory() {
-//        return cusDirectoryList;
-//    }
-//
-//    public void setCusDirectory(ArrayList<CustomerAccountDirectory> cusDirectoryList) {
-//        this.cusDirectoryList= cusDirectoryList;
-//    }
-//    
-//    public Customer createCustomer(Integer cusId, String fullName, String address, String email, String phone, String membership){
-//        Customer cusomer = new Customer(cusId, fullName, address, email, phone, membership);
-//        Customer.getName(name);
-//        cusDirectoryList.add(cusomer);
-//        return customer;
-//    }
     
 }
