@@ -6,9 +6,13 @@ package UI;
 
 
 import Business.Enterprise.Enterprise;
+import Business.ConfigureASystem;
+import Business.EcoSystem;
+import Business.DB4OUtil.DB4OUtil;
 import Business.Network.Network;
 import Business.Organization.Organization;
 import Business.Accounts.UserAccount;
+import UI.Customer.NewCustomerRegJPanel;
 import java.awt.CardLayout;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -26,16 +30,21 @@ public class MainJFrame extends javax.swing.JFrame {
      * Creates new form MainJFrame
      */
     private JPanel mPanel;
+    private EcoSystem system;
+    private DB4OUtil dB4OUtil = DB4OUtil.getInstance();
     
 
     public MainJFrame() {
         initComponents();
-      
+        system = ConfigureASystem.configure();
+        //system = dB4OUtil.retrieveSystem();
+        this.setSize(1450, 830);
+        //this.container = container;
     }
     
     public MainJFrame (JPanel mPanel){
         initComponents();
-        
+        this.system = system;
         this.mPanel = mPanel;
     }
 
@@ -167,7 +176,49 @@ public class MainJFrame extends javax.swing.JFrame {
         char[] passwordCharArray = pfPasswd.getPassword();
         String password = String.valueOf(passwordCharArray);
 
+        //Step1: Check in the system admin user account directory if you have the user
+        UserAccount userAccount = system.getUserAccountDirectory().authenticateUser(userName, password);
+
+        Enterprise inEnterprise = null;
+        Organization inOrganization = null;
+        Network inNetwork = null;
         
+        if (userAccount == null) {
+            //Step 2: Go inside each network and check each enterprise
+            
+            for (Network network : system.getNetworkList()) {
+                //Step 2.a: check against each enterprise
+                userAccount = network.getUserAccountDirectory().authenticateUser(userName, password);
+                if (userAccount == null) {
+                    for (Enterprise enterprise : network.getEnterpriseDirectory().getEnterpriseList()) {
+                        userAccount = enterprise.getUserAccountDirectory().authenticateUser(userName, password);
+                        if (userAccount == null) {
+                            //Step 3:check against each organization for each enterprise
+                            for (Organization organization : enterprise.getOrganizationDirectory().getOrganizationList()) {
+                                userAccount = organization.getUserAccountDirectory().authenticateUser(userName, password);
+                                if (userAccount != null) {
+                                    inEnterprise = enterprise;
+                                    inOrganization = organization;
+                                    inNetwork = network;
+                                    break;
+                                }
+                            }
+
+                        } else {
+                            inNetwork = network;
+                            break;
+                        }
+                        if (inOrganization != null) {
+                            break;
+                        }
+                    }
+                } else {
+                    inEnterprise = enterprise;
+                    break;
+                }
+                
+            }
+        }
         
 
         loginJButton.setEnabled(false);
@@ -188,12 +239,21 @@ public class MainJFrame extends javax.swing.JFrame {
         container.removeAll();
         JPanel blankJP = new JPanel();
         container.add("blank", blankJP);
-        
+        dB4OUtil.storeSystem(system);
     }//GEN-LAST:event_logoutJButtonActionPerformed
 
     private void btnNewUserRegistrationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewUserRegistrationActionPerformed
-      
-        
+
+        NewCustomerRegJPanel newCust = new NewCustomerRegJPanel(this.system, this.container, this);
+        //this.container.add("CusRegistraionJPanel", crp);
+        this.container.add("NewCustomerRegJPanel", newCust);
+        CardLayout layout = (CardLayout) this.container.getLayout();
+        container.remove(this);
+        layout.next(this.container);
+        txtUserName.setEnabled(true);
+        pfPasswd.setEnabled(true);
+        loginJButton.setEnabled(true);
+        logoutJButton.setEnabled(true);
     }//GEN-LAST:event_btnNewUserRegistrationActionPerformed
 
     private void pfPasswdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pfPasswdActionPerformed
@@ -206,13 +266,15 @@ public class MainJFrame extends javax.swing.JFrame {
 
     private void btnNewApplicationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewApplicationActionPerformed
         
-        
-        txtUserName.setEnabled(true);
-        pfPasswd.setEnabled(true);
-        loginJButton.setEnabled(true);
-        logoutJButton.setEnabled(true);
-        logoutJButton.setText("Go back");
-        logoutJButton.setBackground(Color.GRAY);
+        NewHireJPanel newHire = new NewHireJPanel(this.system, this.container, this);
+        this.container.add ("NewHireJPanel", newHire);
+        CardLayout layout = (CardLayout) this.container.getLayout();
+        container.remove(this);
+        layout.next(this.container);
+        txtUserName.setEnabled(false);
+        pfPasswd.setEnabled(false);
+        loginJButton.setEnabled(false);
+        logoutJButton.setEnabled(false);
     }//GEN-LAST:event_btnNewApplicationActionPerformed
 
     /**
