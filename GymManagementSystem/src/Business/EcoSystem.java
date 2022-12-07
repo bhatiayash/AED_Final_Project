@@ -32,6 +32,11 @@ public class EcoSystem extends Organization{
         return business;
     }
     
+    public Network createAndAddNetwork(){
+        Network network=new Network();
+        networkList.add(network);
+        return network;
+    }
     
     @Override
     public ArrayList<Role> getSupportedRole() {
@@ -51,7 +56,24 @@ public class EcoSystem extends Organization{
     public void setNetworkList(ArrayList<Network> networkList) {
         this.networkList = networkList;
     }
-    
+    public boolean checkIfUserIsUnique(String userName){
+        if(!this.getUserAccountDirectory().checkIfUsernameIsUnique(userName)){
+            return false;
+        }
+        for(Network network:networkList){
+            for(Enterprise enterprise : network.getEnterpriseList()){
+                
+                if(enterprise.checkIfUsernameIsUnique(userName))
+                    return false;
+                
+                for(Organization organization : enterprise.getOrganizationDirectory().getOrganizationList())
+                    if(!organization.checkIfUsernameIsUnique(userName))
+                        return false;
+            }
+            
+        }
+        return true;
+    }
   
 }
     
