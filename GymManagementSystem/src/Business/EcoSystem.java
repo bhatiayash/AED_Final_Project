@@ -5,9 +5,12 @@
  */
 package Business;
 
+import Business.Customer.CustomerDirectory;
+import Business.Network.Network;
 import Business.Organization.Organization;
 import Business.Role.Role;
 import Business.Role.SystemAdminRole;
+import java.util.ArrayList;
 import Business.Enterprise.Enterprise;
 import Business.Network.Network;
 import Business.Accounts.UserAccount;
@@ -37,7 +40,6 @@ public class EcoSystem extends Organization{
         networkList.add(network);
         return network;
     }
-    
     @Override
     public ArrayList<Role> getSupportedRole() {
         ArrayList<Role> roleList=new ArrayList<Role>();
@@ -56,18 +58,19 @@ public class EcoSystem extends Organization{
     public void setNetworkList(ArrayList<Network> networkList) {
         this.networkList = networkList;
     }
+    
     public boolean checkIfUserIsUnique(String userName){
         if(!this.getUserAccountDirectory().checkIfUsernameIsUnique(userName)){
             return false;
         }
         for(Network network:networkList){
-            for(Enterprise enterprise : network.getEnterpriseList()){
+            for(Enterprise enterprise : network.getEnterpriseDirectory().getEnterpriseList()){
                 
-                if(enterprise.checkIfUsernameIsUnique(userName))
+                if(!enterprise.getUserAccountDirectory().checkIfUsernameIsUnique(userName))
                     return false;
                 
                 for(Organization organization : enterprise.getOrganizationDirectory().getOrganizationList())
-                    if(!organization.checkIfUsernameIsUnique(userName))
+                    if(!organization.getUserAccountDirectory().checkIfUsernameIsUnique(userName))
                         return false;
             }
             

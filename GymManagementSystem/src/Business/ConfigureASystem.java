@@ -129,22 +129,23 @@ public class ConfigureASystem {
             String l = "";
             try {
                 l = br.readLine(); //read header
+                l = br.readLine();
                 while (l != null) {
                     
                     
                     String[] programData = l.split(",");
-                    Program program = new Program(programData[0], Integer.parseInt(programData [1]);
+                    Program program = new Program(programData[0], Integer.parseInt(programData [1]), programData [2]);
                     program.setRemainSeats(Integer.parseInt(programData[1]));
                     courseList.add(program);
-                    program.setDifficulties(programData[1]);
+                    program.setDifficulties(programData[2]);
                     l = br.readLine();
                 }
             }catch (IOException ex) {
-                Logger.getLogger(ConfigureASystem.class.getName());
+                Logger.getLogger(ConfigureASystem.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         catch (FileNotFoundException ex) {
-            Logger.getLogger(ConfigureASystem.class.getName());
+            Logger.getLogger(ConfigureASystem.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
@@ -196,19 +197,19 @@ public class ConfigureASystem {
                     programRequest.setReceiver(manager);
                     programRequest.setStatus(programRequestData[3]);
                     
-                    programRequest.setSender(cus);
-                    programRequest.setReceiver(manager);
+//                    programRequest.setSender2(cus);
+//                    programRequest.setReceiver2(manager);
                     
                     gymEnterprise.getProgramQueue().getProgramRequestList().add(programRequest);
                     cus.getProgramQueue().getProgramRequestList().add(programRequest);
                     l = br.readLine();
                 }
             }catch (IOException ex) {
-                Logger.getLogger(ConfigureASystem.class.getName();
+                Logger.getLogger(ConfigureASystem.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         catch (FileNotFoundException ex) {
-            Logger.getLogger(ConfigureASystem.class.getName());
+            Logger.getLogger(ConfigureASystem.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
@@ -236,7 +237,7 @@ public class ConfigureASystem {
                     try {
                         date = df.parse(appointmentRequestData[2]);
                     } catch (ParseException ex) {
-                        Logger.getLogger(ConfigureASystem.class.getName();
+                        Logger.getLogger(ConfigureASystem.class.getName()).log(Level.SEVERE, null, ex);
                     }
                     
                     UserAccount cus = null;
@@ -271,7 +272,7 @@ public class ConfigureASystem {
                     appointmentRequest.setReceiver(trainer);
                     appointmentRequest.setStatus(appointmentRequestData[5]);
                     gymEnterprise.getBookingQueue().getAppointmentRequestList().add(appointmentRequest);
-                    cus.getAppointmentQueue().getAppointmentRequestList();
+                    cus.getAppointmentQueue().getAppointmentRequestList().add(appointmentRequest);
                     
                     if(appointmentRequest.getStatus().equals("Cancelled"))
                         gymEnterprise.getBookingQueue().getAppointmentRequestList().remove(appointmentRequest);
@@ -279,13 +280,13 @@ public class ConfigureASystem {
                     l = br.readLine();
                 }
            }catch (IOException ex) {
-                Logger.getLogger(ConfigureASystem.class.getName());
+                Logger.getLogger(ConfigureASystem.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         catch (FileNotFoundException ex) {
-            Logger.getLogger(ConfigureASystem.class.getName();
+            Logger.getLogger(ConfigureASystem.class.getName()).log(Level.SEVERE, null, ex);
         }
-                    
+                   
        }
     
         
@@ -339,11 +340,11 @@ public class ConfigureASystem {
                     line = br.readLine();
                 }
             }catch (IOException ex) {
-                Logger.getLogger(ConfigureASystem.class.getName();
+                Logger.getLogger(ConfigureASystem.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         catch (FileNotFoundException ex) {
-            Logger.getLogger(ConfigureASystem.class.getName();
+            Logger.getLogger(ConfigureASystem.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
