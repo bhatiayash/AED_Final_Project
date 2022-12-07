@@ -47,8 +47,8 @@ public class CheckoutProgramJPanel extends javax.swing.JPanel {
         for (Program course : myCourse.getProgramList()) {
                 Object[] row = new Object[3];
                 row[0] = course.getProgramId();
-                row[1] = course.getDifficulties();
-                row[2] = course;
+                row[1] = course;
+                row[2] = course.getDifficulties();
                 model.addRow(row);
         }
     }
@@ -153,8 +153,8 @@ public class CheckoutProgramJPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
         container.remove(this);
         Component[] componentArray = container.getComponents();
-        Component component = componentArray.length - 1;
-        ReserveProgramJPanel ReserveCourseJPanel = component;
+        Component component = componentArray[componentArray.length - 1];
+        ReserveProgramJPanel ReserveCourseJPanel = (ReserveProgramJPanel) component;
         ReserveCourseJPanel.populateCourse();
         CardLayout layout = (CardLayout) container.getLayout();
         layout.previous(container);
@@ -171,15 +171,15 @@ public class CheckoutProgramJPanel extends javax.swing.JPanel {
                 ProgramRequest programRequest = new ProgramRequest();
                 programRequest.setSender(account);
                 programRequest.setStatus("Pending");
-                programRequest.setProgram(myCourse.get(i));
+                programRequest.setProgram(myCourse.getProgramList().get(i));
                  
                 fitenterprise.getProgramQueue().getProgramRequestList().add(programRequest);
-                account.getProgramQueue().add(programRequest);
+                account.getProgramQueue().getProgramRequestList().add(programRequest);
                 
             }
             
             for (Program c: myCourse.getProgramList()){
-            c.setRemainSeats(c.getRemainSeats());
+            c.setRemainSeats(c.getRemainSeats()-1);
             }
             
             myCourse.setProgramList(new ArrayList<Program> ());
@@ -195,7 +195,7 @@ public class CheckoutProgramJPanel extends javax.swing.JPanel {
         int selectedRow = viewCourseJTable.getSelectedRow();
         if(selectedRow >= 0){
             Program course = (Program)viewCourseJTable.getValueAt(selectedRow, 1);
-            myCourse.getProgramList();
+            myCourse.getProgramList().remove(course);
             populateCourse();
         }
         else{
