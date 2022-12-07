@@ -5,6 +5,12 @@
  */
 package UI.Customer;
 
+import Business.Program.Program;
+import Business.Enterprise.GymEnterprise;
+import Business.Accounts.CustomerAccount;
+import Business.Accounts.UserAccount;
+import Business.WorkQueue.ProgramQueue;
+import Business.WorkQueue.ProgramRequest;
 import java.awt.CardLayout;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -17,14 +23,38 @@ import javax.swing.table.DefaultTableModel;
 public class ProgramViewJPanel extends javax.swing.JPanel {
 
     private JPanel container;
+    private UserAccount account;
+    private GymEnterprise fitenterprise;
     //private Program course;
 
     /**
      * Creates new form CourseViewJPanel
      */
-    public ProgramViewJPanel(JPanel container) {
+    public ProgramViewJPanel(JPanel container, UserAccount account, GymEnterprise fitenterprise) {
         initComponents();
-        
+        this.container = container;
+        this.account = account;
+        this.fitenterprise = fitenterprise;
+        //this.course =course;
+
+        populateRequest();
+
+    }
+    
+    public void populateRequest() {
+        ProgramQueue courseQueue = account.getProgramQueue();
+        DefaultTableModel model = (DefaultTableModel) myCourseJTable.getModel();
+
+        model.setRowCount(0);
+        for (ProgramRequest courseRequest : courseQueue.getProgramRequestList()) {
+            Object[] row = new Object[3];
+            row[0] = courseRequest;
+            row[1] = courseRequest.getStatus();
+            row[2] = courseRequest.getReceiver();
+            
+            model.addRow(row);
+
+        }
     }
 
     /**
@@ -138,17 +168,52 @@ public class ProgramViewJPanel extends javax.swing.JPanel {
 
     private void renewBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_renewBtnActionPerformed
         // TODO add your handling code here:
-        
+        int selectedRow = myCourseJTable.getSelectedRow();
+        if (selectedRow >= 0) {
+            ProgramRequest courseRequest = (ProgramRequest) myCourseJTable.getValueAt(selectedRow, 0);
+            if (!courseRequest.getStatus().equals("Complete")) {
+                JOptionPane.showMessageDialog(null, "This status cannot be changed");
+            } else {
+                courseRequest.setStatus("Renewed");
+                for (Program course2 : fitenterprise.getProgramDirectory().getProgramList()) {
+                    if (courseRequest.getProgram().equals(course2)) {
+                        int remainSeats = course2.getRemainSeats();
+                        course2.setRemainSeats(remainSeats - 1);
+                    }
+                }
+
+                JOptionPane.showMessageDialog(null, "Renew Course Successfully!!");
+                populateRequest();
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Please select a Row!!");
+        }
+        populateRequest();
     }//GEN-LAST:event_renewBtnActionPerformed
 
     private void backBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backBtnActionPerformed
         // TODO add your handling code here:
-      
+      container.remove(this);
+        CardLayout layout = (CardLayout) container.getLayout();
+        layout.previous(container);
     }//GEN-LAST:event_backBtnActionPerformed
 
     private void reviewBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reviewBtnActionPerformed
         // TODO add your handling code here:
-        
+        nt selectedRow = myCourseJTable.getSelectedRow();
+
+        if (selectedRow >= 0) {
+            ProgramRequest courseRequest = (ProgramRequest) myCourseJTable.getValueAt(selectedRow, 0);
+            if (!courseRequest.getStatus().equals("Complete")) {
+                JOptionPane.showMessageDialog(null, "This status cannot be changed");
+                return;
+            }
+            Program course =( (ProgramRequest) myCourseJTable.getValueAt(selectedRow, 0)).getProgram();
+            ReviewProgramJPanel reviewCourseJPanel = new ReviewProgramJPanel(container, account, course, fitenterprise);
+            container.add("reviewCourseJPanel", reviewCourseJPanel);
+            CardLayout layout = (CardLayout) container.getLayout();
+            layout.next(container);
+        }
 
     }//GEN-LAST:event_reviewBtnActionPerformed
 

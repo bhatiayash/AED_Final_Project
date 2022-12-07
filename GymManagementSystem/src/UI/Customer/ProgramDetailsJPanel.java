@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package UI.Customer;
+import Business.Program.Program;
 import javax.swing.JPanel;
 import java.awt.CardLayout;
 
@@ -12,13 +13,21 @@ import java.awt.CardLayout;
  * @author keshni
  */
 public class ProgramDetailsJPanel extends javax.swing.JPanel {
-    
+    private Program course;
+    private JPanel container;
     /**
      * Creates new form CouseDetailJPanel
      */
-    public ProgramDetailsJPanel(JPanel container) {
+    public ProgramDetailsJPanel(JPanel container, Program course) {
         initComponents();
-        
+        this.course = course;
+        this.container = container;
+        coursenameTxt.setText(course.getProgramName());
+        IdTxt.setText(String.valueOf(course.getProgramId()));
+        remainseatsTxt.setText(String.valueOf(course.getRemainSeats()));
+        coursenameTxt.setEditable(false);
+        IdTxt.setEditable(false);
+        remainseatsTxt.setEditable(false);
     }
     
     
@@ -133,7 +142,9 @@ public class ProgramDetailsJPanel extends javax.swing.JPanel {
 
     private void backTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backTxtActionPerformed
         // TODO add your handling code here:
-        
+        container.remove(this);
+        CardLayout layout = (CardLayout) container.getLayout();
+        layout.previous(container);
     }//GEN-LAST:event_backTxtActionPerformed
 
     private void coursenameTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_coursenameTxtActionPerformed
