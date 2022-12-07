@@ -4,7 +4,12 @@
  */
 package UI.Gym.Clerk;
 
-
+import Business.EcoSystem;
+import Business.Enterprise.GymEnterprise;
+import Business.Network.Network;
+import Business.Organization.ClerkOrganization;
+import Business.Organization.TrainerOrganization;
+import Business.Accounts.UserAccount;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -17,14 +22,25 @@ import javax.swing.JPanel;
  */
 public class ClerkWorkAreaJPanel extends javax.swing.JPanel {
     private JPanel container;
+    private UserAccount account;
+    private ClerkOrganization clerkOrganization;
+    private GymEnterprise gymEnterprise;
+    private Network network;
+    private EcoSystem ecoSystem;
     private DateFormat df2;
     /**
      * Creates new form ClerkWorkAreaJPanel
      */
-    public ClerkWorkAreaJPanel()
+    public ClerkWorkAreaJPanel(JPanel container, UserAccount account, ClerkOrganization clerkOrganization, 
+            GymEnterprise gymEnterprise, Network network, EcoSystem ecoSystem)
     {
-        initComponents();
+       initComponents();
         this.container = container;
+        this.account= account;
+        this.clerkOrganization = clerkOrganization;
+        this.gymEnterprise = (GymEnterprise)gymEnterprise;
+        this.ecoSystem = ecoSystem;
+        this.network = network;
         df2 = new SimpleDateFormat("YYYY/MM/DD");
         
         populateComboBox();
@@ -33,6 +49,16 @@ public class ClerkWorkAreaJPanel extends javax.swing.JPanel {
     public void populateComboBox() {
         
         cbxClnDateSel.removeAll();
+        
+        for(Date date : gymEnterprise.getAppointmentTime().getDateList()){
+            cbxClnDateSel.addItem(df2.format(date));
+        }
+        
+        cbxTimeSlot.removeAll();
+        
+        for(String cleanSession : gymEnterprise.getAppointmentTime().getSessionList()){
+            cbxTimeSlot.addItem(cleanSession);
+        }
        
     }
     /**
@@ -146,7 +172,8 @@ public class ClerkWorkAreaJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_cbxClnDateSelKeyPressed
 
     private void btnConfirmCleanSessionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmCleanSessionActionPerformed
-        
+           JOptionPane.showMessageDialog(null,"Cleaning Session successfully booked");
+
        
         
     }//GEN-LAST:event_btnConfirmCleanSessionActionPerformed
