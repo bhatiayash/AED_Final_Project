@@ -4,7 +4,13 @@
  */
 package UI.Admin;
 
-
+import Business.EcoSystem;
+import Business.Employee.Employee;
+import Business.Enterprise.Enterprise;
+import Business.Organization.Organization;
+import Business.Person.Person;
+import Business.Role.Role;
+import Business.Accounts.UserAccount;
 import java.awt.CardLayout;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -12,34 +18,64 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author akash
+ * @author yashbhatia
  */
 public class ManageUserAccountJPanel extends javax.swing.JPanel {
 
     /**
      * Creates new form ManageUserAccountJPanel
      */
+    private JPanel container;
+    private Enterprise enterprise;
+    private EcoSystem ecoSystem;
 
-    public ManageUserAccountJPanel() {
+    public ManageUserAccountJPanel(JPanel container, Enterprise enterprise) {
         initComponents();
-        
+        this.enterprise = enterprise;
+        this.container = container;
+
+        popOrganizationComboBox();
+       // employeeJComboBox.removeAllItems();
+        popData();
     }
 
     public void popOrganizationComboBox() {
-        
+        organizationJComboBox.removeAllItems();
+
+        for (Organization organization : enterprise.getOrganizationDirectory().getOrganizationList()) {
+            organizationJComboBox.addItem(organization);
+        }
     }
     
-    public void populateUserComboBox(){
+    public void populateUserComboBox(Organization organization){
+        userJComboBox.removeAllItems();
         
+        for (Person person : organization.getPersonDirectory().getPersonList()){
+            userJComboBox.addItem(person);
+        }
     }
     
-    private void populateRoleComboBox(){
-        
+    private void populateRoleComboBox(Organization organization){
+        roleJComboBox.removeAllItems();
+        for (Role role : organization.getSupportedRole()){
+            roleJComboBox.addItem(role);
+        }
     }
 
     public void popData() {
 
-        
+        DefaultTableModel model = (DefaultTableModel) userJTable.getModel();
+
+        model.setRowCount(0);
+
+        for (Organization organization : enterprise.getOrganizationDirectory().getOrganizationList()) {
+            for (UserAccount ua : organization.getUserAccountDirectory().getUserAccountList()) {
+                Object row[] = new Object[2];
+                row[0] = ua;
+                row[1] = ua.getRole();
+                ((DefaultTableModel) userJTable.getModel()).addRow(row);
+            }
+        }
     }
 
     /**
@@ -209,16 +245,38 @@ public class ManageUserAccountJPanel extends javax.swing.JPanel {
     private void createUserJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createUserJButtonActionPerformed
         String userName = nameJTextField.getText();
         String password = passwordJTextField.getText();
-    
+        if(!ecoSystem.checkIfUserIsUnique(userName)){
+            JOptionPane.showMessageDialog(null, "Username already exist");
+        }
+        else if(password.equals("")){
+            JOptionPane.showMessageDialog(null, "Password cannot be empty");
+        }
+        else
+        {
+        Organization organization = (Organization) organizationJComboBox.getSelectedItem();
+        //Employee employee = (Employee) employeeJComboBox.getSelectedItem();
+        Person person = (Person) userJComboBox.getSelectedItem();
+        Role role = (Role) roleJComboBox.getSelectedItem();
+        
+        organization.getUserAccountDirectory().createUserAccount(userName, password, person, role);
+        
+        popData();
+        }
     }//GEN-LAST:event_createUserJButtonActionPerformed
 
     private void backjButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backjButton1ActionPerformed
         // TODO add your handling code here:
-        
+        container.remove(this);
+        CardLayout layout = (CardLayout) container.getLayout();
+        layout.previous(container);
     }//GEN-LAST:event_backjButton1ActionPerformed
 
     private void organizationJComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_organizationJComboBoxActionPerformed
-        
+        Organization organization = (Organization) organizationJComboBox.getSelectedItem();
+        if (organization != null){
+            populateUserComboBox(organization);
+            populateRoleComboBox(organization);
+        }
     }//GEN-LAST:event_organizationJComboBoxActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
