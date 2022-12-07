@@ -5,20 +5,49 @@
  */
 package UI.Gym.Analyst;
 
-
+import Business.Program.Program;
+import Business.Enterprise.GymEnterprise;
+import Business.Enterprise.SalesEnterprise;
+import Business.Organization.Organization;
+import Business.Sales.Sales;
+import Business.Accounts.UserAccount;
+import Business.WorkQueue.BookingRequest;
+import Business.WorkQueue.ProgramRequest;
+import Business.WorkQueue.SalesQueue;
+import Business.WorkQueue.SalesRequest;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Window;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Map;
 import javax.swing.JPanel;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartFrame;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.CategoryPlot;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.renderer.category.BarRenderer;
+import org.jfree.chart.renderer.category.StandardBarPainter;
+import org.jfree.data.category.DefaultCategoryDataset;
+
+
+
+
 
 
 /**
  *
- * @author keshni
+ * @author akash
  */
 public class AnalysisJPanel extends javax.swing.JPanel {
-
+    
     //private GymEnterprise fitenterprise;
+    private GymEnterprise gymEnterprise;
+    private JPanel container;
+    private SalesEnterprise salesenterprise;
     
    
 
@@ -27,6 +56,9 @@ public class AnalysisJPanel extends javax.swing.JPanel {
      */
     public AnalysisJPanel() {
         initComponents();
+         this.container = container;
+        this.gymEnterprise = gymEnterprise;
+        this.salesenterprise = salesenterprise;
        
     }
 
@@ -150,17 +182,148 @@ public class AnalysisJPanel extends javax.swing.JPanel {
 
     private void btnMostEnrolledProgramsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMostEnrolledProgramsActionPerformed
         // TODO add your handling code here:
+           // TODO add your handling code here:
+     HashMap<String, Integer> courseRank = new HashMap();
+
+        for (Program course : gymEnterprise.getProgramDirectory().getProgramList()) {
+            courseRank.put(course.getProgramName(), 0);
+        }
+
+        for (ProgramRequest courseRequest : gymEnterprise.getProgramQueue().getProgramRequestList()) {
+            Program course = courseRequest.getProgram();
+            int count = 0;
+            if (courseRank.containsKey(course.getProgramName())) {
+                count = courseRank.get(course.getProgramName());
+                count++;
+                courseRank.put(course.getProgramName(), count);
+
+            }
+        }
+             ArrayList<Map.Entry<String, Integer>> rankList = new ArrayList(courseRank.entrySet());
+
+        Collections.sort(rankList, new Comparator<Map.Entry<String, Integer>>() {
+
+            @Override
+            public int compare(Map.Entry<String, Integer> o1, Map.Entry<String, Integer> o2) {
+                return -o1.getValue() + o2.getValue();
+            }
+        });
+
+        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+        for (int i = 0; i < 5; i++) {
+            dataset.setValue(rankList.get(i).getValue(), "a", rankList.get(i).getKey());
+        }
+        JFreeChart chart = ChartFactory.createBarChart("Program chosen", "Program Name", "No. of people who chose", dataset, PlotOrientation.VERTICAL, false, true, false);
+        CategoryPlot p = chart.getCategoryPlot();
+        BarRenderer renderer = (BarRenderer) p.getRenderer();
+        renderer.setSeriesPaint(0, new Color(0, 128, 128));
+        p.setRangeGridlinePaint(Color.black);
+        ChartFrame chartFrame = new ChartFrame("Most popular courses", chart);
+        chartFrame.setVisible(true);
+        chartFrame.setSize(700, 500);
+        chart.getTitle().setPaint(new Color(0, 128, 128));
      
     }//GEN-LAST:event_btnMostEnrolledProgramsActionPerformed
 
     private void btnMostActiveCustomersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMostActiveCustomersActionPerformed
         // TODO add your handling code here:
+         // TODO add your handling code here:
+
+        HashMap<String, Integer> trainerRank = new HashMap();
+
+        for (Organization organization : gymEnterprise.getOrganizationDirectory().getOrganizationList()) {
+            if (organization.getName().equals("Trainer Organization")) {
+                for (UserAccount ua : organization.getUserAccountDirectory().getUserAccountList()) {
+                    trainerRank.put(ua.getPerson().getName(), 0);
+                }
+            }
+        }
+        
+        for (BookingRequest appRequest : gymEnterprise.getBookingQueue().getAppointmentRequestList()) {
+            int count = 0;
+            if (trainerRank.containsKey(appRequest.getSender().getPerson().getName())) {
+                count = trainerRank.get(appRequest.getSender().getPerson().getName());
+            }
+            count++;
+            trainerRank.put(appRequest.getSender().getPerson().getName(), count);
+        }
+        System.out.println(trainerRank);
+        
+        ArrayList<Map.Entry<String, Integer>> rankList = new ArrayList(trainerRank.entrySet());
+
+        Collections.sort(rankList, new Comparator<Map.Entry<String, Integer>>() {
+
+            @Override
+            public int compare(Map.Entry<String, Integer> en1, Map.Entry<String, Integer> en2) {
+                return -en1.getValue() + en2.getValue();
+            }
+        });
+
+        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+        for (int i = 0; i < 5; i++) {
+            dataset.setValue(rankList.get(i).getValue(), "a", rankList.get(i).getKey());
+        }
+        JFreeChart chart = ChartFactory.createBarChart("Most active customers", "Customer", "Number", dataset, PlotOrientation.VERTICAL, false, true, false);
+        CategoryPlot p = chart.getCategoryPlot();
+        BarRenderer renderer = (BarRenderer) p.getRenderer();
+        renderer.setSeriesPaint(0, new Color(0, 128, 128));
+        ChartFrame chartFrame = new ChartFrame("Most Active Customer", chart);
+        chartFrame.setVisible(true);
+        chartFrame.setSize(700, 500);
+        chartFrame.setBackground(Color.white);
 
      
     }//GEN-LAST:event_btnMostActiveCustomersActionPerformed
 
     private void btnMostSoldProductsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMostSoldProductsActionPerformed
         // TODO add your handling code here:
+          // TODO add your handling code here:
+        HashMap<String, Integer> productRank = new HashMap();
+        SalesQueue salesQueue = new SalesQueue();
+
+        for (Organization organization : gymEnterprise.getOrganizationDirectory().getOrganizationList()) 
+            
+            if (organization.getName().equals("Customer Organization")) 
+                for (UserAccount us : organization.getUserAccountDirectory().getUserAccountList()) 
+                    for (SalesRequest salesRequest : us.getSalesQueue().getOnlinesalesRequestList()) 
+                        salesQueue.getOnlinesalesRequestList().add(salesRequest);
+
+        for (SalesRequest salesRequest : salesQueue.getOnlinesalesRequestList()) 
+            for (Sales product : salesRequest.getProductOrder().keySet()){
+                
+                int ct = 0;
+                if (productRank.containsKey(product.getProductID()))
+                { 
+                    ct = productRank.get(product.getProductName());
+                }
+                ct = ct + salesRequest.getProductOrder().get(product);
+                productRank.put(product.getProductName(), ct);
+        }
+            
+        ArrayList<Map.Entry<String, Integer>> rankList = new ArrayList(productRank.entrySet());
+
+        Collections.sort(rankList, new Comparator<Map.Entry<String, Integer>>() {
+
+            @Override
+            public int compare(Map.Entry<String, Integer> en1, Map.Entry<String, Integer> en2) {
+                return -en1.getValue() + en2.getValue();
+            }
+        });
+
+        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+        for (int i = 0; i < 5; i++) {
+            dataset.setValue(rankList.get(i).getValue(), "a", rankList.get(i).getKey());
+        }
+        JFreeChart chart = ChartFactory.createBarChart("No. of products per order", "Product", "Amount", dataset, PlotOrientation.VERTICAL, false, true, false);
+        
+        CategoryPlot p = chart.getCategoryPlot();
+        BarRenderer renderer = (BarRenderer) p.getRenderer();
+        renderer.setSeriesPaint(0, new Color(0, 128, 128));
+        p.setRangeGridlinePaint(Color.black);
+        
+        ChartFrame chartFrame = new ChartFrame("Most sold products", chart);
+        chartFrame.setVisible(true);
+        chartFrame.setSize(700, 500);
         
     }//GEN-LAST:event_btnMostSoldProductsActionPerformed
 
