@@ -314,33 +314,7 @@ public class NewCustomerRegJPanel extends javax.swing.JPanel {
         txtPhoneNum.setEnabled(false);
         emailTxt.setEnabled(false);
         frame.setActivate();
-        String username = userNameTxt.getText();
-        char[] passwordCharArray1 = PassField.getPassword();
-        String pass1 = String.valueOf(passwordCharArray1);
-        char[] passwordCharArray2 = CPassField.getPassword();
-        String pass2 = String.valueOf(passwordCharArray2);
-
-        if (system.checkIfUserIsUnique(username)) {
-            if (pass1.equals(pass2)) {
-                //this.frame.setSize(500, 430);
-                NewCustomerRegJPanel cp = new NewCustomerRegJPanel(this.system, this.crpJPanel);
-                this.crpJPanel.add("NewCustomerRegJPanel", cp);
-                CardLayout layout = (CardLayout) this.crpJPanel.getLayout();
-                crpJPanel.remove(this);
-                layout.next(this.crpJPanel);
-            } else {
-                JOptionPane.showMessageDialog(null, "Passwords don't match!");
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, "Username already exists!");
-        }
         
-        this.frame.dispose();
-        MainJFrame mf = new MainJFrame();
-        this.frame.dispose();
-        mf.setVisible(true);
-        mf.setLocationRelativeTo(null);
-
     }                                            
     private Boolean checkEmailPattern(){
         String validName = "^[A-Z0-9a-z]+\\w*@[A-Z0-9a-z]+(\\.[A-Z0-9a-z]+)*$";
@@ -370,7 +344,12 @@ private boolean phonePattern(){
    
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
 
-
+        CancelJPanel cp = new CancelJPanel(this.system, this.crpJPanel);
+        this.crpJPanel.add("CancelJPanel", cp);
+        CardLayout layout = (CardLayout) this.crpJPanel.getLayout();
+        crpJPanel.remove(this.crpJPanel);
+        layout.next(crpJPanel);
+        frame.setActivate();
     }//GEN-LAST:event_cancelButtonActionPerformed
 
     private void userNameTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userNameTxtActionPerformed
