@@ -3,6 +3,7 @@
  * and open the template in the editor.
  */
 package UI.Admin;
+
 import Business.Employee.Employee;
 import Business.Organization.Organization;
 import Business.Organization.OrganizationDirectory;
@@ -32,13 +33,11 @@ public class ManageEmployeeJPanel extends javax.swing.JPanel {
     }
     
     public void populateOrganizationComboBox(){
-         organizationJComboBox.removeAllItems();
-         f
+           organizationJComboBox.removeAllItems();
+        
+        for (Organization organization : organizationDir.getOrganizationList()){
             organizationJComboBox.addItem(organization);
-            this.userProcessContainer = userProcessContainer;
-        this.organizationDir = organizationDir;
-        populateOrganizationComboBox();
-        populateOrganizationEmpComboBox();
+        }
         
     }
     
@@ -51,7 +50,7 @@ public class ManageEmployeeJPanel extends javax.swing.JPanel {
         
     }
 
-    private void populateTable(){
+    private void populateTable(Organization organization){
            DefaultTableModel model = (DefaultTableModel) organizationJTable.getModel();
         
         model.setRowCount(0);
