@@ -6,6 +6,15 @@
 
 package UI.Customer;
 
+import Business.Program.ProgramDirectory;
+import Business.EcoSystem;
+import Business.Enterprise.Enterprise;
+import Business.Enterprise.GymEnterprise;
+import Business.Enterprise.SalesEnterprise;
+import Business.Network.Network;
+import Business.Organization.CustomerOrganization;
+import Business.Sales.Sales;
+import Business.Accounts.UserAccount;
 import java.awt.CardLayout;
 import java.util.HashMap;
 import javax.swing.JPanel;
@@ -16,10 +25,21 @@ import javax.swing.JPanel;
  */
 public class CustomerWorkAreaJPanel extends javax.swing.JPanel {
     private JPanel container;
+    private UserAccount account;
+    private Network network;
+    private ProgramDirectory myCourse;
+    private EcoSystem ecoSystem;
+    private HashMap<Sales, Integer> cart;
 
     /** Creates new form CustomerAreaJPanel */
-    public CustomerWorkAreaJPanel(JPanel container) {
+    public CustomerWorkAreaJPanel(JPanel container, UserAccount account, CustomerOrganization organization,
+            Enterprise enterprise, Network network, EcoSystem ecoSystem) {
         this.container = container;
+        this.account = account;
+        this.ecoSystem = ecoSystem;
+        this.network = network;
+        myCourse = new ProgramDirectory();
+        this.cart = new HashMap();
         initComponents();
     }
 
@@ -231,26 +251,58 @@ public class CustomerWorkAreaJPanel extends javax.swing.JPanel {
 
     private void btnCheckHistoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCheckHistoryActionPerformed
         // TODO add your handling code here:
+        for(Enterprise ent : network.getEnterpriseDirectory().getEnterpriseList()){
+            if(ent instanceof SalesEnterprise){
+        OrderItemJPanel orderItemJPanel = new OrderItemJPanel(container, account, cart, (SalesEnterprise) ent);
+        container.add("orderItemJPanel", orderItemJPanel);
+        CardLayout layout = (CardLayout) container.getLayout();
+        layout.next(container);
+            }
+        }
     }//GEN-LAST:event_btnCheckHistoryActionPerformed
 
     private void BtnOrderOnlineActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnOrderOnlineActionPerformed
         // TODO add your handling code here:
-        
+        for(Enterprise ent : network.getEnterpriseDirectory().getEnterpriseList()){
+            if(ent instanceof GymEnterprise){
+        ProgramViewJPanel courseHistoryViewJPanel = new ProgramViewJPanel(container, account, (GymEnterprise) ent);
+        container.add("courseHistoryViewJPanel", courseHistoryViewJPanel);
+        CardLayout layout = (CardLayout) container.getLayout();
+        layout.next(container);
+            }
+        }
     }//GEN-LAST:event_BtnOrderOnlineActionPerformed
 
     private void BtnViewOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnViewOrderActionPerformed
         // TODO add your handling code here:
-        
+        ViewPastOrdersJPanel viewOrderJPanel = new ViewPastOrdersJPanel(container, account);
+        container.add("viewOrderJPanel", viewOrderJPanel);
+        CardLayout layout = (CardLayout) container.getLayout();
+        layout.next(container);
     }//GEN-LAST:event_BtnViewOrderActionPerformed
 
     private void btnReserveCourseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReserveCourseActionPerformed
         // TODO add your handling code here:
-        
+        for(Enterprise ent : network.getEnterpriseDirectory().getEnterpriseList()){
+            if(ent instanceof GymEnterprise){
+        ReserveProgramJPanel reverseClassJPanel = new ReserveProgramJPanel(container, account, myCourse, (GymEnterprise) ent);
+        container.add("reverseClassJPanel", reverseClassJPanel);
+        CardLayout layout = (CardLayout) container.getLayout();
+        layout.next(container);
+            }
+        }
     }//GEN-LAST:event_btnReserveCourseActionPerformed
 
     private void btnRequestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRequestActionPerformed
         // TODO add your handling code here:
-        
+        for(Enterprise ent : network.getEnterpriseDirectory().getEnterpriseList()){
+            if(ent instanceof GymEnterprise){
+                RequestTrainerJPanel makeRequestJPanel = new RequestTrainerJPanel(container, account, (GymEnterprise) ent);
+                container.add("makeRequestJPanel", makeRequestJPanel);
+                CardLayout layout = (CardLayout) container.getLayout();
+                layout.next(container);
+            }
+        }
     }//GEN-LAST:event_btnRequestActionPerformed
 
 

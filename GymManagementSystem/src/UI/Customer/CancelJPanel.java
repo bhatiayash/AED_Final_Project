@@ -5,20 +5,23 @@
  */
 package UI.Customer;
 
+import Business.EcoSystem;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 /**
  *
- * @author keshnu
+ * @author keshni
  */
 public class CancelJPanel extends javax.swing.JPanel {
+    private EcoSystem system;
     private JPanel container;
     //private JFrame frame;
     /**
      * Creates new form CancelJPanel
      */
-    public CancelJPanel(JPanel container) {
+    public CancelJPanel(EcoSystem system, JPanel container) {
+        this.system = system;
         this.container = container;
         initComponents();
     }

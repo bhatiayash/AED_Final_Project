@@ -5,10 +5,20 @@
  */
 package UI.Customer;
 
+import Business.DB4OUtil.DB4OUtil;
+import Business.EcoSystem;
+import Business.Customer.Customer;
+import Business.Enterprise.Enterprise;
+import Business.Network.Network;
+import Business.Organization.Organization;
+import Business.Person.Person;
+import Business.Accounts.UserAccount;
 import java.awt.CardLayout;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import UI.MainJFrame;
+import UI.Customer.NewCustomerRegJPanel;
+import Business.Role.CustomerRole;
 import java.awt.Color;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -23,14 +33,22 @@ public class NewCustomerRegJPanel extends javax.swing.JPanel {
     private JPanel crpJPanel;
     private String username;
     private String password;
+    private EcoSystem system;
+    private Network network;
     private MainJFrame frame;
 
     /**
      * Creates new form CusRegistrationJPanel
      */
-    public NewCustomerRegJPanel(MainJFrame frame) {
+    public NewCustomerRegJPanel(EcoSystem system, JPanel crpJPanel, MainJFrame frame) {
         initComponents();
-        
+        this.system = system;
+        this.crpJPanel = crpJPanel;
+        this.frame = frame;
+        NetworkCMB.removeAllItems();
+        for (Network network : system.getNetworkList()) {
+            NetworkCMB.addItem(network);
+        }
     }
 
     /**
@@ -183,7 +201,171 @@ public class NewCustomerRegJPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
+        if (userNameTxt.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "User name can't be empty!");
+            return;
+        }
+        if (PassField.getPassword().equals("")) {
+            JOptionPane.showMessageDialog(null, "Password can't be empty!");
+            return;
+        }
+        if (CPassField.getPassword().equals("")) {
+            JOptionPane.showMessageDialog(null, "Confirm Password can't be empty!");
+            return;
+        }
+
+        if (firstNameTxt.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "First name can't be empty!");
+            return;
+        }
+        if (lastNameTxt.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Last name can't be empty!");
+            return;
+        }
+        if (txtPhoneNum.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Phone number can't be empty!");
+            return;
+        }
+        if (emailTxt.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Email can't be empty!");
+            return;
+        }
+        if(!checkEmailPattern()){
+            JOptionPane.showMessageDialog(null, "Email must follow the format");
+            return;
+        }
+        if(!passwordPatternCorrect()){
+            JOptionPane.showMessageDialog(null, "Password must follow the format");
+            return;
+        }
+        if(!PassField.getText().equals(CPassField.getText())){
+            JOptionPane.showMessageDialog(null, "The password does not match");
+            return;
+        }
+        if(!phonePattern()){
+            JOptionPane.showMessageDialog(null, "Please follow the phone number format");
+            return;
+        }
+
+        username = userNameTxt.getText();
+        password = CPassField.getText();
+
+        UserAccount userAccount = system.getUserAccountDirectory().authenticateUser(username, password);
+
+        if (userAccount == null) {
+            for (Network network : system.getNetworkList()) {
+                userAccount = network.getUserAccountDirectory().authenticateUser(username, password);
+                if (userAccount == null) {
+                    for (Enterprise enterprise : network.getEnterpriseDirectory().getEnterpriseList()) {
+                        userAccount = enterprise.getUserAccountDirectory().authenticateUser(username, password);
+                        if (userAccount == null) {
+                            for (Organization organization : enterprise.getOrganizationDirectory().getOrganizationList()) {
+                                userAccount = organization.getUserAccountDirectory().authenticateUser(username, password);
+                                if (userAccount != null) {
+                                    JOptionPane.showMessageDialog(null, "Account already exist!");
+                                    userNameTxt.setText("");
+                                    PassField.setText("");
+                                    CPassField.setText("");
+//                                firstNameTxt.setText("");
+//                                lastNameTxt.setText("");
+                                    return;
+                                }
+                            }
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Account already exist!");
+                            userNameTxt.setText("");
+                            PassField.setText("");
+                            CPassField.setText("");
+                            return;
+
+                        }
+                        //UserAccount userAccount = system.getUserAccountDirectory().authenticateUser(username, password);
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Account already exist!");
+                    userNameTxt.setText("");
+                    PassField.setText("");
+                    CPassField.setText("");
+                    return;
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Account already exist!");
+            userNameTxt.setText("");
+            PassField.setText("");
+            CPassField.setText("");
+            return;
+
+        }
+
+        Customer customer = new Customer(firstNameTxt.getText(), lastNameTxt.getText(),
+                emailTxt.getText(), txtPhoneNum.getText());
+        this.network = (Network) NetworkCMB.getSelectedItem();
+        UserAccount ua = network.getUserAccountDirectory().createUserAccount(userNameTxt.getText(), CPassField.getText(), customer, new CustomerRole());
+
+        //DB4OUtil.getInstance().storeSystem(system);
+        JOptionPane.showMessageDialog(null, "Create Account Successfully");
+        userNameTxt.setEnabled(false);
+        PassField.setEnabled(false);
+        CPassField.setEnabled(false);
+        firstNameTxt.setEnabled(false);
+        lastNameTxt.setEnabled(false);
+        addressTxt.setEnabled(false);
+        txtPhoneNum.setEnabled(false);
+        emailTxt.setEnabled(false);
+        frame.setActivate();
+        String username = userNameTxt.getText();
+        char[] passwordCharArray1 = PassField.getPassword();
+        String pass1 = String.valueOf(passwordCharArray1);
+        char[] passwordCharArray2 = CPassField.getPassword();
+        String pass2 = String.valueOf(passwordCharArray2);
+
+        if (system.checkIfUserIsUnique(username)) {
+            if (pass1.equals(pass2)) {
+                //this.frame.setSize(500, 430);
+                NewCustomerRegJPanel cp = new NewCustomerRegJPanel(this.system, this.crpJPanel);
+                this.crpJPanel.add("NewCustomerRegJPanel", cp);
+                CardLayout layout = (CardLayout) this.crpJPanel.getLayout();
+                crpJPanel.remove(this);
+                layout.next(this.crpJPanel);
+            } else {
+                JOptionPane.showMessageDialog(null, "Passwords don't match!");
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Username already exists!");
+        }
         
+        this.frame.dispose();
+        MainJFrame mf = new MainJFrame();
+        this.frame.dispose();
+        mf.setVisible(true);
+        mf.setLocationRelativeTo(null);
+
+    }                                            
+    private Boolean checkEmailPattern(){
+        String validName = "^[A-Z0-9a-z]+\\w*@[A-Z0-9a-z]+(\\.[A-Z0-9a-z]+)*$";
+        Pattern p = Pattern.compile(validName);
+        Matcher m = p.matcher(emailTxt.getText());
+        boolean b = m.matches();
+        
+        return b;
+    }
+
+private boolean passwordPatternCorrect(){
+        Pattern p = Pattern.compile("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,}$");  //must be of 6 characters, 1 LC, 1 UC, 1 spec., 1 num.
+//                "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[$*#&])[A-Za-z\\d$*#&]{6,}$]"
+        Matcher m = p.matcher(PassField.getText());
+        boolean b = m.matches();
+        
+        return b;
+    }
+private boolean phonePattern(){
+        Pattern p = Pattern.compile("^(\\+?1)?[2-9]\\d{2}[2-9](?!11)\\d{6}$");        // must start from +1, then 10 digits
+                //"^(\\+?1)?[2-9]\\d{2}[2-9](?!11)\\d{6}$"
+        Matcher m = p.matcher(txtPhoneNum.getText());
+        boolean b = m.matches();
+        
+        return b;
     }//GEN-LAST:event_submitButtonActionPerformed
    
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
@@ -210,7 +392,27 @@ public class NewCustomerRegJPanel extends javax.swing.JPanel {
 
     private void txtPhoneNumKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPhoneNumKeyPressed
         // TODO add your handling code here:
+        int code = evt.getKeyCode();
         
+        char c = evt.getKeyChar();
+        
+        if (Character.isLetter(c)) {                                                                                        // If user enters an input which is not number 
+            
+            txtPhoneNum.setEditable(false);
+            
+            txtPhoneNum.setBackground(Color.red);
+            
+            lblPhoneNumMesg.setText( " Please enter digits only");
+        }
+        
+        else {
+            
+            txtPhoneNum.setEditable(true);
+            
+            txtPhoneNum.setBackground(Color.WHITE);
+            
+            lblPhoneNumMesg.setText( " ");
+        }
     }//GEN-LAST:event_txtPhoneNumKeyPressed
 
 

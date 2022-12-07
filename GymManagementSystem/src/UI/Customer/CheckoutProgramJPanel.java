@@ -5,7 +5,11 @@
  */
 package UI.Customer;
 
-
+import Business.Program.Program;
+import Business.Program.ProgramDirectory;
+import Business.Enterprise.GymEnterprise;
+import Business.Accounts.UserAccount;
+import Business.WorkQueue.ProgramRequest;
 import java.awt.CardLayout;
 import java.awt.Component;
 import java.util.ArrayList;
@@ -15,21 +19,38 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author kesni
+ * @author keshni
  */
 public class CheckoutProgramJPanel extends javax.swing.JPanel {
     private JPanel container;
+    private UserAccount account;
+    private GymEnterprise fitenterprise;
+    private ProgramDirectory myCourse;
+    private Program course;
    
  
-    CheckoutProgramJPanel(JPanel container) {
+    CheckoutProgramJPanel(JPanel container, UserAccount account, ProgramDirectory myCourse, GymEnterprise fitenterprise) {
         initComponents();
         this.container = container;
+        this.account = account;
+        this.fitenterprise = fitenterprise;
+        this.myCourse = myCourse;
+        populateCourse();
     }
     /**
      * Creates new form CheckoutProgramJPanel
      */
     public void populateCourse(){
+        DefaultTableModel model = (DefaultTableModel) viewCourseJTable.getModel();
         
+        model.setRowCount(0);
+        for (Program course : myCourse.getProgramList()) {
+                Object[] row = new Object[3];
+                row[0] = course.getProgramId();
+                row[1] = course.getDifficulties();
+                row[2] = course;
+                model.addRow(row);
+        }
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -130,19 +151,56 @@ public class CheckoutProgramJPanel extends javax.swing.JPanel {
 
     private void backjButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backjButtonActionPerformed
         // TODO add your handling code here:
-        
+        container.remove(this);
+        Component[] componentArray = container.getComponents();
+        Component component = componentArray.length - 1;
+        ReserveProgramJPanel ReserveCourseJPanel = component;
+        ReserveCourseJPanel.populateCourse();
+        CardLayout layout = (CardLayout) container.getLayout();
+        layout.previous(container);
     }//GEN-LAST:event_backjButtonActionPerformed
 
     private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
         // TODO add your handling code here:
-        
+        DefaultTableModel model = (DefaultTableModel) viewCourseJTable.getModel();
+        int n = model.getRowCount();
+        if(model.getRowCount() == 0)
+        JOptionPane.showMessageDialog(null, "No Gym program selected yet!");
+        else{
+            for (int i = 0; i < n; i ++) {
+                ProgramRequest programRequest = new ProgramRequest();
+                programRequest.setSender(account);
+                programRequest.setStatus("Pending");
+                programRequest.setProgram(myCourse.get(i));
+                 
+                fitenterprise.getProgramQueue().getProgramRequestList().add(programRequest);
+                account.getProgramQueue().add(programRequest);
+                
+            }
+            
+            for (Program c: myCourse.getProgramList()){
+            c.setRemainSeats(c.getRemainSeats());
+            }
+            
+            myCourse.setProgramList(new ArrayList<Program> ());
+            myCourse = new ProgramDirectory();
+            JOptionPane.showMessageDialog(null, "The program you chose has been submitted!!");
+            populateCourse();
             
         }
     }//GEN-LAST:event_submitButtonActionPerformed
 
     private void removeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeButtonActionPerformed
         // TODO add your handling code here:
-        
+        int selectedRow = viewCourseJTable.getSelectedRow();
+        if(selectedRow >= 0){
+            Program course = (Program)viewCourseJTable.getValueAt(selectedRow, 1);
+            myCourse.getProgramList();
+            populateCourse();
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "Please select a Row!!");
+        }
     }//GEN-LAST:event_removeButtonActionPerformed
 
 
