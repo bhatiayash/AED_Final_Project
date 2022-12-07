@@ -5,6 +5,12 @@
  */
 package UI.Customer;
 
+import Business.Enterprise.Enterprise;
+import Business.Enterprise.SalesEnterprise;
+import Business.Network.Network;
+import Business.Sales.Sales;
+import Business.Accounts.UserAccount;
+import Business.WorkQueue.SalesRequest;
 import java.awt.CardLayout;
 import java.util.HashMap;
 import java.util.Map;
@@ -18,20 +24,65 @@ import javax.swing.table.DefaultTableModel;
  */
 public class OrderItemJPanel extends javax.swing.JPanel {
     private JPanel container;
+    private UserAccount account;
+    //private Network network;
+    private SalesRequest onlinesalesRequest;
+    private HashMap<Sales, Integer> cart;
+    private SalesEnterprise salesEnterprise;
    
     /**
      * Creates new form OrderItemJPanel
      */
-    public OrderItemJPanel(JPanel container) {
+    public OrderItemJPanel(JPanel container, UserAccount account, HashMap<Sales, Integer> cart, 
+            SalesEnterprise salesEnterprise) {
         initComponents();
         this.container = container;
-       
+        this.account = account;
+        //this.network = network;
+        
+        this.cart = cart;
+        this.salesEnterprise = salesEnterprise;
+        
+
+        cbxQty.removeAll();
+        
+        for (int i = 1; i < 11; i++){
+            cbxQty.addItem(i);
         }
         
-}
+        populateItem();
+        populateCart();
+    }
+    public void populateItem() {
+        DefaultTableModel model = (DefaultTableModel) tblProductsMenu.getModel();
+        model.setRowCount(0);
+        for(Sales product : salesEnterprise.getSalesDirectory().getSalesList()){
+            Object[] row = new Object[2];
+            row[0] = product;
+            row[1] = product.getPrice();
+            model.addRow(row);
+        }
+        
+    }
     
-    
-
+    public void populateCart() {
+        DefaultTableModel model = (DefaultTableModel) tblCart.getModel();
+        model.setRowCount(0);
+        double amount = 0;
+        
+        for(Sales product : cart.keySet()){
+            Object[] row = new Object[4];
+            row[0] = product;
+            row[1] = product.getPrice();
+            row[2] = cart.get(product);
+            row[3] = product.getPrice() * cart.get(product);
+            
+            amount = amount + product.getPrice() * cart.get(product);
+            model.addRow(row);
+            
+        }
+        priceLabel.setText("Grand Total: " + amount);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -251,20 +302,70 @@ public class OrderItemJPanel extends javax.swing.JPanel {
 
     private void addBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBtnActionPerformed
         // TODO add your handling code here:
-        
+        int selectedRow = tblProductsMenu.getSelectedRow();
+        if(selectedRow >= 0){
+            Sales product = (Sales)tblProductsMenu.getValueAt(selectedRow, 0);
+            int pre = 0;
+            if(cart.containsKey(product))
+            pre = cart.get(product);
+            
+            int quantity = pre + (int) cbxQty.getSelectedItem();
+            cart.put(product, quantity);
+            populateCart();
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "Please select a Row!!");
+        }
     }//GEN-LAST:event_addBtnActionPerformed
 
     private void deleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtnActionPerformed
         // TODO add your handling code here:
-        
+        int selectedRow = tblCart.getSelectedRow();
+        if(selectedRow >= 0){
+            int selectionButton = JOptionPane.YES_NO_OPTION;
+            int selectionResult = JOptionPane.showConfirmDialog(null, "Are you sure to delete?","Warning",selectionButton);
+            if(selectionResult == JOptionPane.YES_OPTION){
+                Sales product = (Sales)tblCart.getValueAt(selectedRow, 0);
+                cart.remove(product);
+                populateCart();
+            }
+        }else{
+            JOptionPane.showMessageDialog(null, "Please select a Row!!");
+        }
     }//GEN-LAST:event_deleteBtnActionPerformed
 
     private void checkoutBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkoutBtnActionPerformed
         // TODO add your handling code here:
+        DefaultTableModel model = (DefaultTableModel) tblCart.getModel();
+        if(model.getRowCount() == 0)
+        JOptionPane.showMessageDialog(null, "No product selected yet!");
+        else{
+            onlinesalesRequest = new SalesRequest();
+            onlinesalesRequest.setSender(account);
+            onlinesalesRequest.setStatus("Paid");
+            onlinesalesRequest.setProductOrder(cart);
+            
+            HashMap<Sales, Integer> purchase = new HashMap();
+
+            for(Map.Entry<Sales,Integer> e : cart.entrySet())
+            purchase.put(e.getKey(),e.getValue());
+
+            onlinesalesRequest.setProductOrder(purchase);
+            cart.clear();
+
+            salesEnterprise.getSalesQueue().getOnlinesalesRequestList().add(onlinesalesRequest);
+            account.getSalesQueue().getOnlinesalesRequestList().add(onlinesalesRequest);
+
+            JOptionPane.showMessageDialog(null, "Your order has been placed");
+            populateCart();
+        }
     }//GEN-LAST:event_checkoutBtnActionPerformed
 
     private void backBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backBtnActionPerformed
         // TODO add your handling code here:
+        container.remove(this);
+        CardLayout layout = (CardLayout) container.getLayout();
+        layout.previous(container);
     }//GEN-LAST:event_backBtnActionPerformed
 
     private void cbxQtyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxQtyActionPerformed
@@ -290,7 +391,7 @@ public class OrderItemJPanel extends javax.swing.JPanel {
     private javax.swing.JTable tblProductsMenu;
     // End of variables declaration//GEN-END:variables
 
-    
+}
 
     
 
