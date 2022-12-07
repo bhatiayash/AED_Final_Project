@@ -7,6 +7,11 @@ package UI.Gym.NewHire;
 
 
 
+import Business.EcoSystem;
+import Business.HireApplications.NewHireApplication;
+import Business.HireApplications.NewHireApplicationsDirectory;
+
+
 import UI.MainJFrame;
 import java.awt.CardLayout;
 import java.awt.Window;
@@ -18,7 +23,7 @@ import javax.swing.SwingUtilities;
 
 /**
  *
- * @author yashbhatia
+ * @author akash
  */
 public class NewHireJPanel extends javax.swing.JPanel {
 
@@ -33,8 +38,12 @@ public class NewHireJPanel extends javax.swing.JPanel {
     private MainJFrame frame2;
     private JPanel container;
     
-    public NewHireJPanel() {
-        initComponents();
+    public NewHireJPanel(EcoSystem system, JPanel nhJPanel, MainJFrame frame) {
+      
+         initComponents();
+        this.system = system;
+        this.nhJPanel = nhJPanel;
+        this.frame2 = frame;
         this.container = container;
     }
     
@@ -209,7 +218,20 @@ public class NewHireJPanel extends javax.swing.JPanel {
 
     private void btnSubmitApplicationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubmitApplicationActionPerformed
         // TODO add your handling code here:
-      
+       String username = txtUserName.getText();
+        String position = cbxPosition.getSelectedItem().toString();
+        
+        if(!pfone.getText().equals(pftwo.getText())){
+            
+            JOptionPane.showMessageDialog(null, "Please enter the same passwords in both fields");
+        }
+        
+        else {
+        // Adding the new job application
+        NewHireApplication nha = new NewHireApplication (username, position);
+        
+        JOptionPane.showMessageDialog(null, "Your application has been successfully submitted!");
+        } 
     }//GEN-LAST:event_btnSubmitApplicationActionPerformed
 
 
