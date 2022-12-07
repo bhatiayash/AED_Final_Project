@@ -252,9 +252,9 @@ public class CustomerWorkAreaJPanel extends javax.swing.JPanel {
     private void btnCheckHistoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCheckHistoryActionPerformed
         // TODO add your handling code here:
         for(Enterprise ent : network.getEnterpriseDirectory().getEnterpriseList()){
-            if(ent instanceof SalesEnterprise){
-        OrderItemJPanel orderItemJPanel = new OrderItemJPanel(container, account, cart, (SalesEnterprise) ent);
-        container.add("orderItemJPanel", orderItemJPanel);
+            if(ent instanceof GymEnterprise){
+        ProgramViewJPanel courseHistoryViewJPanel = new ProgramViewJPanel(container, account, (GymEnterprise) ent);
+        container.add("courseHistoryViewJPanel", courseHistoryViewJPanel);
         CardLayout layout = (CardLayout) container.getLayout();
         layout.next(container);
             }
@@ -264,9 +264,9 @@ public class CustomerWorkAreaJPanel extends javax.swing.JPanel {
     private void BtnOrderOnlineActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnOrderOnlineActionPerformed
         // TODO add your handling code here:
         for(Enterprise ent : network.getEnterpriseDirectory().getEnterpriseList()){
-            if(ent instanceof GymEnterprise){
-        ProgramViewJPanel courseHistoryViewJPanel = new ProgramViewJPanel(container, account, (GymEnterprise) ent);
-        container.add("courseHistoryViewJPanel", courseHistoryViewJPanel);
+            if(ent instanceof SalesEnterprise){
+        OrderItemJPanel orderItemJPanel = new OrderItemJPanel(container, account, cart, (SalesEnterprise) ent);
+        container.add("orderItemJPanel", orderItemJPanel);
         CardLayout layout = (CardLayout) container.getLayout();
         layout.next(container);
             }
@@ -275,10 +275,13 @@ public class CustomerWorkAreaJPanel extends javax.swing.JPanel {
 
     private void BtnViewOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnViewOrderActionPerformed
         // TODO add your handling code here:
+        
         ViewPastOrdersJPanel viewOrderJPanel = new ViewPastOrdersJPanel(container, account);
         container.add("viewOrderJPanel", viewOrderJPanel);
         CardLayout layout = (CardLayout) container.getLayout();
         layout.next(container);
+            
+        
     }//GEN-LAST:event_BtnViewOrderActionPerformed
 
     private void btnReserveCourseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReserveCourseActionPerformed
