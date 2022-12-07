@@ -4,6 +4,12 @@
  */
 package Business.Role;
 
+import Business.EcoSystem;
+import Business.Enterprise.Enterprise;
+import Business.Network.Network;
+import Business.Organization.Organization;
+import Business.Accounts.UserAccount;
+import javax.swing.JPanel;
 
 /**
  *
@@ -33,6 +39,18 @@ public abstract class Role {
         public String toString() {
             return value;
         }
+    }
+    
+    public abstract JPanel createWorkArea(JPanel userProcessContainer, 
+            UserAccount account, 
+            Organization organization, 
+            Enterprise enterprise,
+            Network network,
+            EcoSystem business);
+
+    @Override
+    public String toString() {
+        return this.getClass().getName();
     }
     
     
