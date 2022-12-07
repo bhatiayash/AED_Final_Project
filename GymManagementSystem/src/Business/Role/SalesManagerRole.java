@@ -5,6 +5,15 @@
  */
 package Business.Role;
 
+import Business.EcoSystem;
+import Business.Enterprise.Enterprise;
+import Business.Enterprise.SalesEnterprise;
+import Business.Network.Network;
+import Business.Organization.Organization;
+import Business.Organization.SalesOrganization;
+import Business.Accounts.UserAccount;
+import javax.swing.JPanel;
+import UI.Sales.Manager.SalesManagerWorkAreaJPanel;
 
 /**
  *
@@ -12,4 +21,9 @@ package Business.Role;
  */
 public class SalesManagerRole extends Role{
 
+    @Override
+    public JPanel createWorkArea(JPanel userProcessContainer, UserAccount account, Organization organization, Enterprise enterprise, Network network, EcoSystem business) {
+        return new SalesManagerWorkAreaJPanel(userProcessContainer, account, (SalesOrganization) organization, (SalesEnterprise) enterprise, network, business);
+    }
+    
 }
