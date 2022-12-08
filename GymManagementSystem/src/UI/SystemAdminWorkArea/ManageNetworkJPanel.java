@@ -4,11 +4,14 @@
  */
 package UI.SystemAdminWorkArea;
 
+import Business.EcoSystem;
+import Business.Network.Network;
 import java.awt.CardLayout;
 import java.awt.Component;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
+import Business.Organization.AnalysisOrganization;
 
 
 /**
@@ -17,17 +20,31 @@ import javax.swing.table.DefaultTableModel;
  */
 public class ManageNetworkJPanel extends javax.swing.JPanel {
 
+    private JPanel userProcessContainer;
+    private EcoSystem system;
     /**
      *
      * Creates new form ManageNetworkJPanel
      */
-    public ManageNetworkJPanel() {
+    public ManageNetworkJPanel(JPanel userProcessContainer, EcoSystem system) {
+        
         initComponents();
 
+        this.userProcessContainer = userProcessContainer;
+        this.system = system;
+
+        populateNetworkTable();
     }
 
     private void populateNetworkTable() {
-       
+       DefaultTableModel model = (DefaultTableModel) networkJTable.getModel();
+
+        model.setRowCount(0);
+        for (Network network : system.getNetworkList()) {
+            Object[] row = new Object[1];
+            row[0] = network;
+            model.addRow(row);
+        }
     }
 
     /**
@@ -177,16 +194,48 @@ public class ManageNetworkJPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void submitJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitJButtonActionPerformed
-       
+       if(nameJTextField.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "Name can't be empty!");
+            return;
+       }
+        String name = nameJTextField.getText();
+        for(Network net : system.getNetworkList()){
+            if (net.getName().equals(name)) {
+                JOptionPane.showMessageDialog(null, "This network already exist!");
+                return;
+            }
+        }
+        
+        Network network = system.createAndAddNetwork();
+        network.setName(name);
+
+        populateNetworkTable();
     }//GEN-LAST:event_submitJButtonActionPerformed
 
     private void backJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backJButtonActionPerformed
-      
+      int selectedRow = networkJTable.getSelectedRow();
+        if(selectedRow >= 0){
+            int selectionButton = JOptionPane.YES_NO_OPTION;
+            int selectionResult = JOptionPane.showConfirmDialog(null, "Are you sure to delete?", "Warning", selectionButton);
+            if(selectionResult == JOptionPane.YES_OPTION){
+                Network network = (Network) networkJTable.getValueAt(selectedRow, 0);
+                system.getNetworkList().remove(network);
+                populateNetworkTable();
+            }
+        }else{
+            JOptionPane.showMessageDialog(null, "Please select a Row!!");
+        }
     }//GEN-LAST:event_backJButtonActionPerformed
 
     private void deleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtnActionPerformed
         // TODO add your handling code here:
-        
+        userProcessContainer.remove(this);
+         Component[] componentArray = userProcessContainer.getComponents();
+        Component component = componentArray[componentArray.length - 1];
+        SystemAdminWorkAreaJPanel sysAdminwjp = (SystemAdminWorkAreaJPanel) component;
+        sysAdminwjp.populateTree();
+        CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+        layout.previous(userProcessContainer);
         
     }//GEN-LAST:event_deleteBtnActionPerformed
 
