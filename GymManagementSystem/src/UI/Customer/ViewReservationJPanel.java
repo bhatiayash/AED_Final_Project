@@ -5,6 +5,9 @@
  */
 package UI.Customer;
 
+import Business.Enterprise.GymEnterprise;
+import Business.Accounts.UserAccount;
+import Business.WorkQueue.BookingRequest;
 import java.awt.CardLayout;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -17,17 +20,32 @@ import javax.swing.table.DefaultTableModel;
 public class ViewReservationJPanel extends javax.swing.JPanel {
 
     private JPanel container;
+    private UserAccount account;
+    private GymEnterprise fitenterprise;
     
     /**
      * Creates new form ViewReservationJPanel
      */
-    public ViewReservationJPanel(JPanel container) {
+    public ViewReservationJPanel(JPanel container, UserAccount account, GymEnterprise fitenterprise) {
         initComponents();
+        this.container = container;
+        this.account = account;
+        this.fitenterprise = fitenterprise;
+        populateRequest();
         
     }
 
     private void populateRequest() {
-        
+        DefaultTableModel model = (DefaultTableModel) requestJTable.getModel();
+        model.setRowCount(0);
+        for (BookingRequest appointmentRequest : account.getAppointmentQueue().getAppointmentRequestList()) {
+            Object[] row = new Object[4];
+            row[0] = appointmentRequest;
+            row[1] = appointmentRequest.getAppointment().getClassRoom();
+            row[2] = appointmentRequest.getReceiver();         
+            row[3] = appointmentRequest.getStatus();
+            model.addRow(row);
+        }
     }
 
     /**
@@ -130,12 +148,30 @@ public class ViewReservationJPanel extends javax.swing.JPanel {
 
     private void backjButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backjButtonActionPerformed
         // TODO add your handling code here:
-       
+        container.remove(this);
+        CardLayout layout = (CardLayout) container.getLayout();
+        layout.previous(container);
     }//GEN-LAST:event_backjButtonActionPerformed
 
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
         // TODO add your handling code here:
-        
+        int selectedRow = requestJTable.getSelectedRow();
+        if (selectedRow >= 0) {
+            BookingRequest appointmentRequest = (BookingRequest) requestJTable.getValueAt(selectedRow, 0);
+            if (appointmentRequest.getStatus().equals("Cancelled")) {
+                JOptionPane.showMessageDialog(null, "It's already cancelled");
+            } else {
+                int selectionButton = JOptionPane.YES_NO_OPTION;
+                int selectionResult = JOptionPane.showConfirmDialog(null, "Are you sure to cancel?", "Warning", selectionButton);
+                if (selectionResult == JOptionPane.YES_OPTION) {
+                    appointmentRequest.setStatus("Cancelled");
+                }
+                fitenterprise.getBookingQueue().getAppointmentRequestList().remove(appointmentRequest);
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Please select a Row!!");
+        }
+        populateRequest();
     }//GEN-LAST:event_cancelButtonActionPerformed
 
 
