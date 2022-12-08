@@ -5,7 +5,6 @@
  */
 package UI.Sales.Manager;
 
-
 import Business.Enterprise.SalesEnterprise;
 import Business.Sales.Sales;
 import Business.Accounts.UserAccount;
@@ -42,6 +41,7 @@ public class ManageProductListJPanel extends javax.swing.JPanel {
             row[0] = item;
             row[1] = item.getPrice();
             model.addRow(row);
+        }
     }
 
     /**
@@ -167,17 +167,17 @@ public class ManageProductListJPanel extends javax.swing.JPanel {
 
     private void BackbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackbtnActionPerformed
         // TODO add your handling code here:
-        AddProductJPanel addItemJPanel = new AddProductJPanel(container, salesenterprise);
-        container.add("addItemJPanel", addItemJPanel);
+        container.remove(this);
         CardLayout layout = (CardLayout) container.getLayout();
-        layout.next(container);
+        layout.previous(container);
     }//GEN-LAST:event_BackbtnActionPerformed
 
     private void addBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBtnActionPerformed
         // TODO add your handling code here:
-        container.remove(this);
+        AddProductJPanel addItemJPanel = new AddProductJPanel(container, salesenterprise);
+        container.add("addItemJPanel", addItemJPanel);
         CardLayout layout = (CardLayout) container.getLayout();
-        layout.previous(container);
+        layout.next(container);
     }//GEN-LAST:event_addBtnActionPerformed
 
 
