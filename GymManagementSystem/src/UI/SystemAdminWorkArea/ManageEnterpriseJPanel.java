@@ -5,6 +5,10 @@
 package UI.SystemAdminWorkArea;
 
 
+import Business.EcoSystem;
+import Business.Enterprise.Enterprise;
+import Business.Network.Network;
+import Business.Organization.Organization;
 import java.awt.CardLayout;
 import java.awt.Component;
 import javax.swing.JOptionPane;
@@ -17,21 +21,51 @@ import javax.swing.table.DefaultTableModel;
  */
 public class ManageEnterpriseJPanel extends javax.swing.JPanel {
 
+    private JPanel userProcessContainer;
+    private EcoSystem system;
+    private Enterprise enterprise;
     
     /**
      * Creates new form ManageEnterpriseJPanel
      */
-    public ManageEnterpriseJPanel() {
+    public ManageEnterpriseJPanel(JPanel userProcessContainer, EcoSystem system) {
         initComponents();
+        this.userProcessContainer = userProcessContainer;
+        this.system = system;
+        this.enterprise = enterprise;
+
+        populateTable();
+        populateComboBox();
        
     }
 
     private void populateTable() {
-       
+       DefaultTableModel model = (DefaultTableModel) enterpriseJTable.getModel();
+
+        model.setRowCount(0);
+        for (Network network : system.getNetworkList()) {
+            for (Enterprise enterprise : network.getEnterpriseDirectory().getEnterpriseList()) {
+                Object[] row = new Object[3];
+                row[0] = enterprise;
+                row[1] = network.getName();
+                row[2] = enterprise.getEnterpriseType().getValue();
+
+                model.addRow(row);
+            }
+        }
     }
 
     private void populateComboBox() {
-        
+        networkJComboBox.removeAllItems();
+        enterpriseTypeJComboBox.removeAllItems();
+
+        for (Network network : system.getNetworkList()) {
+            networkJComboBox.addItem(network);
+        }
+
+        for (Enterprise.EnterpriseType type : Enterprise.EnterpriseType.values()) {
+            enterpriseTypeJComboBox.addItem(type);
+        }
     }
 
     /**
@@ -193,11 +227,42 @@ public class ManageEnterpriseJPanel extends javax.swing.JPanel {
 
     private void submitJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitJButtonActionPerformed
         
+        if(nameJTextField.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "Name can't be empty!");
+            return;
+        }
+        Network network = (Network) networkJComboBox.getSelectedItem();
+        for(Enterprise ent : network.getEnterpriseDirectory().getEnterpriseList()){
+            if(ent.getName().equals(nameJTextField.getText())){
+                JOptionPane.showMessageDialog(null, "Name already exist!");
+                return;
+            }
+            
+        }
+        
+        Enterprise.EnterpriseType type = (Enterprise.EnterpriseType) enterpriseTypeJComboBox.getSelectedItem();
 
+        if (network == null || type == null) {
+            JOptionPane.showMessageDialog(null, "Invalid Input!");
+            return;
+        }
+
+        String name = nameJTextField.getText();
+
+        Enterprise enterprise = network.getEnterpriseDirectory().createAndAddEnterprise(name, type);
+
+        populateTable();
     }//GEN-LAST:event_submitJButtonActionPerformed
 
     private void backJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backJButtonActionPerformed
-        
+        userProcessContainer.remove(this);
+         Component[] componentArray = userProcessContainer.getComponents();
+        Component component = componentArray[componentArray.length - 1];
+        SystemAdminWorkAreaJPanel sysAdminwjp = (SystemAdminWorkAreaJPanel) component;
+        sysAdminwjp.populateTree();
+
+        CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+        layout.previous(userProcessContainer);
     }//GEN-LAST:event_backJButtonActionPerformed
 
     private void networkJComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_networkJComboBoxActionPerformed
@@ -210,7 +275,19 @@ public class ManageEnterpriseJPanel extends javax.swing.JPanel {
 
     private void deleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtnActionPerformed
         // TODO add your handling code here:
-        
+        Network network = (Network) networkJComboBox.getSelectedItem();
+        int selectedRow = enterpriseJTable.getSelectedRow();
+        if(selectedRow >= 0){
+            int selectionButton = JOptionPane.YES_NO_OPTION;
+            int selectionResult = JOptionPane.showConfirmDialog(null, "Are you sure to delete?", "Warning", selectionButton);
+            if(selectionResult == JOptionPane.YES_OPTION){
+                Enterprise enterprise = (Enterprise)enterpriseJTable.getValueAt(selectedRow, 0);
+                network.getEnterpriseDirectory().getEnterpriseList().remove(enterprise);
+                populateTable();
+            }
+        }else{
+            JOptionPane.showMessageDialog(null, "Please select a Row!!");
+        }
         
     }//GEN-LAST:event_deleteBtnActionPerformed
 
