@@ -19,21 +19,69 @@ import javax.swing.table.DefaultTableModel;
  * @author keshni
  */
 public class ReserveProgramJPanel extends javax.swing.JPanel {
-   
+    private JPanel container;
+    private UserAccount account;
+    private GymEnterprise fitenterprise;
+    private ProgramDirectory myCourse;
 
     /**
      * Creates new form ReverseClassJPanel
      */
-    ReserveProgramJPanel() {
-        
+    ReserveProgramJPanel(JPanel container, UserAccount account, ProgramDirectory myCourse, GymEnterprise fitenterprise) {
+        this.container = container;
+        this.account = account;
+        this.myCourse = myCourse;
+        this.fitenterprise = fitenterprise;
+        initComponents();
+        populateCourse();
     }
     
     public void populateCourse(){
+        DefaultTableModel model = (DefaultTableModel) viewCourseJTable.getModel();
         
+        model.setRowCount(0);
+        for (Program course : fitenterprise.getProgramDirectory().getProgramList()) {
+                Object[] row = new Object[3];
+                row[0] = course;
+                row[1] = course.getDifficulties();
+                row[2] = course.getRemainSeats();
+                
+                model.addRow(row);
+        }
+        
+        for(int i = model.getRowCount() - 1; i >= 0; i--){
+            if(myCourse.getProgramList().contains((Program)viewCourseJTable.getValueAt(i, 0))){
+                model.removeRow(i);
+            }
+        }
+         for(int i = model.getRowCount() - 1; i >= 0; i--){
+            for(ProgramRequest courseRequest : account.getProgramQueue().getProgramRequestList())
+                if(courseRequest.getStatus().equals("Accept") || courseRequest.getStatus().equals("Sent"))
+                    if(courseRequest.getProgram().getProgramName()
+                            .equals(((Program)viewCourseJTable.getValueAt(i, 0)).getProgramName()))
+                        model.removeRow(i);
+        }
     }
 
     public void populateCouse(String name){
+        DefaultTableModel model = (DefaultTableModel) viewCourseJTable.getModel();
+        model.setRowCount(0);
+        for (Program course : fitenterprise.getProgramDirectory().getProgramList()) {
+            if(course.getProgramName().equals(name)){
+                Object[] row = new Object[3];
+                row[0] = course;
+                row[1] = course.getDifficulties();
+                row[2] = course.getRemainSeats();
+                
+                model.addRow(row);
+            }
+        }
         
+        for(int i = model.getRowCount() - 1; i >= 0; i--){
+            if(myCourse.getProgramList().contains((Program)viewCourseJTable.getValueAt(i, 0))){
+                model.removeRow(i);
+            }
+        }
     }
 
     
@@ -201,29 +249,66 @@ public class ReserveProgramJPanel extends javax.swing.JPanel {
 
     private void btnViewDetailsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewDetailsActionPerformed
         // TODO add your handling code here:
-        
+        int selectedRow = viewCourseJTable.getSelectedRow();
+        if(selectedRow >= 0){
+            Program course = (Program)viewCourseJTable.getValueAt(selectedRow, 0);
+            ProgramDetailsJPanel courseDetailJPanel = new ProgramDetailsJPanel(container, course);
+            container.add("courseDetailJPanel", courseDetailJPanel);
+            CardLayout layout = (CardLayout) container.getLayout();
+            layout.next(container);
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "Please select a Row!!");
+        }
     }//GEN-LAST:event_btnViewDetailsActionPerformed
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
-        
+        container.remove(this);
+        CardLayout layout = (CardLayout) container.getLayout();
+        layout.previous(container);
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void checkoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkoutButtonActionPerformed
         // TODO add your handling code here:
-       
+        CheckoutProgramJPanel checkoutCourseJPanel = new CheckoutProgramJPanel(container, account, myCourse, fitenterprise);
+        container.add("checkoutCourseJPanel", checkoutCourseJPanel);
+        CardLayout layout = (CardLayout) container.getLayout();
+        layout.next(container);
     }//GEN-LAST:event_checkoutButtonActionPerformed
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
        
+        String name = nameTxt.getText();
+        populateCouse(name);
     }//GEN-LAST:event_btnSearchActionPerformed
 
     private void btnResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetActionPerformed
-      
+      populateCourse();
     }//GEN-LAST:event_btnResetActionPerformed
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         // TODO add your handling code here:
-        
+        int selectedRow = viewCourseJTable.getSelectedRow();
+        if(selectedRow >= 0){
+            Program course = (Program)viewCourseJTable.getValueAt(selectedRow, 0);
+            if(myCourse.getProgramList().contains(course)){
+                JOptionPane.showMessageDialog(null, "It's already in your cart!");
+            }
+            else{
+                if(course.getRemainSeats() == 0){
+                    JOptionPane.showMessageDialog(null, "This class is out of stock");
+                }
+                else{
+                    myCourse.getProgramList().add(course);
+                    JOptionPane.showMessageDialog(null, "Add Successfully");
+                    DefaultTableModel model = (DefaultTableModel) viewCourseJTable.getModel();
+                    populateCourse();
+                }
+            }
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "Please select a Row!!");
+        }
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void nameTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameTxtActionPerformed

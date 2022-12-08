@@ -6,6 +6,9 @@
 package UI.Customer;
 
 
+import Business.Program.Program;
+import Business.Enterprise.GymEnterprise;
+import Business.Accounts.UserAccount;
 import java.awt.CardLayout;
 import javax.security.auth.login.AccountException;
 import javax.swing.JOptionPane;
@@ -16,13 +19,23 @@ import javax.swing.JPanel;
  * @author keshni
  */
 public class ReviewProgramJPanel extends javax.swing.JPanel {
-    
+    private JPanel container;
+    private UserAccount account;
+    private GymEnterprise fitenterprise;
+    private Program course;
+    //private ReviewId reviewId;
     /**
      * Creates new form ReviewCourseJPanel
      */
-    public ReviewProgramJPanel() {
+    public ReviewProgramJPanel(JPanel container, UserAccount account, Program course, GymEnterprise fitenterprise) {
         initComponents();
+        this.container = container;
+        this.account = account;
+        this.course = course;
+        this.fitenterprise = fitenterprise;
+        this.cnameTxt.setText(course.getProgramName());
         
+        this.cnameTxt.setEditable(false);
         
     }
 //    private void populateReview() {
@@ -167,11 +180,24 @@ public class ReviewProgramJPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
-       
+       if(!commentTextArea.equals(null)){
+           int result = JOptionPane.showConfirmDialog(null, "Are you sure to cancel it?", "Warning", JOptionPane.YES_NO_OPTION);
+           if (result == JOptionPane.YES_OPTION) {
+               commentTextArea.setText("");
+               return;
+           }
+           
+           
+       }
     }//GEN-LAST:event_cancelButtonActionPerformed
 
     private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
-       
+       if(!commentTextArea.equals(null)){
+            JOptionPane.showMessageDialog(null,"Evaluation submit successfully!");
+            commentTextArea.setText("");
+//            rateCBX.setToolTipText("");
+            return;
+        }
     }//GEN-LAST:event_submitButtonActionPerformed
 
     private void rateCBXActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rateCBXActionPerformed
@@ -184,7 +210,9 @@ public class ReviewProgramJPanel extends javax.swing.JPanel {
 
     private void BackbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackbtnActionPerformed
         // TODO add your handling code here:
-       
+        container.remove(this);
+        CardLayout layout = (CardLayout) container.getLayout();
+        layout.previous(container);
     }//GEN-LAST:event_BackbtnActionPerformed
 
     

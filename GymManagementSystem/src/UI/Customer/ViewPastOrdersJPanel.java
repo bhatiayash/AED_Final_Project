@@ -5,29 +5,47 @@
  */
 package UI.Customer;
 
+import Business.Accounts.UserAccount;
+import Business.WorkQueue.SalesRequest;
 import java.awt.CardLayout;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author yashbhatia
+ * @author keshni
  */
 public class ViewPastOrdersJPanel extends javax.swing.JPanel {
     private JPanel container;
+    private UserAccount account;
    
 
     /**
      * Creates new form ViewOnlineOrderJPanel
      */
-    public ViewPastOrdersJPanel() {
+    public ViewPastOrdersJPanel(JPanel container, UserAccount account) {
         initComponents();
-       
+        this.container = container;
+        this.account = account;
+        
+        populatePastOrders ();
         
     }
     public void populatePastOrders() {
         
-       
+        DefaultTableModel mdl = (DefaultTableModel) tblPastOrders.getModel();
+        mdl.setRowCount(0);
+        
+        for(SalesRequest salesRequest : account.getSalesQueue().getOnlinesalesRequestList()){
+            Object[] row = new Object[4];
+            
+            row[0] = salesRequest;
+            row[1] = salesRequest.getTotalPrice();
+            row[2] = salesRequest.getReceiver();
+            row[3] = salesRequest.getStatus();
+            
+            mdl.addRow(row);
+        }
     }
 
     
@@ -114,7 +132,10 @@ public class ViewPastOrdersJPanel extends javax.swing.JPanel {
 
     private void backBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backBtnActionPerformed
         // TODO add your handling code here:
-       
+        container.remove(this);
+        CardLayout layout = (CardLayout) container.getLayout();
+        layout.previous(container);
+
 
     }//GEN-LAST:event_backBtnActionPerformed
 
