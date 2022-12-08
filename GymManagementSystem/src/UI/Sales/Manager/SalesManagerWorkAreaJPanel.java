@@ -126,18 +126,16 @@ public class SalesManagerWorkAreaJPanel extends javax.swing.JPanel {
 
     private void manageListButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manageListButtonActionPerformed
         // TODO add your handling code here:
-        ManageOrderJPanel manageItemListJPanel = new ManageOrderJPanel(container, account, salesenterprise);
-        container.add("manageItemJPanel", manageItemListJPanel);
+        ManageProductListJPanel manageItemListJPanel = new ManageProductListJPanel(container, account, salesenterprise);
+        container.add("manageListJPanel", manageItemListJPanel);
         CardLayout layout = (CardLayout) container.getLayout();
         layout.next(container);
     }//GEN-LAST:event_manageListButtonActionPerformed
 
     private void manageOrdersButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manageOrdersButtonActionPerformed
         // TODO add your handling code here:
-        
-        
-        ManageProductListJPanel manageItemListJPanel = new ManageProductListJPanel(container, account, salesenterprise);
-        container.add("manageListJPanel", manageItemListJPanel);
+        ManageOrderJPanel manageItemListJPanel = new ManageOrderJPanel(container, account, salesenterprise);
+        container.add("manageItemJPanel", manageItemListJPanel);
         CardLayout layout = (CardLayout) container.getLayout();
         layout.next(container);
     }//GEN-LAST:event_manageOrdersButtonActionPerformed
