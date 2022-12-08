@@ -5,6 +5,10 @@
  */
 package UI.Customer;
 
+import Business.Booking.Booking;
+import Business.Enterprise.GymEnterprise;
+import Business.Accounts.UserAccount;
+import Business.WorkQueue.BookingRequest;
 import java.awt.CardLayout;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -19,15 +23,31 @@ import javax.swing.JPanel;
  * @author keshni
  */
 public class RequestTrainerJPanel extends javax.swing.JPanel {
-    
+    private JPanel container;
+    private UserAccount account;
+    private GymEnterprise gymenterprise;
+    private DateFormat df;
     /**
      * Creates new form RequestTrainerJPanel
      */
-    public RequestTrainerJPanel() {
-       
+    public RequestTrainerJPanel(JPanel container, UserAccount account, GymEnterprise fitenterprise) {
+       initComponents();
+        this.container = container;
+        this.account = account;
+        this.gymenterprise = fitenterprise;
+        //df = new SimpleDateFormat("yyyy-MM-dd");
+        df = new SimpleDateFormat("YYYY/MM/DD");
+        populateComboBox();
     }
     public void populateComboBox() {
-        
+        cbxDateSelect.removeAll();
+        for(Date date : gymenterprise.getAppointmentTime().getDateList()){
+            cbxDateSelect.addItem(df.format(date));
+        }
+        cbxTimeSlotSelect.removeAll();
+        for(String session : gymenterprise.getAppointmentTime().getSessionList()){
+            cbxTimeSlotSelect.addItem(session);
+        }
     }
 
     /**
@@ -177,7 +197,9 @@ public class RequestTrainerJPanel extends javax.swing.JPanel {
 
     private void backjButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backjButtonActionPerformed
         // TODO add your handling code here:
-        
+        container.remove(this);
+        CardLayout layout = (CardLayout) container.getLayout();
+        layout.previous(container);
     }//GEN-LAST:event_backjButtonActionPerformed
 
     private void cbxDateSelectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxDateSelectActionPerformed
@@ -190,11 +212,35 @@ public class RequestTrainerJPanel extends javax.swing.JPanel {
 
     private void BtnReserveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnReserveActionPerformed
         // TODO add your handling code here:
+        String dateString = (String) cbxDateSelect.getSelectedItem();
+        Date date = null;
+        try {
+            date = df.parse(dateString);
+        } catch (ParseException ex) {
+            Logger.getLogger(RequestTrainerJPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        String session = (String) cbxTimeSlotSelect.getSelectedItem();
+        for(BookingRequest appointmentRequest : account.getAppointmentQueue().getAppointmentRequestList()){
+            if((appointmentRequest.getStatus().equals("Accept") || appointmentRequest.getStatus().equals("Pending")) && appointmentRequest.getAppointment().getDate().equals(date) && appointmentRequest.getAppointment().getSession().equals(session)){
+                JOptionPane.showMessageDialog(null, "You already have appointment at that time");
+                return;
+            }
+        }
+        JOptionPane.showMessageDialog(null, "Successfully");
+        Booking appointment = new Booking(date, session);
+        BookingRequest appointmentRequest = new BookingRequest(appointment);
+        appointmentRequest.setSender(account);
+        appointmentRequest.setStatus("Pending");
+        account.getAppointmentQueue().getAppointmentRequestList().add(appointmentRequest);
+        gymenterprise.getBookingQueue().getAppointmentRequestList().add(appointmentRequest);
     }//GEN-LAST:event_BtnReserveActionPerformed
 
     private void viewBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewBtnActionPerformed
         // TODO add your handling code here:
-        
+        ViewReservationJPanel requestViewJPanel = new ViewReservationJPanel(container, account, gymenterprise);
+        container.add("requestViewJPanel", requestViewJPanel);
+        CardLayout layout = (CardLayout) container.getLayout();
+        layout.next(container);
     }//GEN-LAST:event_viewBtnActionPerformed
 
     private void cbxDateSelectKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cbxDateSelectKeyPressed
