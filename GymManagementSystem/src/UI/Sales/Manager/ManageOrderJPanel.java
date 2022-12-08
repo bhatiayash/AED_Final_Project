@@ -20,7 +20,7 @@ import javax.swing.table.DefaultTableModel;
  * @author akash
  */
 public class ManageOrderJPanel extends javax.swing.JPanel {
-private JPanel container;
+    private JPanel container;
     private UserAccount account;
     private SalesEnterprise salesenterprise;
 
