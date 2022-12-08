@@ -200,7 +200,7 @@ public class ProgramViewJPanel extends javax.swing.JPanel {
 
     private void reviewBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reviewBtnActionPerformed
         // TODO add your handling code here:
-        nt selectedRow = myCourseJTable.getSelectedRow();
+        int selectedRow = myCourseJTable.getSelectedRow();
 
         if (selectedRow >= 0) {
             ProgramRequest courseRequest = (ProgramRequest) myCourseJTable.getValueAt(selectedRow, 0);
