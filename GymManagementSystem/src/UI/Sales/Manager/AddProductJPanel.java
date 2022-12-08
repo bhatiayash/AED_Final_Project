@@ -23,7 +23,7 @@ public class AddProductJPanel extends javax.swing.JPanel {
      * Creates new form AddItemJPanel
      */
     public AddProductJPanel(JPanel container, SalesEnterprise salesenterprise) {
-    initComponents();
+        initComponents();
         this.container = container;
         this.salesenterprise = salesenterprise;
     }
@@ -149,7 +149,7 @@ public class AddProductJPanel extends javax.swing.JPanel {
 
     private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
         // TODO add your handling code here:
-          if(nameTxt.getText().isEmpty() || priceTxt.getText().isEmpty() )   {
+        if(nameTxt.getText().isEmpty() || priceTxt.getText().isEmpty() )   {
             JOptionPane.showMessageDialog(null, "please add all the mandatory fields");
         }
         else{
@@ -168,8 +168,6 @@ public class AddProductJPanel extends javax.swing.JPanel {
             nameTxt.setText("");
             priceTxt.setText("");
             JOptionPane.showMessageDialog(null, "Add successfully");
-        }
-        
         }
 
     }//GEN-LAST:event_submitButtonActionPerformed
