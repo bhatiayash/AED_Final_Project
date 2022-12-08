@@ -5,7 +5,11 @@
  */
 package UI.Sales.Manager;
 
-
+import Business.EcoSystem;
+import Business.Enterprise.SalesEnterprise;
+import Business.Network.Network;
+import Business.Organization.SalesOrganization;
+import Business.Accounts.UserAccount;
 import java.awt.CardLayout;
 import javax.swing.JPanel;
 
@@ -14,13 +18,26 @@ import javax.swing.JPanel;
  * @author yashbhatia
  */
 public class SalesManagerWorkAreaJPanel extends javax.swing.JPanel {
-   
+    private JPanel container;
+    private UserAccount account;
+    private SalesOrganization salesorganization;
+    private SalesEnterprise salesenterprise;
+    private Network network;
+    private EcoSystem ecoSystem;
+    
     
     /**
      * Creates new form OSManagerWorkAreaJPanel
      */
-    public SalesManagerWorkAreaJPanel(){
+    public SalesManagerWorkAreaJPanel(JPanel container, UserAccount account, 
+            SalesOrganization salesorganization, SalesEnterprise salesenterprise, Network network, EcoSystem business){
         initComponents();
+        this.container = container;
+        this.account = account;
+        this.salesorganization = salesorganization;
+        this.salesenterprise = salesenterprise;
+        this.network = network;
+        this.ecoSystem = ecoSystem;
         
     }
 
@@ -109,12 +126,20 @@ public class SalesManagerWorkAreaJPanel extends javax.swing.JPanel {
 
     private void manageListButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manageListButtonActionPerformed
         // TODO add your handling code here:
-       
+        ManageOrderJPanel manageItemListJPanel = new ManageOrderJPanel(container, account, salesenterprise);
+        container.add("manageItemJPanel", manageItemListJPanel);
+        CardLayout layout = (CardLayout) container.getLayout();
+        layout.next(container);
     }//GEN-LAST:event_manageListButtonActionPerformed
 
     private void manageOrdersButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manageOrdersButtonActionPerformed
         // TODO add your handling code here:
         
+        
+        ManageProductListJPanel manageItemListJPanel = new ManageProductListJPanel(container, account, salesenterprise);
+        container.add("manageListJPanel", manageItemListJPanel);
+        CardLayout layout = (CardLayout) container.getLayout();
+        layout.next(container);
     }//GEN-LAST:event_manageOrdersButtonActionPerformed
 
 

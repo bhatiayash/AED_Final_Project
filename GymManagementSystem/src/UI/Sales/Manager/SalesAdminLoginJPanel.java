@@ -32,7 +32,8 @@ public class SalesAdminLoginJPanel extends javax.swing.JPanel {
     private JPanel container;
     private SalesEnterprise salesenterprise;
     
-    
+    private JPanel container;
+    private SalesEnterprise salesenterprise;
     /**
      * Creates new form ManagerLoginJPanel
      */
@@ -89,7 +90,7 @@ public class SalesAdminLoginJPanel extends javax.swing.JPanel {
             model.addRow(row);
          }
         
-    }
+         }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -479,6 +480,68 @@ public class SalesAdminLoginJPanel extends javax.swing.JPanel {
         
         populateTable();
         
+        if (name.equals("")) {
+            JOptionPane.showMessageDialog(null, "User name can't be empty!");
+            return;
+        }
+        if (pwd.equals("")) {
+            JOptionPane.showMessageDialog(null, "Password can't be empty!");
+            return;
+        }
+        if (cpwd.equals("")) {
+            JOptionPane.showMessageDialog(null, "Confirm Password can't be empty!");
+            return;
+        }
+
+        if (userNameTxt.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "First name can't be empty!");
+            return;
+        }
+        
+        if (phoneTxt.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Phone number can't be empty!");
+            return;
+        }
+        if (emailTxt.getText().equals("")) {
+            
+            JOptionPane.showMessageDialog(null, "Email can't be empty!");
+            return;
+        }
+        if(!checkEmailPattern()){
+            JOptionPane.showMessageDialog(null, "Email must follow the format");
+            return;
+        }
+        if(!passwordPatternCorrect()){
+            JOptionPane.showMessageDialog(null, "Password must follow the format");
+            return;
+        }
+        if(!pwd.equals(cpwd)){
+            JOptionPane.showMessageDialog(null, "The password does not match");
+            return;
+        }
+        if(!phonePattern()){
+            JOptionPane.showMessageDialog(null, "Please follow the phone number format");
+            return;
+        }
+        
+        
+        SalesOrganization so = (SalesOrganization) organizationCbx.getSelectedItem();
+
+//        Network network = system.createAndAddNetwork();
+//        network.setName(name);
+        nameTxt.setText("");
+        userNameTxt.setText("");
+        passTxt.setText("");
+        CPassTxt.setText("");
+        emailTxt.setText("");
+        phoneTxt.setText("");
+        Person p = new Person();
+        p.setName(name);
+        //p.setId(WIDTH);
+        so.getUserAccountDirectory().createUserAccount(userName, pwd, p, new SalesManagerRole());
+        
+        
+        populateTable();
     }//GEN-LAST:event_AddBtnActionPerformed
 
     private void deleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtnActionPerformed
@@ -556,8 +619,45 @@ private boolean phonePattern(){
         return b;
     
        
+        int selectedRow = uTable.getSelectedRow();
+        if(selectedRow >= 0){
+            int selectionButton = JOptionPane.YES_NO_OPTION;
+            int selectionResult = JOptionPane.showConfirmDialog(null, "Are you sure to delete?","Warning",selectionButton);
+            if(selectionResult == JOptionPane.YES_OPTION){
+                SalesOrganization so = (SalesOrganization)organizationCbx.getSelectedItem();
+                UserAccount ua = (UserAccount) uTable.getValueAt(selectedRow, 0);
+                so.getUserAccountDirectory().getUserAccountList().remove(ua);
+                populateTable();
+            }
+        }else{
+            JOptionPane.showMessageDialog(null, "Please select a Row!!");
+        }
     }//GEN-LAST:event_deBtnActionPerformed
+private Boolean checkEmailPattern(){
+        String validName = "^[A-Z0-9a-z]+\\w*@[A-Z0-9a-z]+(\\.[A-Z0-9a-z]+)*$";
+        Pattern p = Pattern.compile(validName);
+        Matcher m = p.matcher(emailTxt.getText());
+        boolean b = m.matches();
+        
+        return b;
+    }
 
+private boolean passwordPatternCorrect(){
+        Pattern p = Pattern.compile("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,}$");
+//                "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[$*#&])[A-Za-z\\d$*#&]{6,}$]"
+        Matcher m = p.matcher(passTxt.getText());
+        boolean b = m.matches();
+        
+        return b;
+    }
+private boolean phonePattern(){
+        Pattern p = Pattern.compile("^(\\+?1)?[2-9]\\d{2}[2-9](?!11)\\d{6}$");
+                //"^(\\+?1)?[2-9]\\d{2}[2-9](?!11)\\d{6}$"
+        Matcher m = p.matcher(phoneTxt.getText());
+        boolean b = m.matches();
+        
+        return b;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton AddBtn;

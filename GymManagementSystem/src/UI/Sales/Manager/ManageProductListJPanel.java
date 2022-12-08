@@ -6,6 +6,9 @@
 package UI.Sales.Manager;
 
 
+import Business.Enterprise.SalesEnterprise;
+import Business.Sales.Sales;
+import Business.Accounts.UserAccount;
 import java.awt.CardLayout;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -16,17 +19,29 @@ import javax.swing.table.DefaultTableModel;
  * @author akash
  */
 public class ManageProductListJPanel extends javax.swing.JPanel {
-  
+    private JPanel container;
+    private UserAccount account;
+    private SalesEnterprise salesenterprise;
     /**
      * Creates new form ManageItemListJPanel
      */
-    public ManageProductListJPanel() {
+    public ManageProductListJPanel(JPanel container, UserAccount account, SalesEnterprise salesenterprise) {
         initComponents();
-        
+        this.container = container;
+        this.account = account;
+        this.salesenterprise = salesenterprise;
+        populateList();
     }
     
     public void populateList() {
+        DefaultTableModel model = (DefaultTableModel) ItemListJTable.getModel();
         
+        model.setRowCount(0);
+        for(Sales item : salesenterprise.getSalesDirectory().getSalesList()){
+            Object[] row = new Object[2];
+            row[0] = item;
+            row[1] = item.getPrice();
+            model.addRow(row);
     }
 
     /**
@@ -136,17 +151,33 @@ public class ManageProductListJPanel extends javax.swing.JPanel {
 
     private void deleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtnActionPerformed
         // TODO add your handling code here:
-     
+        int selectedRow = ItemListJTable.getSelectedRow();
+        if(selectedRow >= 0){
+            int selectionButton = JOptionPane.YES_NO_OPTION;
+            int selectionResult = JOptionPane.showConfirmDialog(null, "Are you sure to delete?","Warning",selectionButton);
+            if(selectionResult == JOptionPane.YES_OPTION){
+                Sales item = (Sales)ItemListJTable.getValueAt(selectedRow, 0);
+                salesenterprise.getSalesDirectory().getSalesList().remove(item);
+                populateList();
+            }
+        }else{
+            JOptionPane.showMessageDialog(null, "Please select a Row!!");
+        }
     }//GEN-LAST:event_deleteBtnActionPerformed
 
     private void BackbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackbtnActionPerformed
         // TODO add your handling code here:
-       
+        AddProductJPanel addItemJPanel = new AddProductJPanel(container, salesenterprise);
+        container.add("addItemJPanel", addItemJPanel);
+        CardLayout layout = (CardLayout) container.getLayout();
+        layout.next(container);
     }//GEN-LAST:event_BackbtnActionPerformed
 
     private void addBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBtnActionPerformed
         // TODO add your handling code here:
-    
+        container.remove(this);
+        CardLayout layout = (CardLayout) container.getLayout();
+        layout.previous(container);
     }//GEN-LAST:event_addBtnActionPerformed
 
 

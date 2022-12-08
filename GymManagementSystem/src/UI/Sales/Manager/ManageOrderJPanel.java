@@ -24,12 +24,11 @@ private JPanel container;
     private UserAccount account;
     private SalesEnterprise salesenterprise;
 
-    
 
     /**
      * Creates new form ManagerOrderJPanel
      */
-    public ManageOrderJPanel() {
+    public ManageOrderJPanel(JPanel container, UserAccount account, SalesEnterprise salesenterprise) {
         initComponents();
         this.container = container;
         this.account = account;

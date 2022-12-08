@@ -170,11 +170,13 @@ public class AddProductJPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "Add successfully");
         }
         
+        }
+
     }//GEN-LAST:event_submitButtonActionPerformed
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
         // TODO add your handling code here:
-         container.remove(this);
+        container.remove(this);
         CardLayout layout = (CardLayout) container.getLayout();
         Component[] componentArray = container.getComponents();
         Component component = componentArray[componentArray.length - 1];
