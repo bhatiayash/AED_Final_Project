@@ -6,8 +6,21 @@
 package UI.Sales.Manager;
 
 
+import Business.Employee.Employee;
+import Business.Enterprise.Enterprise;
+import Business.Enterprise.GymEnterprise;
+import Business.Enterprise.SalesEnterprise;
+import Business.Network.Network;
+import Business.Organization.Organization;
+import Business.Organization.SalesOrganization;
+import Business.Person.Person;
+import Business.Role.Role;
+import Business.Role.SalesManagerRole;
+import Business.Accounts.UserAccount;
 import java.awt.Container;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
@@ -18,25 +31,60 @@ import javax.swing.table.DefaultTableModel;
  */
 public class SalesAdminLoginJPanel extends javax.swing.JPanel {
     
-    
+    private JPanel container;
+    private SalesEnterprise salesenterprise;
     /**
      * Creates new form ManagerLoginJPanel
      */
-    public SalesAdminLoginJPanel() {
+    public SalesAdminLoginJPanel(JPanel container, SalesEnterprise salesenterprise) {
         initComponents();
+        this.container = container;
+        this.salesenterprise = salesenterprise;
         
+        populateCbx();
+        populateTable();
+        populateOrTbl();
     }
     
     public void populateOrTbl() {
-        
+        DefaultTableModel model = (DefaultTableModel) OrTbl.getModel();
+        int n = model.getRowCount();
+        for (int i = n - 1; i >= 0 ; i--) {
+            model.removeRow(i);
+            //i--;
+        }
+        for (Organization so : salesenterprise.getOrganizationList()) {
+            Object[] row = new Object[1];
+            row[0] = so;
+           
+            model.addRow(row);
+        }
     }
     
     public  void populateCbx() {
-        
+        organizationCbx.removeAllItems();
+        for (Organization o : salesenterprise.getOrganizationList()) {
+            organizationCbx.addItem(o);
+        }
     }
     
     public void populateTable() {
-        
+        SalesOrganization so = (SalesOrganization)organizationCbx.getSelectedItem();
+        if (so == null) {
+            return;
+        }
+        DefaultTableModel model = (DefaultTableModel) uTable.getModel();
+        int n = model.getRowCount();
+        for (int i = n - 1; i >= 0 ; i--) {
+            model.removeRow(i);
+            //i--;
+        }
+        for (UserAccount ua : so.getUserAccountDirectory().getUserAccountList()) {
+            Object[] row = new Object[2];
+            row[0] = ua.getPerson().getName();
+            row[1] = ua;
+            model.addRow(row);
+         }
     }
 
     /**
@@ -357,24 +405,152 @@ public class SalesAdminLoginJPanel extends javax.swing.JPanel {
 
     private void AddBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddBtnActionPerformed
         // TODO add your handling code here:
+        String name = nameTxt.getText();
+        String phone = phoneTxt.getText();
+        String email = emailTxt.getText();
+        String userName = userNameTxt.getText();
+        String pwd = passTxt.getText();
+        String cpwd = CPassTxt.getText();
         
+        if (name.equals("")) {
+            JOptionPane.showMessageDialog(null, "User name can't be empty!");
+            return;
+        }
+        if (pwd.equals("")) {
+            JOptionPane.showMessageDialog(null, "Password can't be empty!");
+            return;
+        }
+        if (cpwd.equals("")) {
+            JOptionPane.showMessageDialog(null, "Confirm Password can't be empty!");
+            return;
+        }
+
+        if (userNameTxt.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "First name can't be empty!");
+            return;
+        }
+        
+        if (phoneTxt.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Phone number can't be empty!");
+            return;
+        }
+        if (emailTxt.getText().equals("")) {
+            
+            JOptionPane.showMessageDialog(null, "Email can't be empty!");
+            return;
+        }
+        if(!checkEmailPattern()){
+            JOptionPane.showMessageDialog(null, "Email must follow the format");
+            return;
+        }
+        if(!passwordPatternCorrect()){
+            JOptionPane.showMessageDialog(null, "Password must follow the format");
+            return;
+        }
+        if(!pwd.equals(cpwd)){
+            JOptionPane.showMessageDialog(null, "The password does not match");
+            return;
+        }
+        if(!phonePattern()){
+            JOptionPane.showMessageDialog(null, "Please follow the phone number format");
+            return;
+        }
+        
+        
+        SalesOrganization so = (SalesOrganization) organizationCbx.getSelectedItem();
+
+//        Network network = system.createAndAddNetwork();
+//        network.setName(name);
+        nameTxt.setText("");
+        userNameTxt.setText("");
+        passTxt.setText("");
+        CPassTxt.setText("");
+        emailTxt.setText("");
+        phoneTxt.setText("");
+        Person p = new Person();
+        p.setName(name);
+        //p.setId(WIDTH);
+        so.getUserAccountDirectory().createUserAccount(userName, pwd, p, new SalesManagerRole());
+        
+        
+        populateTable();
     }//GEN-LAST:event_AddBtnActionPerformed
 
     private void deleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtnActionPerformed
         // TODO add your handling code here:
+        int selectedRow = OrTbl.getSelectedRow();
+        if(selectedRow >= 0){
+            int selectionButton = JOptionPane.YES_NO_OPTION;
+            int selectionResult = JOptionPane.showConfirmDialog(null, "Are you sure to delete?","Warning",selectionButton);
+            if(selectionResult == JOptionPane.YES_OPTION){
+                SalesOrganization so = (SalesOrganization)OrTbl.getValueAt(selectedRow, 0);
+                
+                //UserAccount ua = (UserAccount) uTable.getValueAt(selectedRow, 0);
+                salesenterprise.getOrganizationDirectory().getOrganizationList().remove(so);
+                populateOrTbl();
+            }
+        }else{
+            JOptionPane.showMessageDialog(null, "Please select a Row!!");
+        }
         
     }//GEN-LAST:event_deleteBtnActionPerformed
 
     private void addBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBtnActionPerformed
         // TODO add your handling code here:
-       
+       if(nTxt.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "Name can't be empty!");
+        }else{
+        SalesOrganization or = (SalesOrganization)salesenterprise.getOrganizationDirectory().createOrganization(Organization.Type.Sales);
+        //SalesOrganization or = (SalesOrganization)salesenterprise.getOrganizationDirectory().createOrganization(Organization.Type.OnlineSales);
+        //Organization.Type.Analysis
+        //System.out.println(or);
+        or.setName(nTxt.getText());
+        }
+        populateOrTbl();
     }//GEN-LAST:event_addBtnActionPerformed
 
     private void deBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deBtnActionPerformed
         // TODO add your handling code here:
        
+        int selectedRow = uTable.getSelectedRow();
+        if(selectedRow >= 0){
+            int selectionButton = JOptionPane.YES_NO_OPTION;
+            int selectionResult = JOptionPane.showConfirmDialog(null, "Are you sure to delete?","Warning",selectionButton);
+            if(selectionResult == JOptionPane.YES_OPTION){
+                SalesOrganization so = (SalesOrganization)organizationCbx.getSelectedItem();
+                UserAccount ua = (UserAccount) uTable.getValueAt(selectedRow, 0);
+                so.getUserAccountDirectory().getUserAccountList().remove(ua);
+                populateTable();
+            }
+        }else{
+            JOptionPane.showMessageDialog(null, "Please select a Row!!");
+        }
     }//GEN-LAST:event_deBtnActionPerformed
+private Boolean checkEmailPattern(){
+        String validName = "^[A-Z0-9a-z]+\\w*@[A-Z0-9a-z]+(\\.[A-Z0-9a-z]+)*$";
+        Pattern p = Pattern.compile(validName);
+        Matcher m = p.matcher(emailTxt.getText());
+        boolean b = m.matches();
+        
+        return b;
+    }
 
+private boolean passwordPatternCorrect(){
+        Pattern p = Pattern.compile("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,}$");
+//                "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[$*#&])[A-Za-z\\d$*#&]{6,}$]"
+        Matcher m = p.matcher(passTxt.getText());
+        boolean b = m.matches();
+        
+        return b;
+    }
+private boolean phonePattern(){
+        Pattern p = Pattern.compile("^(\\+?1)?[2-9]\\d{2}[2-9](?!11)\\d{6}$");
+                //"^(\\+?1)?[2-9]\\d{2}[2-9](?!11)\\d{6}$"
+        Matcher m = p.matcher(phoneTxt.getText());
+        boolean b = m.matches();
+        
+        return b;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton AddBtn;

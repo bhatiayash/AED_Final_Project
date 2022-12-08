@@ -5,6 +5,8 @@
  */
 package UI.Sales.Manager;
 
+import Business.Enterprise.SalesEnterprise;
+import Business.Sales.Sales;
 import java.awt.CardLayout;
 import java.awt.Component;
 import javax.swing.JOptionPane;
@@ -15,13 +17,15 @@ import javax.swing.JPanel;
  * @author akash
  */
 public class AddProductJPanel extends javax.swing.JPanel {
-    
+    private JPanel container;
+    private SalesEnterprise salesenterprise;
     /**
      * Creates new form AddItemJPanel
      */
-    public AddProductJPanel() {
+    public AddProductJPanel(JPanel container, SalesEnterprise salesenterprise) {
         initComponents();
-        
+        this.container = container;
+        this.salesenterprise = salesenterprise;
     }
 
     /**
@@ -145,12 +149,36 @@ public class AddProductJPanel extends javax.swing.JPanel {
 
     private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
         // TODO add your handling code here:
-        
+        if(nameTxt.getText().isEmpty() || priceTxt.getText().isEmpty() )   {
+            JOptionPane.showMessageDialog(null, "please add all the mandatory fields");
+        }
+        else{
+            try{
+                Double d = Double.parseDouble(priceTxt.getText());
+                if(d<0){JOptionPane.showMessageDialog(null, "The price can not be negative!");
+                return;
+                }
+            }
+            catch(NumberFormatException e){
+                JOptionPane.showMessageDialog(null, "Only Double allowed as aviliblity");
+                return;
+            }
+            Sales item = new Sales(nameTxt.getText(), Double.parseDouble(priceTxt.getText()));
+            salesenterprise..getSalesList().add(item);
+            
+            JOptionPane.showMessageDialog(null, "Add successfully");
+        }
     }//GEN-LAST:event_submitButtonActionPerformed
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
         // TODO add your handling code here:
-        
+        container.remove(this);
+        CardLayout layout = (CardLayout) container.getLayout();
+        Component[] componentArray = container.getComponents();
+        Component component = componentArray.length - 1;
+        manageItemListJPanel.populateList();
+        ManageProductListJPanel manageItemListJPanel = (ManageProductListJPanel) component;
+        layout.previous(container);
     }//GEN-LAST:event_backButtonActionPerformed
 
 

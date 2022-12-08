@@ -6,6 +6,10 @@
 package UI.Sales.Manager;
 
 
+import Business.Enterprise.SalesEnterprise;
+import Business.Sales.Sales;
+import Business.Accounts.UserAccount;
+import Business.WorkQueue.SalesRequest;
 import java.awt.CardLayout;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -17,18 +21,33 @@ import javax.swing.table.DefaultTableModel;
  */
 public class ManageOrderJPanel extends javax.swing.JPanel {
 
-    
+    private JPanel container;
+    private UserAccount account;
+    private SalesEnterprise salesenterprise;
 
     /**
      * Creates new form ManagerOrderJPanel
      */
-    public ManageOrderJPanel() {
+    public ManageOrderJPanel(JPanel container, UserAccount account, SalesEnterprise salesenterprise) {
         initComponents();
-        
+        this.container = container;
+        this.account = account;
+        this.salesenterprise = salesenterprise;
+        populateOrders();
     }
 
     public void populateOrders() {
-       
+        DefaultTableModel model = (DefaultTableModel) orderJTable.getModel();
+        model.setRowCount(0);
+        for (SalesRequest itemRequest : salesenterprise.getSalesQueue().getOnlinesalesRequestList()) {
+            Object[] row = new Object[5];
+            row[0] = itemRequest.getSender();
+            row[1] = itemRequest;
+            row[2] = itemRequest.getQuantity();
+            row[3] = itemRequest.getTotalPrice();
+            row[4] = itemRequest.getStatus();
+            model.addRow(row);
+        }
     }
 
     /**
@@ -126,12 +145,26 @@ public class ManageOrderJPanel extends javax.swing.JPanel {
 
     private void completeBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_completeBtnActionPerformed
         // TODO add your handling code here:
-
+int selectedRow = orderJTable.getSelectedRow();
+        if (selectedRow >= 0) {
+            SalesRequest itemRequest = (SalesRequest) orderJTable.getValueAt(selectedRow, 1);
+            if (itemRequest.getStatus().equals("Paid")) {
+                JOptionPane.showMessageDialog(null, "Completed Successful!!");
+                itemRequest.setStatus("Complete");
+                itemRequest.setReceiver(account);
+            } else {
+                JOptionPane.showMessageDialog(null, "It has been Completed!!");
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Please select a Row!!");
+        }
     }//GEN-LAST:event_completeBtnActionPerformed
 
     private void BackBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackBtnActionPerformed
         // TODO add your handling code here:
-       
+        container.remove(this);
+        CardLayout layout = container.getLayout();
+        layout.previous(container);
     }//GEN-LAST:event_BackBtnActionPerformed
 
 
