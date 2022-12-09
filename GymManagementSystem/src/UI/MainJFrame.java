@@ -5,17 +5,18 @@
 package UI;
 
 
-import Business.Enterprise.Enterprise;
 import Business.ConfigureASystem;
 import Business.EcoSystem;
 import Business.DB4OUtil.DB4OUtil;
+import Business.Enterprise.Enterprise;
 import Business.Network.Network;
 import Business.Organization.Organization;
 import Business.Accounts.UserAccount;
-import UI.Customer.NewCustomerRegJPanel;
 import java.awt.CardLayout;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import UI.Customer.NewCustomerRegJPanel;
+import UI.Gym.NewHire.NewHireJPanel;
 import java.awt.Color;
 
 /**
@@ -42,7 +43,7 @@ public class MainJFrame extends javax.swing.JFrame {
         //this.container = container;
     }
     
-    public MainJFrame (JPanel mPanel){
+    public MainJFrame (EcoSystem system, JPanel mPanel){
         initComponents();
         this.system = system;
         this.mPanel = mPanel;
@@ -170,6 +171,7 @@ public class MainJFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void loginJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginJButtonActionPerformed
+        
         // Get user name
         String userName = txtUserName.getText();
         // Get Password
@@ -182,7 +184,7 @@ public class MainJFrame extends javax.swing.JFrame {
         Enterprise inEnterprise = null;
         Organization inOrganization = null;
         Network inNetwork = null;
-        
+
         if (userAccount == null) {
             //Step 2: Go inside each network and check each enterprise
             
@@ -205,7 +207,7 @@ public class MainJFrame extends javax.swing.JFrame {
                             }
 
                         } else {
-                            inNetwork = network;
+                            inEnterprise = enterprise;
                             break;
                         }
                         if (inOrganization != null) {
@@ -213,13 +215,25 @@ public class MainJFrame extends javax.swing.JFrame {
                         }
                     }
                 } else {
-                    inEnterprise = enterprise;
+                    inNetwork = network;
                     break;
                 }
-                
+                if (inEnterprise != null) {
+                    break;
+                }
             }
         }
-        
+  
+        if (userAccount == null) {
+            JOptionPane.showMessageDialog(null, "Invalid credentials");
+            return;
+        } else {
+            //if(inNetwork==null)System.out.println("-----------------------------------------------");
+            //if(inNetwork.getUserAccountDirectory()==null)System.out.println("*******************************");
+            CardLayout layout = (CardLayout) container.getLayout();
+            container.add("workArea", userAccount.getRole().createWorkArea(container, userAccount, inOrganization, inEnterprise, inNetwork, system));
+            layout.next(container);
+        }
 
         loginJButton.setEnabled(false);
         logoutJButton.setEnabled(true);
@@ -239,7 +253,8 @@ public class MainJFrame extends javax.swing.JFrame {
         container.removeAll();
         JPanel blankJP = new JPanel();
         container.add("blank", blankJP);
-        dB4OUtil.storeSystem(system);
+        CardLayout crdLyt = (CardLayout) container.getLayout();
+        crdLyt.next(container);
     }//GEN-LAST:event_logoutJButtonActionPerformed
 
     private void btnNewUserRegistrationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewUserRegistrationActionPerformed
@@ -250,10 +265,10 @@ public class MainJFrame extends javax.swing.JFrame {
         CardLayout layout = (CardLayout) this.container.getLayout();
         container.remove(this);
         layout.next(this.container);
-        txtUserName.setEnabled(true);
-        pfPasswd.setEnabled(true);
-        loginJButton.setEnabled(true);
-        logoutJButton.setEnabled(true);
+        txtUserName.setEnabled(false);
+        pfPasswd.setEnabled(false);
+        loginJButton.setEnabled(false);
+        logoutJButton.setEnabled(false);
     }//GEN-LAST:event_btnNewUserRegistrationActionPerformed
 
     private void pfPasswdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pfPasswdActionPerformed
@@ -271,10 +286,17 @@ public class MainJFrame extends javax.swing.JFrame {
         CardLayout layout = (CardLayout) this.container.getLayout();
         container.remove(this);
         layout.next(this.container);
-        txtUserName.setEnabled(false);
-        pfPasswd.setEnabled(false);
-        loginJButton.setEnabled(false);
-        logoutJButton.setEnabled(false);
+//        txtUserName.setEnabled(false);
+//        pfPasswd.setEnabled(false);
+//        loginJButton.setEnabled(false);
+//        logoutJButton.setEnabled(false);
+        
+        txtUserName.setEnabled(true);
+        pfPasswd.setEnabled(true);
+        loginJButton.setEnabled(true);
+        logoutJButton.setEnabled(true);
+        logoutJButton.setText("Go back");
+        logoutJButton.setBackground(Color.GRAY);
     }//GEN-LAST:event_btnNewApplicationActionPerformed
 
     /**
