@@ -6,6 +6,9 @@
 package UI.Gym.Trainer;
 
 
+import Business.Enterprise.GymEnterprise;
+import Business.Program.Program;
+import Business.Accounts.UserAccount;
 import java.awt.CardLayout;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -13,20 +16,35 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author akash
+ * @author keshni
  */
 public class ViewAddedProgramsJPanel extends javax.swing.JPanel {
-    
+     private JPanel container;
+    private UserAccount account;
+    private GymEnterprise gymEnterprise;
+
     
 
     /**
      * Creates new form CourseViewJPanel
      */
     public ViewAddedProgramsJPanel() {
-        
+        this.container = container;
+        this.account = account;
+        this.gymEnterprise = gymEnterprise;
+        initComponents();
+        populateCourse(); 
     }
     public void populateCourse(){
-       
+        DefaultTableModel model = (DefaultTableModel) viewCourseJTable.getModel();
+        
+        model.setRowCount(0);
+        for(Program course : gymEnterprise.getProgramDirectory().getProgramList()){
+            Object[] row = new Object[2];
+            row[0] = course.getProgramId();
+            row[1] = course;
+            model.addRow(row);
+        }
     }
 
     /**
@@ -124,12 +142,25 @@ public class ViewAddedProgramsJPanel extends javax.swing.JPanel {
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         // TODO add your handling code here:
-       
+        container.remove(this);
+        CardLayout layout = (CardLayout) container.getLayout();
+        layout.previous(container);
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void deleteCourseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteCourseButtonActionPerformed
         // TODO add your handling code here:
-        
+         int selectedRow = viewCourseJTable.getSelectedRow();
+        if(selectedRow >= 0){
+            int selectionButton = JOptionPane.YES_NO_OPTION;
+            int selectionResult = JOptionPane.showConfirmDialog(null, "Are you sure to delete?","Warning",selectionButton);
+            if(selectionResult == JOptionPane.YES_OPTION){
+                Program course = (Program)viewCourseJTable.getValueAt(selectedRow, 1);
+                gymEnterprise.getProgramDirectory().getProgramList().remove(course);
+                populateCourse();
+            }
+        }else{
+            JOptionPane.showMessageDialog(null, "Please select a Row!!");
+        }
     }//GEN-LAST:event_deleteCourseButtonActionPerformed
 
 
