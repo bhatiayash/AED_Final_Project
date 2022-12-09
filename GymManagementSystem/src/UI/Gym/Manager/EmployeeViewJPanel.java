@@ -4,6 +4,14 @@
  */
 package UI.Gym.Manager;
 
+import Business.Employee.Employee;
+import Business.Enterprise.GymEnterprise;
+import Business.Network.Network;
+import Business.Accounts.UserAccount;
+import java.awt.CardLayout;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
 
 
 /**
@@ -11,25 +19,42 @@ package UI.Gym.Manager;
  * @author akash
  */
 public class EmployeeViewJPanel extends javax.swing.JPanel {
-    
+    private JPanel container;
+    private UserAccount account;
+    private GymEnterprise gymEnterprise;
+    private Network network;
+
    
 
     /**
      * Creates new form java
      */
-    public EmployeeViewJPanel() {
+    public EmployeeViewJPanel(JPanel container, UserAccount account, GymEnterprise gymEnterprise, Network network) {
         
         
         initComponents();
+        this.container = container;
+        this.account = account;
+        this.gymEnterprise = gymEnterprise;
+        this.network = network;
         
-        
-        
+        populateEmployee(); 
         
     }
 
     
         public void populateEmployee() {
+        DefaultTableModel model = (DefaultTableModel) viewEmployeeJTable.getModel();
         
+        model.setRowCount(0);
+        gymEnterprise.getEmployeeDirectory().getEmployeeList();
+        for(Employee employee : gymEnterprise.getEmployeeDirectory().getEmployeeList()){
+            Object[] row = new Object[3];
+            row[0] = employee.getId();
+            row[1] = employee;
+            row[2] = employee.getJobtitle();
+            model.addRow(row);
+        }
         
         }
     /**
@@ -178,27 +203,64 @@ public class EmployeeViewJPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
+        AddEmployeeJPanel addEmployeeJPanel = new AddEmployeeJPanel(container, gymEnterprise, network);
         
+        container.add("addEmployeeJPanel", addEmployeeJPanel);
+        CardLayout layout = (CardLayout) container.getLayout();
+        
+        layout.next(container);
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnShowDetailsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnShowDetailsActionPerformed
         // TODO add your handling code here:
+        int selectedRow = viewEmployeeJTable.getSelectedRow();
         
+        if(selectedRow >= 0){
+            
+            Employee employee = (Employee)viewEmployeeJTable.getValueAt(selectedRow, 1);
+            EmployeeDetailJPanel employeeDetailJPanel = new EmployeeDetailJPanel(container, employee);
+            container.add("employeeDetailJPanel", employeeDetailJPanel);
+            CardLayout layout = (CardLayout) container.getLayout();
+            layout.next(container);
+            
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "Select a row..");
+        }
     }//GEN-LAST:event_btnShowDetailsActionPerformed
 
     private void btnRemoveEmployeeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveEmployeeActionPerformed
         // TODO add your handling code here:
-       
+       int selectedRow = viewEmployeeJTable.getSelectedRow();
+        if(selectedRow >= 0){
+            
+            int selectionButton = JOptionPane.YES_NO_OPTION;
+            int selectionResult = JOptionPane.showConfirmDialog(null, "Delete it?","Confirm?", selectionButton);
+            if(selectionResult == JOptionPane.YES_OPTION){
+                Employee employee = (Employee)viewEmployeeJTable.getValueAt(selectedRow, 1);
+                gymEnterprise.getEmployeeDirectory().getEmployeeList().remove(employee);
+                populateEmployee();
+            }
+        }
+        else{
+            
+            JOptionPane.showMessageDialog(null, "Select a row..");
+        }
     }//GEN-LAST:event_btnRemoveEmployeeActionPerformed
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         // TODO add your handling code here:
-     
+        container.remove(this);
+        CardLayout layout = (CardLayout) container.getLayout();
+        layout.previous(container);
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void backjButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backjButton1ActionPerformed
         // TODO add your handling code here:
-       
+        container.remove(this);
+        CardLayout layout = (CardLayout) container.getLayout();
+        layout.previous(container);
     }//GEN-LAST:event_backjButton1ActionPerformed
 
 

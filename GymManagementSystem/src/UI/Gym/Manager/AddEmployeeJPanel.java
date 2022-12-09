@@ -6,9 +6,21 @@
 package UI.Gym.Manager;
 
 
+import Business.Program.Program;
+import Business.Employee.Employee;
+import Business.Enterprise.GymEnterprise;
+import Business.Network.Network;
+import Business.Role.AnalystRole;
+import Business.Role.ClerkRole;
+import Business.Role.TrainerRole;
+import Business.Accounts.UserAccount;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.event.KeyEvent;
+import java.io.File;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -18,23 +30,27 @@ import javax.swing.JPanel;
  */
 public class AddEmployeeJPanel extends javax.swing.JPanel {
 
-   
-    
-   
-
+   private JPanel container;
+    //private GymEnterprise fitenterprise;
+    private GymEnterprise gymEnterprise;
+    private Network network;
     /**
      * Creates new form AddEmployeeJPanel
      */
-    public AddEmployeeJPanel() {
+    public AddEmployeeJPanel(JPanel container, GymEnterprise gymEnterprise, Network network) {
         initComponents();
-        
-        
- 
-       
+        this.container = container;
+        this.gymEnterprise = gymEnterprise;
+        this.network = network;
+//        idTxt.setText(String.valueOf());  
+        txtEmployeeID.setEditable(true);
+        populatecombobox();
     }
 
     public void populatecombobox() {
-        
+        cb_ProgramName.removeAll();
+        for (Program courselist : gymEnterprise.getProgramDirectory().getProgramList()) {
+            cb_ProgramName.addItem(String.valueOf(courselist));
         }
     }
 
@@ -325,29 +341,121 @@ public class AddEmployeeJPanel extends javax.swing.JPanel {
 
     private void backTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backTxtActionPerformed
         // TODO add your handling code here:
-        
+        container.remove(this);
+        CardLayout layout = (CardLayout) container.getLayout();
+        Component[] componentArray = container.getComponents();
+        Component component = componentArray[componentArray.length - 1];
+        EmployeeViewJPanel employeeViewJPanel = (EmployeeViewJPanel) component;
+        employeeViewJPanel.populateEmployee();
+        layout.previous(container);
     }//GEN-LAST:event_backTxtActionPerformed
 
     private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
         // TODO add your handling code here:
-        
+        if (nameTxt.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "User name can't be empty!");
+            return;
+        }
+        if (PassField.getPassword().equals("")) {
+            JOptionPane.showMessageDialog(null, "Password can't be empty!");
+            return;
+        }
+        if (RePasswordField.getPassword().equals("")) {
+            JOptionPane.showMessageDialog(null, "Confirm Password can't be empty!");
+            return;
+        }
 
-           
+        if (txtPhnNum.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Phone number can't be empty!");
+            return;
+        }
+        if (txtEmpEmail.getText().equals("")) {
+
+            JOptionPane.showMessageDialog(null, "Email can't be empty!");
+            return;
+        }
+        if (!checkEmailPattern()) {
+            JOptionPane.showMessageDialog(null, "Email must follow the format");
+            return;
+        }
+        if (!passwordPatternCorrect()) {
+            JOptionPane.showMessageDialog(null, "Password must follow the format");
+            return;
+        }
+        if (!PassField.getText().equals(RePasswordField.getText())) {
+            JOptionPane.showMessageDialog(null, "The password does not match");
+            return;
+        }
+        if (!phonePattern()) {
+            JOptionPane.showMessageDialog(null, "Please follow the phone number format");
+            return;
+        }
+        if (nameTxt.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "please add all the mandatory fields");
+        } else {
+            try {
+
+                Integer d = Integer.parseInt(txtEmployeeID.getText());
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Only Integer allowed as ID");
+                return;
+            }
+            
+            
+            Employee employee = new Employee(nameTxt.getText(), txtPhnNum.getText(),
+                    txtEmpEmail.getText(), txtEmpAddress.getText(), String.valueOf(cb_ProgramName.getSelectedItem()), Integer.parseInt(txtEmployeeID.getText()), accountTxt.getText(), PassField.getText(), String.valueOf(cb_JobTitle.getSelectedItem()));
+            //this.network = (Network) NetworkCMB.getSelectedItem();
+            gymEnterprise.getEmployeeDirectory().getEmployeeList().add(employee);
+            
+            if(cb_JobTitle.getSelectedItem().equals("Analyst")){
+            UserAccount ua = gymEnterprise.getUserAccountDirectory().createAnalysisAcount(accountTxt.getText(), RePasswordField.getText(), new AnalystRole());
+            }
+            if (cb_JobTitle.getSelectedItem().equals("Clerk")){
+            UserAccount ua = gymEnterprise.getUserAccountDirectory().createClerkAccount(accountTxt.getText(), RePasswordField.getText(), new ClerkRole());
+            }
+            else
+            {
+            UserAccount ua = gymEnterprise.getUserAccountDirectory().createTrainerAcount(accountTxt.getText(), RePasswordField.getText(), new TrainerRole());
+            }
+            nameTxt.setText("");
+            txtPhnNum.setText("");
+            txtEmpEmail.setText("");
+            txtEmpAddress.setText("");
+            cb_ProgramName.setSelectedItem("");
+            accountTxt.setText("");
+            PassField.setText("");
+            RePasswordField.setText("");
+            cb_JobTitle.setSelectedItem("");
+            
+            String pg_name = String.valueOf(cb_ProgramName.getSelectedItem());
+            //System.out.println (pg_name);
+            JOptionPane.showMessageDialog(null, "Add successfully");
         }
     }//GEN-LAST:event_submitButtonActionPerformed
 
-    private Boolean checkEmailPattern() {
-        
+private Boolean checkEmailPattern() {
+        String validName = "^[A-Z0-9a-z]+\\w*@[A-Z0-9a-z]+(\\.[A-Z0-9a-z]+)*$";
+        Pattern p = Pattern.compile(validName);
+        Matcher m = p.matcher(txtEmpEmail.getText());
+        boolean b = m.matches();
+
+        return b;
     }
 
     private boolean passwordPatternCorrect() {
-        
+        Pattern p = Pattern.compile("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,}$");  //must be of 6 characters, 1 LC, 1 UC, 1 spec., 1 num.
+        Matcher m = p.matcher(PassField.getText());
+        boolean b = m.matches();
 
-        
+        return b;
     }
 
     private boolean phonePattern() {
-       
+        Pattern p = Pattern.compile("^(\\+?1)?[2-9]\\d{2}[2-9](?!11)\\d{6}$");               // must start from +1, then 10 digits
+        //"^(\\+?1)?[2-9]\\d{2}[2-9](?!11)\\d{6}$"
+        Matcher m = p.matcher(txtPhnNum.getText());
+        boolean b = m.matches();
+        return b;
     }
 
     private void cb_ProgramNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cb_ProgramNameActionPerformed
@@ -360,7 +468,7 @@ public class AddEmployeeJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_accountTxtActionPerformed
 
     private void cb_JobTitleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cb_JobTitleActionPerformed
-        // TODO add your handling code here:
+        // TODO add your handling code here
     }//GEN-LAST:event_cb_JobTitleActionPerformed
 
     private void txtEmpAddressActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEmpAddressActionPerformed
@@ -382,12 +490,44 @@ public class AddEmployeeJPanel extends javax.swing.JPanel {
 
     private void cb_JobTitleItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cb_JobTitleItemStateChanged
         // TODO add your handling code here:
-        
+        if (cb_JobTitle.getSelectedItem().toString().equals("Analyst") || cb_JobTitle.getSelectedItem().toString().equals("Clerk")) {
+            cb_ProgramName.setEnabled(false);
+            cb_ProgramName.setSelectedItem(" ");
+        }
+        else 
+        {
+            cb_ProgramName.setEnabled(true);
         }
     }//GEN-LAST:event_cb_JobTitleItemStateChanged
 
     private void txtPhnNumKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPhnNumKeyPressed
-       
+       String s = txtPhnNum.getText();
+        
+        if(evt.getKeyChar() >= '0' && evt.getKeyChar() <= '9'  || evt.getKeyChar() == '+')
+        {
+            
+        if(s.length() < 12){
+            
+            // allow to enter +1 and 10 digits
+            
+            txtPhnNum.setBackground(Color.WHITE);                                               //see
+            txtPhnNum.setEditable(true);
+            
+        }
+        else{
+            txtPhnNum.setEditable(false);
+        }
+        }
+        else{
+            //allow for backspace
+            if(evt.getExtendedKeyCode() == KeyEvent.VK_BACK_SPACE){
+                txtPhnNum.setEditable(true);
+            }
+            else{
+                txtPhnNum.setEditable(false);
+                txtPhnNum.setBackground(Color.red);
+            }
+        }
       
         
        

@@ -23,8 +23,30 @@ public class EmployeeDetailJPanel extends javax.swing.JPanel {
     /**
      * Creates new form EmployeeDetailJPanel
      */
-    public EmployeeDetailJPanel() {
+    public EmployeeDetailJPanel(JPanel container, Employee employee) {
         initComponents();
+        this.employee = employee;
+        this.container = container;
+        
+        txtEmpName.setText(employee.getName());
+        txtEmpID.setText(String.valueOf(employee.getId()));
+        
+        String pg_name = employee.getProgram();
+        //System.out.println (pg_name);
+        txtProgram.setText(employee.getProgram());
+        txtAssessment.setText(employee.getEvaluation());
+        txtEmployeeTitle.setText(employee.getJobtitle());
+        txtPhNo.setText (employee.getPhoneNumber());
+        
+        // can't change these fields
+        
+        //txtProgram.setEditable(false);
+        txtProgram.setEnabled(false);
+        txtEmployeeTitle.setEnabled(false);
+        txtEmpName.setEnabled(false);
+        txtEmpID.setEnabled(false);
+        txtAssessment.setEnabled(false);  
+        txtPhNo.setEnabled(false);
         
     }
 
@@ -250,14 +272,55 @@ public class EmployeeDetailJPanel extends javax.swing.JPanel {
 
     private void backTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backTxtActionPerformed
         // TODO add your handling code here:
-      
-        
+        container.remove(this);
+        CardLayout layout = (CardLayout) container.getLayout();
+        layout.previous(container);
     }//GEN-LAST:event_backTxtActionPerformed
 
     private void btnUpdateDetailsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateDetailsActionPerformed
         // TODO add your handling code here:
-              
+        btnUpdateDetails.setEnabled(false);
         
+        txtPhNo.setEnabled (true);
+        txtAssessment.setEnabled (true);
+        txtPhNo.setEditable (true);
+        txtAssessment.setEditable (true);
+        
+        
+
+        if (txtEmployeeTitle.getText().equals("Trainer")){
+            
+        txtEmpName.setEnabled(false);
+        txtEmpID.setEnabled(false);
+        txtAssessment.setEnabled(true);
+        txtEmployeeTitle.setEnabled(false);
+        txtProgram.setEnabled(true);
+        txtPhNo.setEnabled(true);
+        
+        txtProgram.setEditable(true);
+        txtAssessment.setEditable (true);
+        txtPhNo.setEditable(true);
+        
+        employee.setJobtitle(txtEmployeeTitle.getText());
+        }
+        
+        else {                                          // if its an analyst or clerk
+            
+         txtProgram.setEnabled(false);
+         txtEmpID.setEnabled(false);
+         txtEmpName.setEnabled(false);
+         txtEmployeeTitle.setEnabled(false);
+         
+         txtProgram.setEditable(false);
+         txtAssessment.setEditable (true);
+         txtPhNo.setEditable(true);
+         txtAssessment.setEnabled(true);
+         txtPhNo.setEnabled(true);
+         
+         
+         
+         employee.setJobtitle(txtEmployeeTitle.getText());
+        }
     }//GEN-LAST:event_btnUpdateDetailsActionPerformed
 
     private void txtEmpNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEmpNameActionPerformed
@@ -273,21 +336,73 @@ public class EmployeeDetailJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_txtEmployeeTitleActionPerformed
 
     private void btnUpdateDetailsItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_btnUpdateDetailsItemStateChanged
-      
+ 
+        if(txtEmployeeTitle.getText().equals("Trainer") || txtEmployeeTitle.getText().equals("Clerk"))
+        {
+            txtProgram.setEnabled(true);
+        }
+        
+        else
+        {
+            txtProgram.setEnabled(false);
+        }
+        
+        //txtProgram.setText(txtProgram.getText());
+        employee.setProgram(txtProgram.getText());
     }//GEN-LAST:event_btnUpdateDetailsItemStateChanged
 
     private void btnSaveDetailsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveDetailsActionPerformed
        
+        txtEmpName.setEditable(false);
+        txtEmpID.setEditable(false);
+        txtProgram.setEditable(false);
+        txtAssessment.setEditable(false);
+
+        btnSaveDetails.setEnabled(false);
+        btnUpdateDetails.setEnabled(true);
+
+        
+        String pg_name = txtProgram.getText ();
+        
+        employee.setProgram(pg_name);
+        
+        String phno = txtPhNo.getText();
+        
+        employee.setPhoneNumber(phno);
+        
+        JOptionPane.showMessageDialog(null, "Employee details updated successfully");
         
     }//GEN-LAST:event_btnSaveDetailsActionPerformed
 
     private void txtPhNoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPhNoKeyPressed
        
-
-       
-             
-            
+        String s = txtPhNo.getText();
         
+        if(evt.getKeyChar() >= '0' && evt.getKeyChar() <= '9'  || evt.getKeyChar() == '+')
+        {
+            
+        if(s.length() < 12){
+            
+            // allow to enter +1 and 10 digits
+            
+            txtPhNo.setBackground(Color.WHITE);                                               //see
+            txtPhNo.setEditable(true);
+            
+        }
+        else{
+            txtPhNo.setEditable(false);
+        }
+        }
+        else{
+            //allow for backspace
+            if(evt.getExtendedKeyCode() == KeyEvent.VK_BACK_SPACE){
+                txtPhNo.setEditable(true);
+            }
+            else{
+                txtPhNo.setEditable(false);
+                txtPhNo.setBackground(Color.red);
+            }
+        }
     }//GEN-LAST:event_txtPhNoKeyPressed
 
     private void txtPhNoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPhNoActionPerformed
@@ -296,7 +411,18 @@ public class EmployeeDetailJPanel extends javax.swing.JPanel {
 
     private void txtAssessmentKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtAssessmentKeyPressed
         // TODO add your handling code here:
-       
+       if (evt.getKeyChar() >= '1' && evt.getKeyChar() <= '5')
+        {
+            txtAssessment.setEditable ( true);
+            txtAssessment.setBackground(Color.WHITE);
+        }
+        
+        else
+        {
+            txtAssessment.setEditable (false);
+            txtAssessment.setBackground(Color.RED);
+            lblAssessErrMesg.setText ("Please enter a value between 1 to 5 stars as assessment");
+        }
     }//GEN-LAST:event_txtAssessmentKeyPressed
 
 

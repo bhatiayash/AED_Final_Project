@@ -5,6 +5,15 @@
  */
 package UI.Gym.Manager;
 
+import Business.Program.Program;
+import Business.Enterprise.GymEnterprise;
+import Business.Accounts.UserAccount;
+import Business.WorkQueue.ProgramQueue;
+import Business.WorkQueue.ProgramRequest;
+import java.awt.CardLayout;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
 
 
 /**
@@ -13,20 +22,30 @@ package UI.Gym.Manager;
  */
 public class CustomerProgramRequestJPanel extends javax.swing.JPanel {
 
-   
+    private JPanel container;
+    private UserAccount account;
+    private GymEnterprise gymEnterprise;
     
-
-   
-    public CustomerProgramRequestJPanel() {
+    public CustomerProgramRequestJPanel(JPanel container, UserAccount account, GymEnterprise gymEnterprise) {
         initComponents();
-       
-        
+        this.container = container;
+        this.account = account;
+        this.gymEnterprise = gymEnterprise;
+        populateRequest();
     }
 
     private void populateRequest() {
-      
+        ProgramQueue courseQueue = gymEnterprise.getProgramQueue();
+        DefaultTableModel model = (DefaultTableModel) requestJTable.getModel();
 
-       
+        model.setRowCount(0);
+        for (ProgramRequest courseRequest : courseQueue.getProgramRequestList()) {
+            Object[] row = new Object[4];
+            row[0] = courseRequest.getSender();
+            row[1] = courseRequest;
+            row[2] = courseRequest.getReceiver();
+            row[3] = courseRequest.getStatus();
+            model.addRow(row);
 
         }
     }
@@ -145,17 +164,53 @@ public class CustomerProgramRequestJPanel extends javax.swing.JPanel {
 
     private void backBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backBtnActionPerformed
         // TODO add your handling code here:
-       
+       container.remove(this);
+        CardLayout layout = (CardLayout) container.getLayout();
+        layout.previous(container);
     }//GEN-LAST:event_backBtnActionPerformed
 
     private void acceptBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_acceptBtnActionPerformed
         // TODO add your handling code here:
-        
+        int selectedRow = requestJTable.getSelectedRow();
+        if (selectedRow >= 0) {
+            ProgramRequest courseRequest = (ProgramRequest) requestJTable.getValueAt(selectedRow, 1);
+            if (!courseRequest.getStatus().equals("Pending")) {
+                JOptionPane.showMessageDialog(null, "You cannot change it.");
+            } else {
+                courseRequest.setStatus("Accept");
+                JOptionPane.showMessageDialog(null, "Accept Successfully");
+                courseRequest.setReceiver(account);
+                Program course1 = courseRequest.getProgram(); 
+                    for (Program course2 : gymEnterprise.getProgramDirectory().getProgramList()) {
+                        if (course1 == course2) {
+                            int remainSeats = course2.getRemainSeats();
+                            course2.setRemainSeats(remainSeats - 1);
+                        }
+                    }
+                
+                populateRequest();
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Please select a Row!!");
+        }
     }//GEN-LAST:event_acceptBtnActionPerformed
 
     private void cancelBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelBtnActionPerformed
         // TODO add your handling code here:
-        
+        int selectedRow = requestJTable.getSelectedRow();
+        if (selectedRow >= 0) {
+            ProgramRequest courseRequest = (ProgramRequest) requestJTable.getValueAt(selectedRow, 1);
+            if (!courseRequest.getStatus().equals("Pending")) {
+                JOptionPane.showMessageDialog(null, "You cannot change it.");
+            } else {
+                courseRequest.setStatus("Cancel");
+                JOptionPane.showMessageDialog(null, "Cancel Successfully");
+                courseRequest.setReceiver(account);
+                populateRequest();
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Please select a Row!!");
+        }
     }//GEN-LAST:event_cancelBtnActionPerformed
 
 
