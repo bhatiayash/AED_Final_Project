@@ -5,20 +5,41 @@
  */
 package UI.Gym.Manager;
 
-
+import Business.EcoSystem;
+import Business.Enterprise.GymEnterprise;
+import Business.Enterprise.SalesEnterprise;
+import Business.Network.Network;
+import Business.Organization.GymManagerOrganization;
+import Business.Accounts.UserAccount;
+import java.awt.CardLayout;
+import javax.swing.JPanel;
 
 /**
  *
  * @author akash
  */
 public class GymManagerWorkAreaJPanel extends javax.swing.JPanel {
-    
+    private JPanel container;
+    private UserAccount account;
+    private GymManagerOrganization fitManorganization;
+    private GymEnterprise fitenterprise;
+    private SalesEnterprise salesenterprise;
+    private Network network;
+    private EcoSystem ecoSystem;
    
     /**
      * Creates new form FCManagerWorkAreaJPanel
      */
-    public GymManagerWorkAreaJPanel() {
+    public GymManagerWorkAreaJPanel(JPanel container, UserAccount account, GymManagerOrganization fitManorganization, 
+            GymEnterprise fitenterprise, Network network, EcoSystem ecoSystem) {
         initComponents();
+        this.container = container;
+        this.account = account;
+        this.fitManorganization = fitManorganization;
+        this.fitenterprise = (GymEnterprise) fitenterprise;
+        this.salesenterprise = (SalesEnterprise) salesenterprise;
+        this.network = network;
+        this.ecoSystem = ecoSystem;
        
     }
 
@@ -177,12 +198,18 @@ public class GymManagerWorkAreaJPanel extends javax.swing.JPanel {
 
     private void employeeViewBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_employeeViewBtnActionPerformed
         // TODO add your handling code here:
-       
+        CustomerProgramRequestJPanel publicCourseRequestJPanel = new CustomerProgramRequestJPanel(container, account, fitenterprise);
+        container.add("publicCourseRequestJPanel", publicCourseRequestJPanel);
+        CardLayout layout = (CardLayout) container.getLayout();
+        layout.next(container);
     }//GEN-LAST:event_employeeViewBtnActionPerformed
 
     private void checkRequestButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkRequestButtonActionPerformed
         // TODO add your handling code here:
-        
+        EmployeeViewJPanel employeeViewJPanel = new EmployeeViewJPanel(container, account, fitenterprise, network);
+        container.add("employeeViewJPanel", employeeViewJPanel);
+        CardLayout layout = (CardLayout) container.getLayout();
+        layout.next(container);
     }//GEN-LAST:event_checkRequestButtonActionPerformed
 
 
