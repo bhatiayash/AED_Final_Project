@@ -6,6 +6,9 @@
 package UI.Gym.Trainer;
 
 
+import Business.Program.Program;
+import Business.Enterprise.GymEnterprise;
+import Business.Accounts.UserAccount;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Component;
@@ -14,10 +17,13 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 /**
  *
- * @author akash
+ * @author keshni
  */
 public class AddNewProgramJPanel extends javax.swing.JPanel {
+    private JPanel container;
+    private UserAccount account;
    
+    private GymEnterprise gymEnterprise;
     /**
      * Creates new form AddCourseJPanel
      */
@@ -25,6 +31,11 @@ public class AddNewProgramJPanel extends javax.swing.JPanel {
 
     public AddNewProgramJPanel() {
         initComponents();
+        this.container = container;
+        this.gymEnterprise = gymEnterprise;
+        
+        txtProgramID.setText(String.valueOf(Program.getCount()));
+        txtProgramID.setEditable(false);
                 
     }
 
@@ -180,6 +191,16 @@ public class AddNewProgramJPanel extends javax.swing.JPanel {
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         // TODO add your handling code here:
+         container.remove(this);
+        CardLayout layout = (CardLayout) container.getLayout();
+        Component[] componentArray = container.getComponents();
+        
+        Component component = componentArray[componentArray.length - 1];
+        ViewAddedProgramsJPanel courseViewPanel = (ViewAddedProgramsJPanel) component;
+        
+        courseViewPanel.populateCourse();
+        
+        layout.previous(container);
      
     }//GEN-LAST:event_btnBackActionPerformed
 
@@ -188,7 +209,50 @@ public class AddNewProgramJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_txtProgramIDActionPerformed
 
     private void btnAddProgramActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddProgramActionPerformed
-     
+        
+        int i = 0;
+        
+      // i = Integer.parseInt(txtSeatCount.getText());
+       
+       if (txtProgramName.getText().equals("")  ||  txtDiff.getText().equals("") || txtSeatCount.getText().equals ("") ){
+           
+          JOptionPane.showMessageDialog(null, "Enter all the mandatory fields");
+          
+    }
+       else{
+           
+       i = Integer.parseInt(txtSeatCount.getText());
+       
+       if (i < 100 && i > 10)
+       {
+            
+                
+                try{
+
+                    Integer d = Integer.parseInt(txtSeatCount.getText());
+                    
+                }
+                catch(NumberFormatException e){
+                    
+                    JOptionPane.showMessageDialog(null, "Only digits allowed as seat count");
+                    return;
+                    
+                }
+
+                Program course  = new Program(txtProgramName.getText(), Integer.parseInt(txtSeatCount.getText()), txtDiff.getText());
+                gymEnterprise.getProgramDirectory().getProgramList().add(course);
+                txtProgramName.setText("");
+                txtSeatCount.setText("");
+                JOptionPane.showMessageDialog(null, "Added successfully");
+            
+       }
+       else
+       {
+           JOptionPane.showMessageDialog(null, "The seat count must be between 10 to 100, please enter a value accordingly");
+       }
+
+       }
+       
     }//GEN-LAST:event_btnAddProgramActionPerformed
 
     private void txtSeatCountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSeatCountActionPerformed
@@ -200,12 +264,46 @@ public class AddNewProgramJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_txtProgramNameActionPerformed
 
     private void btnViewYourProgramsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewYourProgramsActionPerformed
+         ViewAddedProgramsJPanel programsView = new ViewAddedProgramsJPanel(container, account, gymEnterprise);
+        container.add ("programsView", programsView);
         
+        CardLayout layout = (CardLayout) container.getLayout();
+        layout.next(container);
     }//GEN-LAST:event_btnViewYourProgramsActionPerformed
 
     private void txtSeatCountKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSeatCountKeyPressed
         // TODO add your handling code here:
+           
+        if(evt.getKeyChar() >= '0' && evt.getKeyChar() <= '9' )
+        {
+            txtSeatCount.setEditable  (true);
+            
+            txtSeatCount.setBackground (Color.WHITE);
+            
+            lblSeatErrMesg.setText ("");
+            
+        }
         
+        else {
+            
+            if (evt.getExtendedKeyCode() == KeyEvent.VK_BACK_SPACE)
+            {
+                txtSeatCount.setEditable(true);
+                
+                 txtSeatCount.setBackground (Color.WHITE);
+                 
+                 lblSeatErrMesg.setText ("");
+            }
+            
+            else {
+                
+                 txtSeatCount.setEditable (false);
+                 
+                 txtSeatCount.setBackground (Color.red);
+                 
+                 lblSeatErrMesg.setText ("You are not entering a digit..");
+            }
+        }
     }//GEN-LAST:event_txtSeatCountKeyPressed
 
 
