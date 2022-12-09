@@ -198,16 +198,16 @@ public class GymManagerWorkAreaJPanel extends javax.swing.JPanel {
 
     private void employeeViewBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_employeeViewBtnActionPerformed
         // TODO add your handling code here:
-        CustomerProgramRequestJPanel publicCourseRequestJPanel = new CustomerProgramRequestJPanel(container, account, fitenterprise);
-        container.add("publicCourseRequestJPanel", publicCourseRequestJPanel);
+        EmployeeViewJPanel employeeViewJPanel = new EmployeeViewJPanel(container, account, fitenterprise, network);
+        container.add("employeeViewJPanel", employeeViewJPanel);
         CardLayout layout = (CardLayout) container.getLayout();
         layout.next(container);
     }//GEN-LAST:event_employeeViewBtnActionPerformed
 
     private void checkRequestButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkRequestButtonActionPerformed
         // TODO add your handling code here:
-        EmployeeViewJPanel employeeViewJPanel = new EmployeeViewJPanel(container, account, fitenterprise, network);
-        container.add("employeeViewJPanel", employeeViewJPanel);
+        CustomerProgramRequestJPanel publicCourseRequestJPanel = new CustomerProgramRequestJPanel(container, account, fitenterprise);
+        container.add("publicCourseRequestJPanel", publicCourseRequestJPanel);
         CardLayout layout = (CardLayout) container.getLayout();
         layout.next(container);
     }//GEN-LAST:event_checkRequestButtonActionPerformed
