@@ -5,8 +5,6 @@
  */
 package UI.Gym.Trainer;
 
-
-
 import Business.EcoSystem;
 import Business.Enterprise.GymEnterprise;
 import Business.Network.Network;
@@ -39,8 +37,6 @@ public class TrainerWorkAreaJPanel extends javax.swing.JPanel {
         this.fitenterprise = (GymEnterprise)fitenterprise;
         this.ecoSystem = ecoSystem;
         this.network = network;
-        
-     
         
     }
 
@@ -137,12 +133,11 @@ public class TrainerWorkAreaJPanel extends javax.swing.JPanel {
         container.add("addCourseJPanel", addCourseJPanel);
         CardLayout layout = (CardLayout) container.getLayout();
         layout.next(container);
-        
     }//GEN-LAST:event_btnAddCourseActionPerformed
 
     private void btnPendingRequestsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPendingRequestsActionPerformed
         // TODO add your handling code here:
-          ViewRequestJPanel viewRequestJPanel = new ViewRequestJPanel(container, account,  fitenterprise);
+        ViewRequestJPanel viewRequestJPanel = new ViewRequestJPanel(container, account,  fitenterprise);
         container.add("viewRequestJPanel", viewRequestJPanel);
         CardLayout layout = (CardLayout) container.getLayout();
         layout.next(container);

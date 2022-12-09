@@ -29,7 +29,7 @@ public class AddNewProgramJPanel extends javax.swing.JPanel {
      */
 
 
-    public AddNewProgramJPanel() {
+    public AddNewProgramJPanel(JPanel container, GymEnterprise gymEnterprise) {
         initComponents();
         this.container = container;
         this.gymEnterprise = gymEnterprise;

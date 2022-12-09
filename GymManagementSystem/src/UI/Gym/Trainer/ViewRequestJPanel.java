@@ -30,7 +30,7 @@ private JPanel container;
     /**
      * Creates new form ReverseRequestJPanel
      */
-    public ViewRequestJPanel() {
+    public ViewRequestJPanel(JPanel container, UserAccount account, GymEnterprise gymEnterprise) {
         initComponents();
          this.container = container;
         this.account = account;

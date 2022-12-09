@@ -54,7 +54,7 @@ public class AnalysisJPanel extends javax.swing.JPanel {
     /**
      * Creates new form AnalysisJPanel
      */
-    public AnalysisJPanel() {
+    public AnalysisJPanel(JPanel container, GymEnterprise gymEnterprise, SalesEnterprise salesenterprise) {
         initComponents();
          this.container = container;
         this.gymEnterprise = gymEnterprise;

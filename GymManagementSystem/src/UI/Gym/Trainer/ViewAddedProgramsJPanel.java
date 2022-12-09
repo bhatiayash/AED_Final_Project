@@ -5,7 +5,6 @@
  */
 package UI.Gym.Trainer;
 
-
 import Business.Enterprise.GymEnterprise;
 import Business.Program.Program;
 import Business.Accounts.UserAccount;
@@ -19,7 +18,8 @@ import javax.swing.table.DefaultTableModel;
  * @author keshni
  */
 public class ViewAddedProgramsJPanel extends javax.swing.JPanel {
-     private JPanel container;
+    
+    private JPanel container;
     private UserAccount account;
     private GymEnterprise gymEnterprise;
 
@@ -28,7 +28,7 @@ public class ViewAddedProgramsJPanel extends javax.swing.JPanel {
     /**
      * Creates new form CourseViewJPanel
      */
-    public ViewAddedProgramsJPanel() {
+    public ViewAddedProgramsJPanel(JPanel container, UserAccount account, GymEnterprise gymEnterprise) {
         this.container = container;
         this.account = account;
         this.gymEnterprise = gymEnterprise;
