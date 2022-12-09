@@ -6,6 +6,14 @@
 package UI.Gym.Trainer;
 
 
+import Business.Booking.Room;
+import Business.Program.Program;
+import Business.Enterprise.GymEnterprise;
+import Business.Accounts.UserAccount;
+import Business.WorkQueue.BookingRequest;
+import Business.WorkQueue.WorkRequest;
+import Business.WorkQueue.ProgramQueue;
+import Business.WorkQueue.ProgramRequest;
 import java.awt.CardLayout;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -15,20 +23,59 @@ import javax.swing.table.DefaultTableModel;
  * @author akash
  */
 public class ViewRequestJPanel extends javax.swing.JPanel {
-
+private JPanel container;
+    private UserAccount account;
+    private GymEnterprise gymEnterprise;
     
     /**
      * Creates new form ReverseRequestJPanel
      */
     public ViewRequestJPanel() {
         initComponents();
-        
+         this.container = container;
+        this.account = account;
+        this.gymEnterprise = gymEnterprise;
+        populateRequest();
+        populateComboBox();
     }
     public void populateRequest() {
-       
+         DefaultTableModel model = (DefaultTableModel) tblRequestList.getModel();
+        
+        model.setRowCount(0);
+        for(BookingRequest bookingRequest : gymEnterprise.getBookingQueue().getAppointmentRequestList()){
+            if(bookingRequest.getReceiver() == null || bookingRequest.getReceiver() == account){
+               Object[] row = new Object[4];
+               
+                row[0] = bookingRequest;
+                row[1] = bookingRequest.getSender();
+                row[2] = bookingRequest.getAppointment().getClassRoom();
+                row[3] = bookingRequest.getStatus();
+                
+                model.addRow(row); 
+            }
+        }
     }
      public void populateComboBox(){
-       
+        cboClassRoom.removeAll();
+        for(Room classRoom : gymEnterprise.getRoomDirec().getClassRoomList()){
+            cboClassRoom.addItem(classRoom);
+        }
+    }
+       public boolean checkRoom(BookingRequest request, Room classRoom){
+        boolean avilable = false;
+        
+        for(BookingRequest bookingRequest : gymEnterprise.getBookingQueue().getAppointmentRequestList())
+            if(bookingRequest.getStatus().equals("Accept") && bookingRequest.getAppointment().getClassRoom() == classRoom && request.getAppointment().getDate().equals(bookingRequest.getAppointment().getDate()) && request.getAppointment().getSession().equals(bookingRequest.getAppointment().getSession()))
+                avilable = true;
+        return avilable;
+    }
+        public boolean checkSchedule(BookingRequest request){
+        boolean avilable = false;
+        
+        for(BookingRequest bookingRequest : account.getAppointmentQueue().getAppointmentRequestList())
+            if(bookingRequest.getStatus().equals("Accept") && request.getAppointment().getDate().equals(bookingRequest.getAppointment().getDate()) && request.getAppointment().getSession().equals(bookingRequest.getAppointment().getSession()))
+                avilable = true;
+        return avilable;
     }
    
     /**
@@ -159,17 +206,63 @@ public class ViewRequestJPanel extends javax.swing.JPanel {
 
     private void backBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backBtnActionPerformed
         // TODO add your handling code here:
-        
+         container.remove(this);
+        CardLayout layout = (CardLayout) container.getLayout();
+        layout.previous(container);
     }//GEN-LAST:event_backBtnActionPerformed
 
     private void acceptBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_acceptBtnActionPerformed
         // TODO add your handling code here:
+           int selectedRow = tblRequestList.getSelectedRow();
         
+        
+        if(selectedRow >= 0){
+            BookingRequest bookingRequest = (BookingRequest)tblRequestList.getValueAt(selectedRow, 0);
+            if(!bookingRequest.getStatus().equals("Pending")){
+                JOptionPane.showMessageDialog(null, "You cannot change it.");
+            }
+            else{
+                Room classRoom = (Room) cboClassRoom.getSelectedItem();
+                if(!checkRoom(bookingRequest, classRoom)){
+                    if(!checkSchedule(bookingRequest)){
+                        bookingRequest.setStatus("Accept");
+                         JOptionPane.showMessageDialog(null, "Accept Successful");
+                        bookingRequest.getAppointment().setClassRoom(classRoom);
+                        bookingRequest.setReceiver(account);
+                        populateRequest();
+                    }
+                    else{
+                        JOptionPane.showMessageDialog(null, "You have schedule at that time");
+                    }
+                }
+                else{
+                    JOptionPane.showMessageDialog(null, "This room has been taken");
+                }
+            }
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "Please select a Row!!");
+        }
     }//GEN-LAST:event_acceptBtnActionPerformed
 
     private void declineBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_declineBtnActionPerformed
         // TODO add your handling code here:
-        
+         int selectedRow = tblRequestList.getSelectedRow();
+        if(selectedRow >= 0){
+            BookingRequest appointmentRequest = (BookingRequest)tblRequestList.getValueAt(selectedRow, 0);
+            if(!appointmentRequest.getStatus().equals("Pending")){
+                JOptionPane.showMessageDialog(null, "You cannot change it.");
+            }
+            else{
+                appointmentRequest.setStatus("Decline");
+                JOptionPane.showMessageDialog(null, "Decline Successfully");
+                appointmentRequest.setReceiver(account);
+                populateRequest();
+            }
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "Please select a Row!!");
+        }
     }//GEN-LAST:event_declineBtnActionPerformed
 
 
