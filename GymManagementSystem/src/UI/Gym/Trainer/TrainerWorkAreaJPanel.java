@@ -6,21 +6,40 @@
 package UI.Gym.Trainer;
 
 
+
+import Business.EcoSystem;
+import Business.Enterprise.GymEnterprise;
+import Business.Network.Network;
+import Business.Organization.TrainerOrganization;
+import Business.Accounts.UserAccount;
 import java.awt.CardLayout;
 import javax.swing.JPanel;
 
 /**
  *
- * @author akash
+ * @author keshni
  */
 public class TrainerWorkAreaJPanel extends javax.swing.JPanel {
-   
+    private JPanel container;
+    private UserAccount account;
+    private TrainerOrganization traorganization;
+    private GymEnterprise fitenterprise;
+    private Network network;
+    private EcoSystem ecoSystem;
     
     /**
      * Creates new form FCTrainerWorkAreaJPanel
      */
-    public TrainerWorkAreaJPanel() {
+    public TrainerWorkAreaJPanel(JPanel container, UserAccount account, TrainerOrganization traorganization, 
+            GymEnterprise fitenterprise, Network network, EcoSystem ecoSystem) {
         initComponents();
+        this.container = container;
+        this.account= account;
+        this.traorganization = traorganization;
+        this.fitenterprise = (GymEnterprise)fitenterprise;
+        this.ecoSystem = ecoSystem;
+        this.network = network;
+        
      
         
     }
@@ -114,11 +133,19 @@ public class TrainerWorkAreaJPanel extends javax.swing.JPanel {
 
     private void btnAddCourseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddCourseActionPerformed
         // TODO add your handling code here:
+        AddNewProgramJPanel addCourseJPanel = new AddNewProgramJPanel(container, fitenterprise);
+        container.add("addCourseJPanel", addCourseJPanel);
+        CardLayout layout = (CardLayout) container.getLayout();
+        layout.next(container);
         
     }//GEN-LAST:event_btnAddCourseActionPerformed
 
     private void btnPendingRequestsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPendingRequestsActionPerformed
         // TODO add your handling code here:
+          ViewRequestJPanel viewRequestJPanel = new ViewRequestJPanel(container, account,  fitenterprise);
+        container.add("viewRequestJPanel", viewRequestJPanel);
+        CardLayout layout = (CardLayout) container.getLayout();
+        layout.next(container);
        
     }//GEN-LAST:event_btnPendingRequestsActionPerformed
 
