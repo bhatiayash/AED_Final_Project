@@ -52,7 +52,7 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author akash
+ * @author yashbhatia
  */
 public class ConfigureASystem {
     
@@ -84,22 +84,56 @@ public class ConfigureASystem {
         takeProgram(courseList);
         
         Organization gymOrganization = gymEnterprise.getOrganizationDirectory().createOrganization(Organization.Type.GymManager);
-        Person gymManager1 = gymOrganization.getPersonDirectory().createPerson("Bob Manager");
+        Person gymManager1 = gymOrganization.getPersonDirectory().createPerson("Akash chhabria");
         UserAccount acc1 = gymOrganization.getUserAccountDirectory().createUserAccount("manager1", "manager1", gymManager1, new GymManagerRole());
+        
+        Person gymManager2 = gymOrganization.getPersonDirectory().createPerson("Yash Bhatia");
+        UserAccount acc2 = gymOrganization.getUserAccountDirectory().createUserAccount("manager2", "manager2", gymManager2, new GymManagerRole());
+        
         
         
         Organization analystOrganization = gymEnterprise.getOrganizationDirectory().createOrganization(Organization.Type.Analysis);
-        Person gymAnalyst = gymOrganization.getPersonDirectory().createPerson("Walter White");
-        UserAccount acc2 = gymOrganization.getUserAccountDirectory().createUserAccount("ana1", "ana1", gymAnalyst, new AnalystRole());
+        Person gymAnalyst = gymOrganization.getPersonDirectory().createPerson("Keshni Mulrajani");
+        UserAccount acc3 = gymOrganization.getUserAccountDirectory().createUserAccount("ana1", "ana1", gymAnalyst, new AnalystRole());
     
         
         Organization cusOrganization = gymEnterprise.getOrganizationDirectory().createOrganization(Organization.Type.Customer);
-        Person cus1 = cusOrganization.getPersonDirectory().createPerson("Tom Cruise");
-        UserAccount acc3 = cusOrganization.getUserAccountDirectory().createUserAccount("cus1", "cus1", cus1, new CustomerRole());
+        Person cus1 = cusOrganization.getPersonDirectory().createPerson("Ganesh Customer");
+        UserAccount acc4 = cusOrganization.getUserAccountDirectory().createUserAccount("cus1", "cus1", cus1, new CustomerRole());
+        
+        Person cus2 = cusOrganization.getPersonDirectory().createPerson("Ritvik Customer");
+        UserAccount acc5 = cusOrganization.getUserAccountDirectory().createUserAccount("cus2", "cus2", cus2, new CustomerRole());
+        
+        Person cus3 = cusOrganization.getPersonDirectory().createPerson("Riya Customer");
+        UserAccount acc6 = cusOrganization.getUserAccountDirectory().createUserAccount("cus3", "cus3", cus3, new CustomerRole());
+        
+        Person cus4 = cusOrganization.getPersonDirectory().createPerson("Akhil Customer");
+        UserAccount acc7 = cusOrganization.getUserAccountDirectory().createUserAccount("cus4", "cus4", cus4, new CustomerRole());
+        
+        Person cus5 = cusOrganization.getPersonDirectory().createPerson("Mohit Customer");
+        UserAccount acc8 = cusOrganization.getUserAccountDirectory().createUserAccount("cus5", "cus5", cus5, new CustomerRole());
+        
+        Person cus6 = cusOrganization.getPersonDirectory().createPerson("Nitesh Customer");
+        UserAccount acc9 = cusOrganization.getUserAccountDirectory().createUserAccount("cus6", "cus6", cus6, new CustomerRole());
+        
+        Person cus7 = cusOrganization.getPersonDirectory().createPerson("Bhavesh Customer");
+        cusOrganization.getUserAccountDirectory().createUserAccount("cus7", "cus7", cus7, new CustomerRole());
         
         Organization trainerOrganization = gymEnterprise.getOrganizationDirectory().createOrganization(Organization.Type.Trainer);
-        Person trainer1 = trainerOrganization.getPersonDirectory().createPerson("Chris Bumstead");
-        UserAccount acc4 = trainerOrganization.getUserAccountDirectory().createUserAccount("trainer1", "trainer1", trainer1, new TrainerRole());
+        Person trainer1 = trainerOrganization.getPersonDirectory().createPerson("Sumit Trainer");
+        UserAccount acc10 = trainerOrganization.getUserAccountDirectory().createUserAccount("trainer1", "trainer1", trainer1, new TrainerRole());
+        
+        Person trainer2 = trainerOrganization.getPersonDirectory().createPerson("Rohit Trainer");
+        UserAccount acc11 = trainerOrganization.getUserAccountDirectory().createUserAccount("trainer2", "trainer2", trainer2, new TrainerRole());
+        
+        Person trainer3 = trainerOrganization.getPersonDirectory().createPerson("Manish Trainer");
+        UserAccount acc12 = trainerOrganization.getUserAccountDirectory().createUserAccount("trainer3", "trainer3", trainer3, new TrainerRole());
+        
+        Person trainer4 = trainerOrganization.getPersonDirectory().createPerson("Rowdy Trainer");
+        UserAccount acc13 = trainerOrganization.getUserAccountDirectory().createUserAccount("trainer4", "trainer4", trainer4, new TrainerRole());
+        
+        Person trainer5 = trainerOrganization.getPersonDirectory().createPerson("Shinda Trainer");
+        UserAccount acc14 = trainerOrganization.getUserAccountDirectory().createUserAccount("trainer5", "trainer5", trainer5, new TrainerRole());
         
         ArrayList<Sales> salesitemList = salesEnterprise.getSalesDirectory().getSalesList();
         
@@ -109,12 +143,20 @@ public class ConfigureASystem {
         
         
         Person sales1 = salesOrganization.getPersonDirectory().createPerson("Sales Unit 1");
-        UserAccount acc5 = salesOrganization.getUserAccountDirectory().createUserAccount("sales1", "sales1", sales1, new SalesRole());
+        UserAccount acc15 = salesOrganization.getUserAccountDirectory().createUserAccount("sales1", "sales1", sales1, new SalesRole());
         
+        Person sales2 = salesOrganization.getPersonDirectory().createPerson("Sales Unit 2");
+        UserAccount acc16 = salesOrganization.getUserAccountDirectory().createUserAccount("sales2", "sales2", sales2, new SalesRole());
         
-        Organization clerkOrganization = gymEnterprise.getOrganizationDirectory().createOrganization(Organization.Type.Clerk);
-        Person clerk1 = clerkOrganization.getPersonDirectory().createPerson("Andrew Clerk");
-        UserAccount acc6 = clerkOrganization.getUserAccountDirectory().createUserAccount("clerk1", "clerk1", clerk1, new ClerkRole());
+        Person sales3 = salesOrganization.getPersonDirectory().createPerson("Sales Unit 3");
+        UserAccount acc17 = salesOrganization.getUserAccountDirectory().createUserAccount("sales3", "sales3", sales3, new SalesRole());
+        
+        Person salesmanager = salesOrganization.getPersonDirectory().createPerson("Kunal Manager");
+        UserAccount acc18 = salesOrganization.getUserAccountDirectory().createUserAccount("salesmanager", "salesmanager", salesmanager, new SalesManagerRole());
+        
+//        Organization clerkOrganization = gymEnterprise.getOrganizationDirectory().createOrganization(Organization.Type.Clerk);
+//        Person clerk1 = clerkOrganization.getPersonDirectory().createPerson("Johnny Clerk");
+//        UserAccount acc19 = clerkOrganization.getUserAccountDirectory().createUserAccount("clerk1", "clerk1", clerk1, new ClerkRole());
         
         takeProgramRequest(gymEnterprise);
         readSalesRequest(gymEnterprise, salesEnterprise);
@@ -286,7 +328,7 @@ public class ConfigureASystem {
         catch (FileNotFoundException ex) {
             Logger.getLogger(ConfigureASystem.class.getName()).log(Level.SEVERE, null, ex);
         }
-                   
+                    
        }
     
         
@@ -350,14 +392,14 @@ public class ConfigureASystem {
 
     public static void readSalesProductList(ArrayList<Sales> salesitemList) {
         
-        Sales item_no1 = new Sales("Energy Drink", 40);
-        Sales item_no2 = new Sales("Protein Bar", 11);
-        Sales item_no3 = new Sales("Protein Shake", 25);
-        Sales item_no4 = new Sales("Veggies", 11);
-        Sales item_no5 = new Sales("Mass Gainer", 30);
-        Sales item_no6 = new Sales("Gym Shoes", 90);
-        Sales item_no7 = new Sales("Gym Wear", 111);
-        Sales item_no8 = new Sales("BCAA", 22);
+        Sales item_no1 = new Sales("Energy Drink", 45.5);
+        Sales item_no2 = new Sales("Protein Bar", 10);
+        Sales item_no3 = new Sales("Protein Shake", 30);
+        Sales item_no4 = new Sales("Veggies", 15);
+        Sales item_no5 = new Sales("Mass Gainer", 35.5);
+        Sales item_no6 = new Sales("Gym Shoes", 100);
+        Sales item_no7 = new Sales("Gym Wear", 150);
+        Sales item_no8 = new Sales("BCAA", 25.5);
         Sales item_no9 = new Sales("Pre Workout Drink", 43.3);
         Sales item_no10 = new Sales("Stretching Mat", 51.75);
 

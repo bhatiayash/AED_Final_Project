@@ -206,8 +206,8 @@ public class ManageEmployeeJPanel extends javax.swing.JPanel {
         Organization organization = (Organization) organizationEmpJComboBox.getSelectedItem();
         String name = nameJTextField.getText();
         
-       //organization.getEmployeeDirectory().createEmployee(name);
-//        organization.getUserAccountDirectory().getUserAccountList().createAnalysisAcount();
+        //organization.getEmployeeDirectory().createEmployee(name);
+        //organization.getUserAccountDirectory().getUserAccountList().createAnalysisAcount();
         populateTable(organization);
         
     }//GEN-LAST:event_addJButtonActionPerformed
