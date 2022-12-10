@@ -150,8 +150,9 @@ public class MainJFrame extends javax.swing.JFrame {
         jLabel5.setText("Password");
         jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 210, -1, -1));
 
-        jLabel6.setText("Want to apply for a job here?");
-        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 650, -1, -1));
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel6.setText("Apply for a job here");
+        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 650, -1, -1));
 
         btnNewApplication.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnNewApplication.setText("Click Here!");
@@ -162,8 +163,9 @@ public class MainJFrame extends javax.swing.JFrame {
         });
         jPanel1.add(btnNewApplication, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 670, 160, 40));
 
+        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setText("New User?");
-        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 550, -1, -1));
+        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 550, -1, -1));
 
         jSplitPane1.setLeftComponent(jPanel1);
 
