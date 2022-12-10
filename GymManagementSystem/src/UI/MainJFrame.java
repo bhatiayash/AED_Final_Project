@@ -80,7 +80,7 @@ public class MainJFrame extends javax.swing.JFrame {
 
         jSplitPane1.setBackground(new java.awt.Color(255, 255, 255));
 
-        jPanel1.setBackground(new java.awt.Color(0, 0, 0));
+        jPanel1.setBackground(new java.awt.Color(0, 102, 102));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         loginJButton.setBackground(new java.awt.Color(204, 255, 204));
@@ -92,7 +92,7 @@ public class MainJFrame extends javax.swing.JFrame {
                 loginJButtonActionPerformed(evt);
             }
         });
-        jPanel1.add(loginJButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 330, 165, 40));
+        jPanel1.add(loginJButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 350, 165, 40));
 
         txtUserName.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         txtUserName.addActionListener(new java.awt.event.ActionListener() {
@@ -100,7 +100,7 @@ public class MainJFrame extends javax.swing.JFrame {
                 txtUserNameActionPerformed(evt);
             }
         });
-        jPanel1.add(txtUserName, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, 165, 30));
+        jPanel1.add(txtUserName, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 200, 165, 30));
 
         pfPasswd.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         pfPasswd.addActionListener(new java.awt.event.ActionListener() {
@@ -108,7 +108,7 @@ public class MainJFrame extends javax.swing.JFrame {
                 pfPasswdActionPerformed(evt);
             }
         });
-        jPanel1.add(pfPasswd, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 240, 165, 30));
+        jPanel1.add(pfPasswd, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 280, 165, 30));
         jPanel1.add(loginJLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(211, 395, -1, -1));
 
         logoutJButton.setBackground(new java.awt.Color(255, 102, 102));
@@ -120,7 +120,7 @@ public class MainJFrame extends javax.swing.JFrame {
                 logoutJButtonActionPerformed(evt);
             }
         });
-        jPanel1.add(logoutJButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 400, 165, 40));
+        jPanel1.add(logoutJButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 410, 165, 40));
 
         jLabel3.setForeground(new java.awt.Color(102, 102, 102));
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 551, 165, -1));
@@ -135,24 +135,27 @@ public class MainJFrame extends javax.swing.JFrame {
         jPanel1.add(btnNewUserRegistration, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 573, 165, 40));
 
         jLabel4.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel4.setFont(new java.awt.Font("Agency FB", 1, 48)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Arial", 1, 48)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("  Login");
         jLabel4.setToolTipText("");
         jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 200, -1));
 
         jLabel2.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel2.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("User Name");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, -1, -1));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 170, -1, -1));
 
+        jLabel5.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("Password");
-        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 210, -1, -1));
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 250, -1, -1));
 
+        jLabel6.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel6.setText("Apply for a job here");
-        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 650, -1, -1));
+        jLabel6.setText("Apply for a job");
+        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 650, -1, -1));
 
         btnNewApplication.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnNewApplication.setText("Click Here!");
@@ -169,9 +172,12 @@ public class MainJFrame extends javax.swing.JFrame {
 
         jSplitPane1.setLeftComponent(jPanel1);
 
-        container.setBackground(new java.awt.Color(0, 0, 0));
+        container.setBackground(new java.awt.Color(0, 102, 102));
+        container.setForeground(new java.awt.Color(0, 102, 102));
         container.setLayout(new java.awt.CardLayout());
 
+        jLabel1.setBackground(new java.awt.Color(0, 102, 102));
+        jLabel1.setForeground(new java.awt.Color(0, 102, 102));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Business/fitness.png"))); // NOI18N
         container.add(jLabel1, "card2");
