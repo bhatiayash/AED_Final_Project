@@ -78,12 +78,13 @@ public class CustomerWorkAreaJPanel extends javax.swing.JPanel {
         );
 
         setBackground(new java.awt.Color(0, 102, 102));
+        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setBackground(new java.awt.Color(0, 102, 102));
 
-        btnRequest.setFont(new java.awt.Font("Arial Narrow", 0, 18)); // NOI18N
-        btnRequest.setForeground(new java.awt.Color(102, 102, 255));
-        btnRequest.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Business/appointment.png"))); // NOI18N
+        btnRequest.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        btnRequest.setForeground(new java.awt.Color(0, 102, 102));
+        btnRequest.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Business/calendar (1).png"))); // NOI18N
         btnRequest.setText("    Request an appointment with a trainer");
         btnRequest.setPreferredSize(new java.awt.Dimension(130, 110));
         btnRequest.addActionListener(new java.awt.event.ActionListener() {
@@ -92,23 +93,24 @@ public class CustomerWorkAreaJPanel extends javax.swing.JPanel {
             }
         });
 
-        jLabel3.setFont(new java.awt.Font("Tamil MN", 1, 24)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(102, 102, 102));
-        jLabel3.setText("Have any queries regarding program?");
+        jLabel3.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel3.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setText("Have any questions regarding program?");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
+                .addGap(0, 157, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(btnRequest, javax.swing.GroupLayout.PREFERRED_SIZE, 420, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(154, 154, 154))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(133, 133, 133))))
+                        .addComponent(jLabel3)
+                        .addGap(123, 123, 123))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -120,14 +122,16 @@ public class CustomerWorkAreaJPanel extends javax.swing.JPanel {
                 .addContainerGap(38, Short.MAX_VALUE))
         );
 
-        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+        add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(317, 55, 742, -1));
 
-        jLabel4.setFont(new java.awt.Font("Calibri Light", 1, 24)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(102, 102, 102));
+        jPanel2.setBackground(new java.awt.Color(0, 102, 102));
+
+        jLabel4.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("View available slots");
 
-        btnReserveCourse.setFont(new java.awt.Font("Arial Narrow", 1, 14)); // NOI18N
-        btnReserveCourse.setForeground(new java.awt.Color(102, 102, 255));
+        btnReserveCourse.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        btnReserveCourse.setForeground(new java.awt.Color(0, 102, 102));
         btnReserveCourse.setText("Book a seat for a program");
         btnReserveCourse.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -135,8 +139,8 @@ public class CustomerWorkAreaJPanel extends javax.swing.JPanel {
             }
         });
 
-        btnCheckHistory.setFont(new java.awt.Font("Arial Narrow", 1, 14)); // NOI18N
-        btnCheckHistory.setForeground(new java.awt.Color(102, 102, 255));
+        btnCheckHistory.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        btnCheckHistory.setForeground(new java.awt.Color(0, 102, 102));
         btnCheckHistory.setText("View your past bookings");
         btnCheckHistory.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -157,7 +161,7 @@ public class CustomerWorkAreaJPanel extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel4)
-                .addGap(237, 237, 237))
+                .addGap(254, 254, 254))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -171,10 +175,12 @@ public class CustomerWorkAreaJPanel extends javax.swing.JPanel {
                 .addContainerGap(58, Short.MAX_VALUE))
         );
 
-        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
+        add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(317, 300, -1, -1));
 
-        BtnOrderOnline.setFont(new java.awt.Font("Arial Narrow", 1, 14)); // NOI18N
-        BtnOrderOnline.setForeground(new java.awt.Color(102, 102, 255));
+        jPanel3.setBackground(new java.awt.Color(0, 102, 102));
+
+        BtnOrderOnline.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        BtnOrderOnline.setForeground(new java.awt.Color(0, 102, 102));
         BtnOrderOnline.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Business/search.png"))); // NOI18N
         BtnOrderOnline.setText("Browse Shop for new items");
         BtnOrderOnline.addActionListener(new java.awt.event.ActionListener() {
@@ -183,9 +189,9 @@ public class CustomerWorkAreaJPanel extends javax.swing.JPanel {
             }
         });
 
-        BtnViewOrder.setFont(new java.awt.Font("Arial Narrow", 1, 14)); // NOI18N
-        BtnViewOrder.setForeground(new java.awt.Color(102, 102, 255));
-        BtnViewOrder.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Business/past_order.png"))); // NOI18N
+        BtnViewOrder.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        BtnViewOrder.setForeground(new java.awt.Color(0, 102, 102));
+        BtnViewOrder.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Business/to-do-list.png"))); // NOI18N
         BtnViewOrder.setText("View your past orders");
         BtnViewOrder.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -193,8 +199,9 @@ public class CustomerWorkAreaJPanel extends javax.swing.JPanel {
             }
         });
 
-        jLabel5.setFont(new java.awt.Font("Calibri Light", 1, 24)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(102, 102, 102));
+        jLabel5.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel5.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("Supplements Shop");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -203,8 +210,8 @@ public class CustomerWorkAreaJPanel extends javax.swing.JPanel {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(100, 100, 100)
-                .addComponent(BtnOrderOnline, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(BtnOrderOnline)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 122, Short.MAX_VALUE)
                 .addComponent(BtnViewOrder, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(74, 74, 74))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
@@ -224,29 +231,7 @@ public class CustomerWorkAreaJPanel extends javax.swing.JPanel {
                 .addGap(42, 42, 42))
         );
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(340, 340, 340)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(387, 387, 387))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(55, 55, 55)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+        add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(317, 537, 742, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCheckHistoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCheckHistoryActionPerformed

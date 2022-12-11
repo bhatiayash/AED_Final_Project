@@ -88,6 +88,7 @@ public class CheckoutProgramJPanel extends javax.swing.JPanel {
 
         removeButton.setFont(new java.awt.Font("Arial", 0, 20)); // NOI18N
         removeButton.setForeground(new java.awt.Color(255, 102, 102));
+        removeButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Business/delete (1).png"))); // NOI18N
         removeButton.setText("Delete");
         removeButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -133,7 +134,7 @@ public class CheckoutProgramJPanel extends javax.swing.JPanel {
                         .addComponent(removeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(278, 278, 278)
-                        .addComponent(backjButton, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(backjButton)))
                 .addGap(554, 554, 554))
         );
         layout.setVerticalGroup(
