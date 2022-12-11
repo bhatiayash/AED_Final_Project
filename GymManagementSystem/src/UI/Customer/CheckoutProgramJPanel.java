@@ -67,16 +67,18 @@ public class CheckoutProgramJPanel extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         viewCourseJTable = new javax.swing.JTable();
 
-        setBackground(new java.awt.Color(255, 255, 255));
+        setBackground(new java.awt.Color(0, 102, 102));
 
+        backjButton.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         backjButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Business/goback.png"))); // NOI18N
+        backjButton.setText("Previous");
         backjButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 backjButtonActionPerformed(evt);
             }
         });
 
-        submitButton.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        submitButton.setFont(new java.awt.Font("Arial", 0, 20)); // NOI18N
         submitButton.setText("Submit");
         submitButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -84,9 +86,9 @@ public class CheckoutProgramJPanel extends javax.swing.JPanel {
             }
         });
 
-        removeButton.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        removeButton.setFont(new java.awt.Font("Arial", 0, 20)); // NOI18N
         removeButton.setForeground(new java.awt.Color(255, 102, 102));
-        removeButton.setText("Remove");
+        removeButton.setText("Delete");
         removeButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 removeButtonActionPerformed(evt);
@@ -119,7 +121,7 @@ public class CheckoutProgramJPanel extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(359, 359, 359)
+                .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 579, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(435, 435, 435))
             .addGroup(layout.createSequentialGroup()
@@ -130,22 +132,22 @@ public class CheckoutProgramJPanel extends javax.swing.JPanel {
                         .addGap(18, 18, 18)
                         .addComponent(removeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(233, 233, 233)
-                        .addComponent(backjButton, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(278, 278, 278)
+                        .addComponent(backjButton, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(554, 554, 554))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(144, 144, 144)
+                .addGap(53, 53, 53)
+                .addComponent(backjButton, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(41, 41, 41)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(35, 35, 35)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(submitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(removeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(110, 110, 110)
-                .addComponent(backjButton, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(167, 167, 167))
         );
     }// </editor-fold>//GEN-END:initComponents
 
