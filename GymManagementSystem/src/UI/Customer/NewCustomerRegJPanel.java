@@ -89,7 +89,8 @@ public class NewCustomerRegJPanel extends javax.swing.JPanel {
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setText("Come");
 
-        setBackground(new java.awt.Color(255, 255, 255));
+        setBackground(new java.awt.Color(0, 102, 102));
+        setForeground(new java.awt.Color(255, 255, 255));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         submitButton.setFont(new java.awt.Font("Arial Black", 0, 14)); // NOI18N
@@ -100,7 +101,7 @@ public class NewCustomerRegJPanel extends javax.swing.JPanel {
                 submitButtonActionPerformed(evt);
             }
         });
-        add(submitButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 720, 112, 50));
+        add(submitButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 610, 112, 50));
 
         cancelButton.setFont(new java.awt.Font("Arial Black", 1, 14)); // NOI18N
         cancelButton.setForeground(new java.awt.Color(255, 153, 153));
@@ -110,16 +111,16 @@ public class NewCustomerRegJPanel extends javax.swing.JPanel {
                 cancelButtonActionPerformed(evt);
             }
         });
-        add(cancelButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 720, 112, 50));
+        add(cancelButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 610, 112, 50));
 
         firstNameTxt.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        add(firstNameTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 170, 165, -1));
+        add(firstNameTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 160, 165, -1));
 
         lastNameTxt.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        add(lastNameTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 230, 165, -1));
+        add(lastNameTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 210, 165, -1));
 
         addressTxt.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        add(addressTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 420, 336, -1));
+        add(addressTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 370, 240, -1));
 
         txtPhoneNum.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         txtPhoneNum.addActionListener(new java.awt.event.ActionListener() {
@@ -132,14 +133,15 @@ public class NewCustomerRegJPanel extends javax.swing.JPanel {
                 txtPhoneNumKeyPressed(evt);
             }
         });
-        add(txtPhoneNum, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 470, 165, -1));
+        add(txtPhoneNum, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 420, 165, -1));
 
         emailTxt.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        add(emailTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 520, 165, -1));
+        add(emailTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 470, 165, -1));
 
-        jLabel1.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
-        jLabel1.setText("Fill in Registration details..");
-        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(324, 21, 453, -1));
+        jLabel1.setFont(new java.awt.Font("Arial", 0, 36)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("Registration Details");
+        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 30, 340, -1));
 
         userNameTxt.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         userNameTxt.addActionListener(new java.awt.event.ActionListener() {
@@ -147,10 +149,10 @@ public class NewCustomerRegJPanel extends javax.swing.JPanel {
                 userNameTxtActionPerformed(evt);
             }
         });
-        add(userNameTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 110, 165, -1));
+        add(userNameTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 110, 165, -1));
 
         PassField.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        add(PassField, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 300, 165, -1));
+        add(PassField, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 270, 165, -1));
 
         CPassField.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         CPassField.addActionListener(new java.awt.event.ActionListener() {
@@ -158,7 +160,7 @@ public class NewCustomerRegJPanel extends javax.swing.JPanel {
                 CPassFieldActionPerformed(evt);
             }
         });
-        add(CPassField, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 360, 165, -1));
+        add(CPassField, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 320, 165, -1));
 
         NetworkCMB.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         NetworkCMB.addActionListener(new java.awt.event.ActionListener() {
@@ -166,34 +168,44 @@ public class NewCustomerRegJPanel extends javax.swing.JPanel {
                 NetworkCMBActionPerformed(evt);
             }
         });
-        add(NetworkCMB, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 570, 165, 35));
+        add(NetworkCMB, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 520, 165, 35));
 
-        jLabel10.setText("User name");
-        add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 110, -1, -1));
+        jLabel10.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel10.setText("User name :");
+        add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 110, -1, -1));
 
-        jLabel11.setText("First Name");
-        add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 170, -1, -1));
+        jLabel11.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        jLabel11.setText("First Name :");
+        add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 160, -1, -1));
 
-        jLabel12.setText("Last Name");
-        add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 230, -1, 18));
+        jLabel12.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        jLabel12.setText("Last Name :");
+        add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 210, -1, 18));
 
-        jLabel13.setText("Password");
-        add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 300, -1, -1));
+        jLabel13.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        jLabel13.setText("Password :");
+        add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 270, -1, 20));
 
-        jLabel14.setText("Re-enter the password");
-        add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 360, -1, 30));
+        jLabel14.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        jLabel14.setText("Re-enter the password :");
+        add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 310, -1, 30));
 
-        jLabel15.setText("Address");
-        add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 430, -1, -1));
+        jLabel15.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        jLabel15.setText("Address :");
+        add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 370, -1, -1));
 
-        jLabel16.setText("Phone Number");
-        add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 470, -1, -1));
+        jLabel16.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        jLabel16.setText("Phone Number :");
+        add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 420, -1, -1));
 
-        jLabel17.setText("Email");
-        add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 530, -1, -1));
+        jLabel17.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        jLabel17.setText("Email :");
+        add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 470, -1, -1));
 
-        jLabel18.setText("Network");
-        add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 580, -1, -1));
+        jLabel18.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        jLabel18.setText("Network :");
+        add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 520, -1, -1));
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Business/regis.png"))); // NOI18N
         add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 40, 70, 130));
