@@ -514,19 +514,16 @@ public class SalesAdminLoginJPanel extends javax.swing.JPanel {
 
     private void addBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBtnActionPerformed
         // TODO add your handling code here:
-        int selectedRow = uTable.getSelectedRow();
-        if(selectedRow >= 0){
-            int selectionButton = JOptionPane.YES_NO_OPTION;
-            int selectionResult = JOptionPane.showConfirmDialog(null, "Are you sure to delete?","Warning",selectionButton);
-            if(selectionResult == JOptionPane.YES_OPTION){
-                SalesOrganization so = (SalesOrganization)organizationCbx.getSelectedItem();
-                UserAccount ua = (UserAccount) uTable.getValueAt(selectedRow, 0);
-                so.getUserAccountDirectory().getUserAccountList().remove(ua);
-                populateTable();
-            }
+        if(nTxt.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "Name can't be empty!");
         }else{
-            JOptionPane.showMessageDialog(null, "Please select a Row!!");
+        SalesOrganization or = (SalesOrganization)salesenterprise.getOrganizationDirectory().createOrganization(Organization.Type.Sales);
+        //SalesOrganization or = (SalesOrganization)salesenterprise.getOrganizationDirectory().createOrganization(Organization.Type.OnlineSales);
+        //Organization.Type.Analysis
+        //System.out.println(or);
+        or.setName(nTxt.getText());
         }
+        populateOrTbl();
     }//GEN-LAST:event_addBtnActionPerformed
 
     private void deBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deBtnActionPerformed
