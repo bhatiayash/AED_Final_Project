@@ -35,8 +35,8 @@ public class RequestTrainerJPanel extends javax.swing.JPanel {
         this.container = container;
         this.account = account;
         this.gymenterprise = fitenterprise;
-        //df = new SimpleDateFormat("yyyy-MM-dd");
-        df = new SimpleDateFormat("YYYY/MM/DD");
+        df = new SimpleDateFormat("yyyy-MM-dd");
+        //df = new SimpleDateFormat("YYYY/MM/DD");
         populateComboBox();
     }
     public void populateComboBox() {

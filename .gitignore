@@ -1,12 +1,4 @@
 //following files will be ignored
 
-/GymManagementSystem/build/
 /GymManagementSystem/dist/
 .DS_Store
-*.png
-*.jar
-*.jpeg
-*.jpg
-*.csv
-*.db4o
-*.gif
