@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 package UI.Customer;
-
+import Utils.Mail.SendMail;
 import Business.DB4OUtil.DB4OUtil;
 import Business.EcoSystem;
 import Business.Customer.Customer;
@@ -318,13 +318,15 @@ public class NewCustomerRegJPanel extends javax.swing.JPanel {
 
         }
 
+
         Customer customer = new Customer(firstNameTxt.getText(), lastNameTxt.getText(),
                 emailTxt.getText(), txtPhoneNum.getText());
         this.network = (Network) NetworkCMB.getSelectedItem();
         UserAccount ua = network.getUserAccountDirectory().createUserAccount(userNameTxt.getText(), CPassField.getText(), customer, new CustomerRole());
+                                    SendMail.sendMail(customer.getEmail(), "Hello "+customer.getFirstName()+", Welcome to Marino Gym, your account has been successfully created!");
 
         //DB4OUtil.getInstance().storeSystem(system);
-        JOptionPane.showMessageDialog(null, "Create Account Successfully");
+        JOptionPane.showMessageDialog(null, "Account created successfully and email has been sent");
         userNameTxt.setEnabled(false);
         PassField.setEnabled(false);
         CPassField.setEnabled(false);
