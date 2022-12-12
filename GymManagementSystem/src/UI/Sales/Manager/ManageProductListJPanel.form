@@ -30,19 +30,14 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="103" alignment="1" groupAlignment="0" attributes="0">
                       <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                      <Group type="102" attributes="0">
-                          <Component id="jScrollPane1" min="-2" pref="634" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="373" max="-2" attributes="0"/>
-                      </Group>
+                      <Component id="jScrollPane1" min="-2" pref="634" max="-2" attributes="0"/>
                   </Group>
-                  <Group type="102" alignment="1" attributes="0">
-                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                          <Component id="deleteBtn" max="32767" attributes="0"/>
-                          <Component id="addBtn" max="32767" attributes="0"/>
-                      </Group>
-                      <EmptySpace min="-2" pref="373" max="-2" attributes="0"/>
+                  <Group type="103" alignment="1" groupAlignment="1" max="-2" attributes="0">
+                      <Component id="deleteBtn" max="32767" attributes="0"/>
+                      <Component id="addBtn" max="32767" attributes="0"/>
                   </Group>
               </Group>
+              <EmptySpace min="373" pref="373" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -57,7 +52,7 @@
               <Component id="jScrollPane1" min="-2" pref="328" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
               <Component id="addBtn" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="32" max="32767" attributes="0"/>
+              <EmptySpace pref="48" max="32767" attributes="0"/>
               <Component id="deleteBtn" min="-2" pref="58" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="61" max="-2" attributes="0"/>
           </Group>
@@ -74,7 +69,7 @@
           <Color blue="0" green="0" red="ff" type="rgb"/>
         </Property>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/Business/minus.png"/>
+          <Image iconType="3" name="/Business/delete (1).png"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Delete"/>
       </Properties>
@@ -157,7 +152,7 @@
           <Color blue="33" green="99" red="0" type="rgb"/>
         </Property>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/Business/plus.png"/>
+          <Image iconType="3" name="/Business/more.png"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Add"/>
       </Properties>

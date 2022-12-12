@@ -147,7 +147,7 @@ public class ManageEnterpriseJPanel extends javax.swing.JPanel {
 
         submitJButton.setFont(new java.awt.Font("Bahnschrift", 0, 18)); // NOI18N
         submitJButton.setForeground(new java.awt.Color(153, 204, 255));
-        submitJButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Business/plus.png"))); // NOI18N
+        submitJButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Business/more.png"))); // NOI18N
         submitJButton.setText("Create");
         submitJButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -166,7 +166,7 @@ public class ManageEnterpriseJPanel extends javax.swing.JPanel {
 
         deleteBtn.setFont(new java.awt.Font("Bahnschrift", 0, 18)); // NOI18N
         deleteBtn.setForeground(new java.awt.Color(255, 51, 51));
-        deleteBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Business/minus.png"))); // NOI18N
+        deleteBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Business/delete (1).png"))); // NOI18N
         deleteBtn.setText("Delete");
         deleteBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

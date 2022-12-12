@@ -64,9 +64,9 @@ public class SalesManagerWorkAreaJPanel extends javax.swing.JPanel {
         jLabel2.setText("Welcome Sales Manager! Choose from following actions");
 
         manageListButton.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
-        manageListButton.setForeground(new java.awt.Color(102, 102, 0));
-        manageListButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Business/items_gf.png"))); // NOI18N
-        manageListButton.setText("Item Fleet..");
+        manageListButton.setForeground(new java.awt.Color(0, 102, 102));
+        manageListButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Business/supplementary-food.png"))); // NOI18N
+        manageListButton.setText("Product");
         manageListButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 manageListButtonActionPerformed(evt);
@@ -74,9 +74,9 @@ public class SalesManagerWorkAreaJPanel extends javax.swing.JPanel {
         });
 
         manageOrdersButton.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
-        manageOrdersButton.setForeground(new java.awt.Color(102, 102, 0));
-        manageOrdersButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Business/orderH.png"))); // NOI18N
-        manageOrdersButton.setText("Orders..");
+        manageOrdersButton.setForeground(new java.awt.Color(0, 102, 102));
+        manageOrdersButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Business/to-do-list.png"))); // NOI18N
+        manageOrdersButton.setText("Orders");
         manageOrdersButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 manageOrdersButtonActionPerformed(evt);
@@ -86,48 +86,50 @@ public class SalesManagerWorkAreaJPanel extends javax.swing.JPanel {
         jLabel4.setBackground(new java.awt.Color(255, 255, 255));
         jLabel4.setFont(new java.awt.Font("Tw Cen MT", 0, 24)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setText("Manage");
+        jLabel4.setText(" Manage Products");
 
         jLabel5.setBackground(new java.awt.Color(255, 255, 255));
         jLabel5.setFont(new java.awt.Font("Tw Cen MT", 0, 24)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setText("Manage ");
+        jLabel5.setText("Manage Orders");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(415, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap(512, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addGap(371, 371, 371)
-                        .addComponent(jLabel5)
-                        .addGap(354, 354, 354))
+                        .addComponent(manageListButton, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(521, 521, 521))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addGap(287, 287, 287))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(manageListButton, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(209, 209, 209)
                         .addComponent(manageOrdersButton, javax.swing.GroupLayout.PREFERRED_SIZE, 276, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(273, 273, 273))))
+                        .addGap(509, 509, 509))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addGap(562, 562, 562))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel5)
+                        .addGap(565, 565, 565))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(117, 117, 117)
                 .addComponent(jLabel2)
-                .addGap(138, 138, 138)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel5))
+                .addGap(67, 67, 67)
+                .addComponent(jLabel4)
                 .addGap(12, 12, 12)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(manageListButton, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(manageOrdersButton, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(63, 63, 63))
+                .addComponent(manageListButton, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(65, 65, 65)
+                .addComponent(jLabel5)
+                .addGap(12, 12, 12)
+                .addComponent(manageOrdersButton, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 

@@ -103,6 +103,7 @@ public class EmployeeViewJPanel extends javax.swing.JPanel {
         jScrollPane1.setViewportView(viewEmployeeJTable);
 
         btnAdd.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
+        btnAdd.setForeground(new java.awt.Color(0, 102, 102));
         btnAdd.setText("Add a new employee");
         btnAdd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -111,6 +112,7 @@ public class EmployeeViewJPanel extends javax.swing.JPanel {
         });
 
         btnShowDetails.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
+        btnShowDetails.setForeground(new java.awt.Color(0, 102, 102));
         btnShowDetails.setText("Show employee details");
         btnShowDetails.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -120,6 +122,7 @@ public class EmployeeViewJPanel extends javax.swing.JPanel {
 
         btnRemoveEmployee.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
         btnRemoveEmployee.setForeground(new java.awt.Color(255, 51, 51));
+        btnRemoveEmployee.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Business/delete (1).png"))); // NOI18N
         btnRemoveEmployee.setText("Remove selected employee");
         btnRemoveEmployee.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -128,7 +131,7 @@ public class EmployeeViewJPanel extends javax.swing.JPanel {
         });
 
         btnBack.setFont(new java.awt.Font("Helvetica Neue", 0, 18)); // NOI18N
-        btnBack.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Business/goback.png"))); // NOI18N
+        btnBack.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Business/back (1).png"))); // NOI18N
         btnBack.setText("Previous");
         btnBack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

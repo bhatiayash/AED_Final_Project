@@ -122,7 +122,7 @@ public class CustomerWorkAreaJPanel extends javax.swing.JPanel {
                 .addContainerGap(38, Short.MAX_VALUE))
         );
 
-        add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(317, 55, 742, -1));
+        add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 60, 742, -1));
 
         jPanel2.setBackground(new java.awt.Color(0, 102, 102));
 

@@ -166,6 +166,7 @@ public class SalesAdminLoginJPanel extends javax.swing.JPanel {
 
         addBtn.setFont(new java.awt.Font("Aurulent Sans", 0, 18)); // NOI18N
         addBtn.setForeground(new java.awt.Color(0, 204, 153));
+        addBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Business/more.png"))); // NOI18N
         addBtn.setText("Add");
         addBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -180,6 +181,7 @@ public class SalesAdminLoginJPanel extends javax.swing.JPanel {
 
         deBtn.setFont(new java.awt.Font("Aurulent Sans", 0, 18)); // NOI18N
         deBtn.setForeground(new java.awt.Color(255, 0, 0));
+        deBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Business/delete (1).png"))); // NOI18N
         deBtn.setText("Remove");
         deBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -336,7 +338,6 @@ public class SalesAdminLoginJPanel extends javax.swing.JPanel {
                             .addComponent(nameTxt))
                         .addGap(68, 68, 68))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel9)
                         .addGap(18, 18, 18)
                         .addComponent(organizationCbx, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)))

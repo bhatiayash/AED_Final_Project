@@ -137,7 +137,7 @@ public class AddProductJPanel extends javax.swing.JPanel {
                     .addComponent(jLabel3))
                 .addGap(46, 46, 46)
                 .addComponent(submitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addContainerGap(147, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 

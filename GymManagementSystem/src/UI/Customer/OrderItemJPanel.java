@@ -158,7 +158,7 @@ public class OrderItemJPanel extends javax.swing.JPanel {
         jLabel1.setFont(new java.awt.Font("Book Antiqua", 0, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Choose any product");
-        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 50, 250, 26));
+        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 50, 250, 26));
 
         jPanel1.setBackground(new java.awt.Color(0, 102, 102));
 
@@ -170,7 +170,7 @@ public class OrderItemJPanel extends javax.swing.JPanel {
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 833, Short.MAX_VALUE)
         );
 
         add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1240, 6, -1, 833));
@@ -198,12 +198,12 @@ public class OrderItemJPanel extends javax.swing.JPanel {
         tblCart.setSelectionBackground(new java.awt.Color(215, 145, 54));
         jScrollPane2.setViewportView(tblCart);
 
-        add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(846, 86, 350, 469));
+        add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 80, 350, 469));
 
         jLabel3.setFont(new java.awt.Font("Book Antiqua", 0, 24)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Your cart ");
-        add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 50, 170, -1));
+        add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 40, 170, -1));
 
         deleteBtn.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         deleteBtn.setForeground(new java.awt.Color(255, 51, 51));
@@ -214,11 +214,11 @@ public class OrderItemJPanel extends javax.swing.JPanel {
                 deleteBtnActionPerformed(evt);
             }
         });
-        add(deleteBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(956, 584, 213, 32));
+        add(deleteBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(920, 580, 213, 32));
 
         priceLabel.setForeground(new java.awt.Color(255, 255, 255));
         priceLabel.setText("Total Cost to Pay:");
-        add(priceLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(1058, 783, -1, -1));
+        add(priceLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 720, -1, -1));
 
         checkoutBtn.setFont(new java.awt.Font("Bahnschrift", 0, 18)); // NOI18N
         checkoutBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Business/money-bag.png"))); // NOI18N
@@ -228,7 +228,7 @@ public class OrderItemJPanel extends javax.swing.JPanel {
                 checkoutBtnActionPerformed(evt);
             }
         });
-        add(checkoutBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(1043, 717, -1, -1));
+        add(checkoutBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 650, -1, -1));
 
         jLabel4.setFont(new java.awt.Font("Tw Cen MT", 0, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));

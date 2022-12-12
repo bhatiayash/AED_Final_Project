@@ -122,10 +122,11 @@ private JPanel container;
         tblRequestList.setSelectionBackground(new java.awt.Color(215, 145, 54));
         jScrollPane1.setViewportView(tblRequestList);
 
-        jLabel1.setFont(new java.awt.Font("Tamil MN", 1, 18)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Requests from customers..");
+        jLabel1.setText("Requests from Customers");
 
+        backBtn.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         backBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Business/goback.png"))); // NOI18N
         backBtn.setText("Previous");
         backBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -134,7 +135,7 @@ private JPanel container;
             }
         });
 
-        acceptBtn.setFont(new java.awt.Font("Arial Narrow", 0, 18)); // NOI18N
+        acceptBtn.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         acceptBtn.setForeground(new java.awt.Color(0, 153, 153));
         acceptBtn.setText("Accept");
         acceptBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -143,7 +144,7 @@ private JPanel container;
             }
         });
 
-        declineBtn.setFont(new java.awt.Font("Arial Narrow", 0, 18)); // NOI18N
+        declineBtn.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         declineBtn.setForeground(new java.awt.Color(255, 153, 153));
         declineBtn.setText("Reject");
         declineBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -154,7 +155,7 @@ private JPanel container;
 
         jLabel2.setFont(new java.awt.Font("Book Antiqua", 0, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("Select the block no. to fix the meeting in .. ");
+        jLabel2.setText("Select the block to fix the meeting ");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -162,9 +163,6 @@ private JPanel container;
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(57, 57, 57)
-                        .addComponent(backBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(616, 616, 616)
                         .addComponent(jLabel1))
@@ -181,7 +179,10 @@ private JPanel container;
                         .addGap(621, 621, 621)
                         .addComponent(acceptBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(75, 75, 75)
-                        .addComponent(declineBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(declineBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(57, 57, 57)
+                        .addComponent(backBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(426, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(

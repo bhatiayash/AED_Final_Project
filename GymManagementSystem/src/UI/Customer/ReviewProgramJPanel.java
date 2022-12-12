@@ -61,7 +61,7 @@ public class ReviewProgramJPanel extends javax.swing.JPanel {
         submitButton = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         cnameTxt = new javax.swing.JTextField();
-        rateCBX = new javax.swing.JComboBox<String>();
+        rateCBX = new javax.swing.JComboBox<>();
         Backbtn = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(0, 102, 102));
@@ -92,8 +92,8 @@ public class ReviewProgramJPanel extends javax.swing.JPanel {
         jLabel3.setText("Additional  comments :");
 
         submitButton.setFont(new java.awt.Font("Bookman Old Style", 0, 18)); // NOI18N
-        submitButton.setForeground(new java.awt.Color(102, 102, 255));
-        submitButton.setText("Submit rating!");
+        submitButton.setForeground(new java.awt.Color(0, 102, 102));
+        submitButton.setText("Submit rating");
         submitButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 submitButtonActionPerformed(evt);
@@ -110,14 +110,15 @@ public class ReviewProgramJPanel extends javax.swing.JPanel {
             }
         });
 
-        rateCBX.setModel(new javax.swing.DefaultComboBoxModel<String>(new String[] { "Choose from list..", "1", "2", "3", "4", "5", " " }));
+        rateCBX.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Choose from list..", "1", "2", "3", "4", "5", " " }));
         rateCBX.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 rateCBXActionPerformed(evt);
             }
         });
 
-        Backbtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Business/goback.png"))); // NOI18N
+        Backbtn.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
+        Backbtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Business/back (1).png"))); // NOI18N
         Backbtn.setText("Previous");
         Backbtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -131,8 +132,8 @@ public class ReviewProgramJPanel extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(220, 220, 220)
-                .addComponent(Backbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(247, 247, 247)
+                .addComponent(Backbtn)
+                .addGap(217, 217, 217)
                 .addComponent(jLabel1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()

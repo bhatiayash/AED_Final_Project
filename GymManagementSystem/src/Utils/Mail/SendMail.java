@@ -21,7 +21,7 @@ import javax.mail.internet.MimeMessage;
 
 /**
  *
- * @author devikaboddu
+ * @author akash
  */
 public class SendMail {
     public static void sendMail(String recepient, String msg){
